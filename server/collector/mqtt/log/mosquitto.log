@@ -1,0 +1,846 @@
+1524248161: mosquitto version 1.4.12 (build date 2017-06-01 13:03:46+0000) starting
+1524248161: Config loaded from /mosquitto/config/mosquitto.conf.
+1524248161: Opening websockets listen socket on port 9001.
+1524248161: Opening ipv4 listen socket on port 1883.
+1524248161: Opening ipv6 listen socket on port 1883.
+1524248179: New connection from 192.168.1.6 on port 1883.
+1524248179: Socket error on client <unknown>, disconnecting.
+1524248180: New connection from 192.168.1.6 on port 1883.
+1524248180: Socket error on client <unknown>, disconnecting.
+1524248182: New connection from 192.168.1.6 on port 1883.
+1524248182: Socket error on client <unknown>, disconnecting.
+1524248430: New connection from 192.168.1.6 on port 1883.
+1524248430: New client connected from 192.168.1.6 as P1 (c1, k60, u'mqttku').
+1524248434: Socket error on client P1, disconnecting.
+1524248442: New connection from 192.168.1.6 on port 1883.
+1524248442: Socket error on client <unknown>, disconnecting.
+1524248443: New connection from 192.168.1.6 on port 1883.
+1524248443: Socket error on client <unknown>, disconnecting.
+1524248445: New connection from 192.168.1.6 on port 1883.
+1524248445: Socket error on client <unknown>, disconnecting.
+1524248498: New connection from 192.168.1.6 on port 1883.
+1524248498: New client connected from 192.168.1.6 as P1 (c1, k60, u'mqttku').
+1524248502: Socket error on client P1, disconnecting.
+1524248532: New connection from 192.168.1.6 on port 1883.
+1524248532: New client connected from 192.168.1.6 as P1 (c1, k60, u'mqttku').
+1524248536: Socket error on client P1, disconnecting.
+1524248691: mosquitto version 1.4.12 terminating
+1524249381: mosquitto version 1.4.12 (build date 2017-06-01 13:03:46+0000) starting
+1524249381: Config loaded from /mosquitto/config/mosquitto.conf.
+1524249381: Opening websockets listen socket on port 9001.
+1524249381: Opening ipv4 listen socket on port 1883.
+1524249381: Opening ipv6 listen socket on port 1883.
+1524249388: New connection from 192.168.1.6 on port 1883.
+1524249388: New client connected from 192.168.1.6 as MyWorker-1 (c1, k60, u'mqttku').
+1524249388: Socket error on client MyWorker-1, disconnecting.
+1524249414: New connection from 192.168.1.6 on port 1883.
+1524249414: New client connected from 192.168.1.6 as MyWorker-1 (c1, k60, u'mqttku').
+1524249423: Socket error on client MyWorker-1, disconnecting.
+1524249474: New connection from 192.168.1.6 on port 1883.
+1524249474: New client connected from 192.168.1.6 as MyWorker-1 (c1, k60, u'mqttku').
+1524249488: Socket error on client MyWorker-1, disconnecting.
+1524249505: New connection from 192.168.1.6 on port 1883.
+1524249505: New client connected from 192.168.1.6 as MyWorker-1 (c1, k60, u'mqttku').
+1524249506: Socket error on client MyWorker-1, disconnecting.
+1524249554: New connection from 192.168.1.6 on port 1883.
+1524249554: New client connected from 192.168.1.6 as MyWorker-1 (c1, k60, u'mqttku').
+1524249555: Socket error on client MyWorker-1, disconnecting.
+1524249558: New connection from 192.168.1.6 on port 1883.
+1524249558: New client connected from 192.168.1.6 as MyWorker-1 (c1, k60, u'mqttku').
+1524249559: Socket error on client MyWorker-1, disconnecting.
+1524250085: New connection from 192.168.1.6 on port 1883.
+1524250085: New client connected from 192.168.1.6 as MyWorker-1 (c1, k60, u'mqttku').
+1524250085: Socket error on client MyWorker-1, disconnecting.
+1524250099: New connection from 192.168.1.6 on port 1883.
+1524250099: New client connected from 192.168.1.6 as MyWorker-1 (c1, k60, u'mqttku').
+1524250103: Socket error on client MyWorker-1, disconnecting.
+1524250107: New connection from 192.168.1.6 on port 1883.
+1524250107: New client connected from 192.168.1.6 as MyWorker-1 (c1, k60, u'mqttku').
+1524250111: Socket error on client MyWorker-1, disconnecting.
+1524250138: New connection from 192.168.1.6 on port 1883.
+1524250138: New client connected from 192.168.1.6 as MyWorker-1 (c1, k60, u'mqttku').
+1524250142: Socket error on client MyWorker-1, disconnecting.
+1524251182: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524252983: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524254784: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524256533: New connection from 172.17.0.3 on port 1883.
+1524256533: Socket error on client <unknown>, disconnecting.
+1524256534: New connection from 172.17.0.3 on port 1883.
+1524256534: Socket error on client <unknown>, disconnecting.
+1524256536: New connection from 172.17.0.3 on port 1883.
+1524256536: Socket error on client <unknown>, disconnecting.
+1524256540: New connection from 172.17.0.3 on port 1883.
+1524256540: Socket error on client <unknown>, disconnecting.
+1524256548: New connection from 172.17.0.3 on port 1883.
+1524256548: Socket error on client <unknown>, disconnecting.
+1524256564: New connection from 172.17.0.3 on port 1883.
+1524256564: Socket error on client <unknown>, disconnecting.
+1524256585: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524256596: New connection from 172.17.0.3 on port 1883.
+1524256596: Socket error on client <unknown>, disconnecting.
+1524256660: New connection from 172.17.0.3 on port 1883.
+1524256660: Socket error on client <unknown>, disconnecting.
+1524256788: New connection from 172.17.0.3 on port 1883.
+1524256788: Socket error on client <unknown>, disconnecting.
+1524256868: New connection from 172.17.0.3 on port 1883.
+1524256868: Socket error on client <unknown>, disconnecting.
+1524256869: New connection from 172.17.0.3 on port 1883.
+1524256869: Socket error on client <unknown>, disconnecting.
+1524256871: New connection from 172.17.0.3 on port 1883.
+1524256871: Socket error on client <unknown>, disconnecting.
+1524256875: New connection from 172.17.0.3 on port 1883.
+1524256875: Socket error on client <unknown>, disconnecting.
+1524256883: New connection from 172.17.0.3 on port 1883.
+1524256883: Socket error on client <unknown>, disconnecting.
+1524256899: New connection from 172.17.0.3 on port 1883.
+1524256899: Socket error on client <unknown>, disconnecting.
+1524256931: New connection from 172.17.0.3 on port 1883.
+1524256931: Socket error on client <unknown>, disconnecting.
+1524256995: New connection from 172.17.0.3 on port 1883.
+1524256995: Socket error on client <unknown>, disconnecting.
+1524257022: New connection from 172.17.0.3 on port 1883.
+1524257022: Socket error on client <unknown>, disconnecting.
+1524257023: New connection from 172.17.0.3 on port 1883.
+1524257023: Socket error on client <unknown>, disconnecting.
+1524257025: New connection from 172.17.0.3 on port 1883.
+1524257025: Socket error on client <unknown>, disconnecting.
+1524257029: New connection from 172.17.0.3 on port 1883.
+1524257029: Socket error on client <unknown>, disconnecting.
+1524257037: New connection from 172.17.0.3 on port 1883.
+1524257037: Socket error on client <unknown>, disconnecting.
+1524257053: New connection from 172.17.0.3 on port 1883.
+1524257053: Socket error on client <unknown>, disconnecting.
+1524257068: New connection from 172.17.0.3 on port 1883.
+1524257068: Socket error on client <unknown>, disconnecting.
+1524257069: New connection from 172.17.0.3 on port 1883.
+1524257069: Socket error on client <unknown>, disconnecting.
+1524257071: New connection from 172.17.0.3 on port 1883.
+1524257071: Socket error on client <unknown>, disconnecting.
+1524257075: New connection from 172.17.0.3 on port 1883.
+1524257075: Socket error on client <unknown>, disconnecting.
+1524257083: New connection from 172.17.0.3 on port 1883.
+1524257083: Socket error on client <unknown>, disconnecting.
+1524257096: mosquitto version 1.4.12 terminating
+1524257134: mosquitto version 1.4.12 (build date 2017-06-01 13:03:46+0000) starting
+1524257134: Config loaded from /mosquitto/config/mosquitto.conf.
+1524257134: Opening websockets listen socket on port 9001.
+1524257134: Opening ipv4 listen socket on port 1883.
+1524257134: Opening ipv6 listen socket on port 1883.
+1524257141: New connection from 172.17.0.4 on port 1883.
+1524257141: New client connected from 172.17.0.4 as worker-1 (c1, k15).
+1524257304: New connection from 192.168.1.6 on port 1883.
+1524257304: New client connected from 192.168.1.6 as MyWorker-1 (c1, k60, u'mqttku').
+1524257369: Socket error on client MyWorker-1, disconnecting.
+1524257371: New connection from 192.168.1.6 on port 1883.
+1524257371: New client connected from 192.168.1.6 as MyWorker-1 (c1, k60, u'mqttku').
+1524257384: Socket error on client MyWorker-1, disconnecting.
+1524257386: New connection from 192.168.1.6 on port 1883.
+1524257386: New client connected from 192.168.1.6 as MyWorker-1 (c1, k60).
+1524257783: Socket error on client MyWorker-1, disconnecting.
+1524257913: New connection from 192.168.1.6 on port 1883.
+1524257913: New client connected from 192.168.1.6 as MyWorker-1 (c1, k60).
+1524257920: Socket error on client MyWorker-1, disconnecting.
+1524258076: New connection from 192.168.1.6 on port 1883.
+1524258076: New client connected from 192.168.1.6 as MyWorker-1 (c1, k60).
+1524258089: Socket error on client MyWorker-1, disconnecting.
+1524258117: New connection from 192.168.1.6 on port 1883.
+1524258117: New client connected from 192.168.1.6 as MyWorker-1 (c1, k60).
+1524258123: Socket error on client MyWorker-1, disconnecting.
+1524258211: New connection from 192.168.1.6 on port 1883.
+1524258211: New client connected from 192.168.1.6 as MyWorker-1 (c1, k60).
+1524258215: Socket error on client MyWorker-1, disconnecting.
+1524258277: New connection from 192.168.1.6 on port 1883.
+1524258277: New client connected from 192.168.1.6 as MyWorker-1 (c1, k60).
+1524258282: Socket error on client MyWorker-1, disconnecting.
+1524258284: New connection from 192.168.1.6 on port 1883.
+1524258284: New client connected from 192.168.1.6 as MyWorker-1 (c1, k60).
+1524258289: Socket error on client MyWorker-1, disconnecting.
+1524258303: New connection from 192.168.1.6 on port 1883.
+1524258303: New client connected from 192.168.1.6 as MyWorker-1 (c1, k60).
+1524258305: Socket error on client MyWorker-1, disconnecting.
+1524258317: New connection from 192.168.1.6 on port 1883.
+1524258317: New client connected from 192.168.1.6 as MyWorker-1 (c1, k60).
+1524258335: Client worker-1 disconnected.
+1524258373: New connection from 172.17.0.4 on port 1883.
+1524258373: New client connected from 172.17.0.4 as fluentd-worker (c1, k15).
+1524258443: Client fluentd-worker disconnected.
+1524258448: New connection from 172.17.0.4 on port 1883.
+1524258448: New client connected from 172.17.0.4 as fluentd-worker (c1, k15).
+1524258606: Socket error on client MyWorker-1, disconnecting.
+1524258609: New connection from 192.168.1.6 on port 1883.
+1524258609: New client connected from 192.168.1.6 as MyWorker-1 (c1, k60).
+1524258611: Client fluentd-worker disconnected.
+1524258615: New connection from 172.17.0.4 on port 1883.
+1524258615: New client connected from 172.17.0.4 as fluentd-worker (c1, k15).
+1524258683: Socket error on client MyWorker-1, disconnecting.
+1524258684: New connection from 192.168.1.6 on port 1883.
+1524258684: New client connected from 192.168.1.6 as MyWorker-1 (c1, k60).
+1524258694: Socket error on client MyWorker-1, disconnecting.
+1524258753: New connection from 192.168.1.6 on port 1883.
+1524258753: New client connected from 192.168.1.6 as MyWorker-1 (c1, k60).
+1524258783: Socket error on client MyWorker-1, disconnecting.
+1524258784: New connection from 192.168.1.6 on port 1883.
+1524258784: New client connected from 192.168.1.6 as MyWorker-1 (c1, k60).
+1524258821: Socket error on client MyWorker-1, disconnecting.
+1524258822: New connection from 192.168.1.6 on port 1883.
+1524258822: New client connected from 192.168.1.6 as MyWorker-1 (c1, k60).
+1524258858: Socket error on client MyWorker-1, disconnecting.
+1524258859: New connection from 192.168.1.6 on port 1883.
+1524258859: New client connected from 192.168.1.6 as MyWorker-1 (c1, k60).
+1524258891: Client fluentd-worker disconnected.
+1524258904: Socket error on client MyWorker-1, disconnecting.
+1524258915: New connection from 172.17.0.4 on port 1883.
+1524258915: New client connected from 172.17.0.4 as fluentd-worker (c1, k15).
+1524258935: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524258939: Client fluentd-worker disconnected.
+1524258940: New connection from 192.168.1.6 on port 1883.
+1524258940: New client connected from 192.168.1.6 as MyWorker-1 (c1, k60).
+1524258947: New connection from 172.17.0.4 on port 1883.
+1524258947: New client connected from 172.17.0.4 as fluentd-worker (c1, k15).
+1524259060: Socket error on client MyWorker-1, disconnecting.
+1524259063: New connection from 192.168.1.6 on port 1883.
+1524259063: New client connected from 192.168.1.6 as MyWorker-1 (c1, k60).
+1524259066: Client fluentd-worker disconnected.
+1524259072: New connection from 172.17.0.4 on port 1883.
+1524259072: New client connected from 172.17.0.4 as fluentd-worker (c1, k15).
+1524259089: Socket error on client MyWorker-1, disconnecting.
+1524259163: Client fluentd-worker disconnected.
+1524259167: New connection from 172.17.0.4 on port 1883.
+1524259167: New client connected from 172.17.0.4 as fluentd-worker (c1, k15).
+1524259168: New connection from 192.168.1.6 on port 1883.
+1524259168: New client connected from 192.168.1.6 as MyWorker-1 (c1, k60).
+1524259178: Socket error on client MyWorker-1, disconnecting.
+1524259233: New connection from 192.168.1.6 on port 1883.
+1524259233: New client connected from 192.168.1.6 as MyWorker-1 (c1, k60).
+1524259241: Client fluentd-worker disconnected.
+1524259262: New connection from 172.17.0.4 on port 1883.
+1524259262: New client connected from 172.17.0.4 as fluentd-worker (c1, k15).
+1524259349: Client fluentd-worker disconnected.
+1524259351: mosquitto version 1.4.12 terminating
+1524259363: mosquitto version 1.4.12 (build date 2017-06-01 13:03:46+0000) starting
+1524259363: Config loaded from /mosquitto/config/mosquitto.conf.
+1524259363: Opening websockets listen socket on port 9001.
+1524259363: Opening ipv4 listen socket on port 1883.
+1524259363: Opening ipv6 listen socket on port 1883.
+1524259369: New connection from 192.168.1.6 on port 1883.
+1524259369: Socket error on client <unknown>, disconnecting.
+1524259369: New connection from 172.17.0.4 on port 1883.
+1524259369: Socket error on client <unknown>, disconnecting.
+1524259370: New connection from 172.17.0.4 on port 1883.
+1524259370: Socket error on client <unknown>, disconnecting.
+1524259372: New connection from 172.17.0.4 on port 1883.
+1524259372: Socket error on client <unknown>, disconnecting.
+1524259376: New connection from 172.17.0.4 on port 1883.
+1524259376: Socket error on client <unknown>, disconnecting.
+1524259384: New connection from 172.17.0.4 on port 1883.
+1524259384: Socket error on client <unknown>, disconnecting.
+1524259385: New connection from 192.168.1.6 on port 1883.
+1524259385: Socket error on client <unknown>, disconnecting.
+1524259400: New connection from 172.17.0.4 on port 1883.
+1524259400: Socket error on client <unknown>, disconnecting.
+1524259417: New connection from 192.168.1.6 on port 1883.
+1524259417: Socket error on client <unknown>, disconnecting.
+1524259432: New connection from 172.17.0.4 on port 1883.
+1524259432: Socket error on client <unknown>, disconnecting.
+1524259481: New connection from 192.168.1.6 on port 1883.
+1524259481: Socket error on client <unknown>, disconnecting.
+1524259498: New connection from 172.17.0.4 on port 1883.
+1524259498: Socket error on client <unknown>, disconnecting.
+1524259499: New connection from 172.17.0.4 on port 1883.
+1524259499: Socket error on client <unknown>, disconnecting.
+1524259501: New connection from 172.17.0.4 on port 1883.
+1524259501: Socket error on client <unknown>, disconnecting.
+1524259505: New connection from 172.17.0.4 on port 1883.
+1524259505: Socket error on client <unknown>, disconnecting.
+1524259513: New connection from 172.17.0.4 on port 1883.
+1524259513: Socket error on client <unknown>, disconnecting.
+1524259529: New connection from 172.17.0.4 on port 1883.
+1524259529: Socket error on client <unknown>, disconnecting.
+1524259561: New connection from 172.17.0.4 on port 1883.
+1524259561: Socket error on client <unknown>, disconnecting.
+1524259601: New connection from 192.168.1.6 on port 1883.
+1524259601: Socket error on client <unknown>, disconnecting.
+1524259625: New connection from 172.17.0.4 on port 1883.
+1524259625: Socket error on client <unknown>, disconnecting.
+1524259642: New connection from 172.17.0.4 on port 1883.
+1524259642: Socket error on client <unknown>, disconnecting.
+1524259643: New connection from 172.17.0.4 on port 1883.
+1524259643: Socket error on client <unknown>, disconnecting.
+1524259645: New connection from 172.17.0.4 on port 1883.
+1524259645: Socket error on client <unknown>, disconnecting.
+1524259721: New connection from 192.168.1.6 on port 1883.
+1524259721: Socket error on client <unknown>, disconnecting.
+1524259841: New connection from 192.168.1.6 on port 1883.
+1524259841: Socket error on client <unknown>, disconnecting.
+1524259961: New connection from 192.168.1.6 on port 1883.
+1524259961: Socket error on client <unknown>, disconnecting.
+1524259963: mosquitto version 1.4.12 terminating
+1524259974: mosquitto version 1.4.12 (build date 2017-06-01 13:03:46+0000) starting
+1524259974: Config loaded from /mosquitto/config/mosquitto.conf.
+1524259974: Opening websockets listen socket on port 9001.
+1524259974: Opening ipv4 listen socket on port 1883.
+1524259974: Opening ipv6 listen socket on port 1883.
+1524259983: New connection from 172.17.0.4 on port 1883.
+1524259983: New client connected from 172.17.0.4 as fluentd-worker (c1, k15).
+1524260007: New connection from 192.168.1.6 on port 1883.
+1524260007: New client connected from 192.168.1.6 as MyWorker-1 (c1, k60, u'mqttku').
+1524260034: Client fluentd-worker disconnected.
+1524260038: New connection from 172.17.0.4 on port 1883.
+1524260038: New client connected from 172.17.0.4 as fluentd-worker (c1, k15).
+1524261775: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524263576: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524265377: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524267178: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524268979: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524270780: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524272581: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524274382: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524276183: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524277984: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524279785: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524281586: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524283387: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524285188: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524285892: Client fluentd-worker disconnected.
+1524286868: mosquitto version 1.4.12 terminating
+1524286971: mosquitto version 1.4.12 (build date 2017-06-01 13:03:46+0000) starting
+1524286971: Config loaded from /mosquitto/config/mosquitto.conf.
+1524286971: Opening websockets listen socket on port 9001.
+1524286971: Opening ipv4 listen socket on port 1883.
+1524286971: Opening ipv6 listen socket on port 1883.
+1524286987: New connection from 192.168.1.6 on port 1883.
+1524286987: New client connected from 192.168.1.6 as MyWorker-1 (c1, k60, u'mqttku').
+1524286994: Socket error on client MyWorker-1, disconnecting.
+1524287000: New connection from 192.168.1.6 on port 1883.
+1524287000: New client connected from 192.168.1.6 as MyWorker-1 (c1, k60, u'jancok').
+1524287009: Socket error on client MyWorker-1, disconnecting.
+1524287198: mosquitto version 1.4.12 terminating
+1524287201: mosquitto version 1.4.12 (build date 2017-06-01 13:03:46+0000) starting
+1524287201: Config loaded from /mosquitto/config/mosquitto.conf.
+1524287201: Opening websockets listen socket on port 9001.
+1524287201: Opening ipv4 listen socket on port 1883.
+1524287201: Opening ipv6 listen socket on port 1883.
+1524287213: New connection from 172.17.0.4 on port 1883.
+1524287213: Socket error on client <unknown>, disconnecting.
+1524287214: New connection from 172.17.0.4 on port 1883.
+1524287214: Socket error on client <unknown>, disconnecting.
+1524287216: New connection from 172.17.0.4 on port 1883.
+1524287216: Socket error on client <unknown>, disconnecting.
+1524287220: New connection from 192.168.1.6 on port 1883.
+1524287220: Socket error on client <unknown>, disconnecting.
+1524287220: New connection from 172.17.0.4 on port 1883.
+1524287220: Socket error on client <unknown>, disconnecting.
+1524287221: New connection from 192.168.1.6 on port 1883.
+1524287221: Socket error on client <unknown>, disconnecting.
+1524287223: New connection from 192.168.1.6 on port 1883.
+1524287223: Socket error on client <unknown>, disconnecting.
+1524287227: New connection from 192.168.1.6 on port 1883.
+1524287227: Socket error on client <unknown>, disconnecting.
+1524287228: New connection from 172.17.0.4 on port 1883.
+1524287228: Socket error on client <unknown>, disconnecting.
+1524287231: New connection from 172.17.0.4 on port 1883.
+1524287231: Socket error on client <unknown>, disconnecting.
+1524287232: New connection from 172.17.0.4 on port 1883.
+1524287232: Socket error on client <unknown>, disconnecting.
+1524287234: New connection from 172.17.0.4 on port 1883.
+1524287234: Socket error on client <unknown>, disconnecting.
+1524287235: New connection from 192.168.1.6 on port 1883.
+1524287235: Socket error on client <unknown>, disconnecting.
+1524287238: New connection from 172.17.0.4 on port 1883.
+1524287238: Socket error on client <unknown>, disconnecting.
+1524287246: New connection from 172.17.0.4 on port 1883.
+1524287246: Socket error on client <unknown>, disconnecting.
+1524287251: New connection from 192.168.1.6 on port 1883.
+1524287251: Socket error on client <unknown>, disconnecting.
+1524287262: New connection from 172.17.0.4 on port 1883.
+1524287262: Socket error on client <unknown>, disconnecting.
+1524287269: mosquitto version 1.4.12 terminating
+1524287286: mosquitto version 1.4.12 (build date 2017-06-01 13:03:46+0000) starting
+1524287286: Config loaded from /mosquitto/config/mosquitto.conf.
+1524287286: Opening websockets listen socket on port 9001.
+1524287286: Opening ipv4 listen socket on port 1883.
+1524287286: Opening ipv6 listen socket on port 1883.
+1524287294: New connection from 172.17.0.4 on port 1883.
+1524287294: Socket error on client <unknown>, disconnecting.
+1524287295: New connection from 172.17.0.4 on port 1883.
+1524287295: Socket error on client <unknown>, disconnecting.
+1524287297: New connection from 172.17.0.4 on port 1883.
+1524287297: Socket error on client <unknown>, disconnecting.
+1524287301: New connection from 172.17.0.4 on port 1883.
+1524287301: Socket error on client <unknown>, disconnecting.
+1524287309: New connection from 172.17.0.4 on port 1883.
+1524287309: Socket error on client <unknown>, disconnecting.
+1524287325: New connection from 172.17.0.4 on port 1883.
+1524287325: Socket error on client <unknown>, disconnecting.
+1524287346: New connection from 172.17.0.4 on port 1883.
+1524287346: Socket error on client <unknown>, disconnecting.
+1524287347: New connection from 172.17.0.4 on port 1883.
+1524287347: Socket error on client <unknown>, disconnecting.
+1524287348: New connection from 192.168.1.6 on port 1883.
+1524287348: Socket error on client <unknown>, disconnecting.
+1524287349: New connection from 172.17.0.4 on port 1883.
+1524287349: Socket error on client <unknown>, disconnecting.
+1524287353: New connection from 172.17.0.4 on port 1883.
+1524287353: Socket error on client <unknown>, disconnecting.
+1524287361: New connection from 172.17.0.4 on port 1883.
+1524287361: Socket error on client <unknown>, disconnecting.
+1524287377: New connection from 172.17.0.4 on port 1883.
+1524287377: Socket error on client <unknown>, disconnecting.
+1524287409: New connection from 172.17.0.4 on port 1883.
+1524287409: Socket error on client <unknown>, disconnecting.
+1524287417: New connection from 172.17.0.4 on port 1883.
+1524287417: Socket error on client <unknown>, disconnecting.
+1524287418: New connection from 172.17.0.4 on port 1883.
+1524287418: Socket error on client <unknown>, disconnecting.
+1524287420: New connection from 172.17.0.4 on port 1883.
+1524287420: Socket error on client <unknown>, disconnecting.
+1524287468: New connection from 192.168.1.6 on port 1883.
+1524287468: Socket error on client <unknown>, disconnecting.
+1524287499: New connection from 192.168.1.6 on port 1883.
+1524287499: Socket error on client <unknown>, disconnecting.
+1524287500: New connection from 192.168.1.6 on port 1883.
+1524287500: Socket error on client <unknown>, disconnecting.
+1524287502: New connection from 192.168.1.6 on port 1883.
+1524287502: Socket error on client <unknown>, disconnecting.
+1524287506: New connection from 192.168.1.6 on port 1883.
+1524287506: Socket error on client <unknown>, disconnecting.
+1524287507: mosquitto version 1.4.12 terminating
+1524287534: mosquitto version 1.4.12 (build date 2017-06-01 13:03:46+0000) starting
+1524287534: Config loaded from /mosquitto/config/mosquitto.conf.
+1524287534: Opening websockets listen socket on port 9001.
+1524287534: Opening ipv4 listen socket on port 1883.
+1524287534: Opening ipv6 listen socket on port 1883.
+1524287537: New connection from 192.168.1.6 on port 1883.
+1524287537: New client connected from 192.168.1.6 as collector-worker (c1, k60, u'mqttku').
+1524287677: New connection from 172.17.0.4 on port 1883.
+1524287677: Socket error on client <unknown>, disconnecting.
+1524287678: New connection from 172.17.0.4 on port 1883.
+1524287678: Socket error on client <unknown>, disconnecting.
+1524287700: New connection from 172.17.0.4 on port 1883.
+1524287700: Socket error on client <unknown>, disconnecting.
+1524287701: New connection from 172.17.0.4 on port 1883.
+1524287701: Socket error on client <unknown>, disconnecting.
+1524287703: New connection from 172.17.0.4 on port 1883.
+1524287703: Socket error on client <unknown>, disconnecting.
+1524288077: New connection from 172.17.0.4 on port 1883.
+1524288077: Socket error on client <unknown>, disconnecting.
+1524288078: New connection from 172.17.0.4 on port 1883.
+1524288078: Socket error on client <unknown>, disconnecting.
+1524288612: mosquitto version 1.4.12 terminating
+1524288613: mosquitto version 1.4.12 (build date 2017-06-01 13:03:46+0000) starting
+1524288613: Config loaded from /mosquitto/config/mosquitto.conf.
+1524288613: Opening websockets listen socket on port 9001.
+1524288613: Opening ipv4 listen socket on port 1883.
+1524288613: Opening ipv6 listen socket on port 1883.
+1524288613: New connection from 192.168.1.6 on port 1883.
+1524288613: New client connected from 192.168.1.6 as collector-worker (c1, k60, u'mqttku').
+1524288620: New connection from 172.17.0.4 on port 1883.
+1524288620: New client connected from 172.17.0.4 as FLUENTD-worker (c1, k15).
+1524288638: Client FLUENTD-worker disconnected.
+1524288642: New connection from 172.17.0.4 on port 1883.
+1524288642: New client connected from 172.17.0.4 as FLUENTD-worker (c1, k15).
+1524288771: Client FLUENTD-worker disconnected.
+1524288774: New connection from 172.17.0.4 on port 1883.
+1524288774: New client connected from 172.17.0.4 as FLUENTD-worker (c1, k15).
+1524288774: New connection from 172.17.0.4 on port 1883.
+1524288774: New client connected from 172.17.0.4 as 2ba594dd-3371-415a-b6b1-a2db9e27da87 (c1, k15).
+1524288880: Client 2ba594dd-3371-415a-b6b1-a2db9e27da87 disconnected.
+1524288880: Client FLUENTD-worker disconnected.
+1524288885: New connection from 172.17.0.4 on port 1883.
+1524288885: New client connected from 172.17.0.4 as FLUENTD-worker (c1, k15, u'mqttku').
+1524288895: Client FLUENTD-worker disconnected.
+1524288907: mosquitto version 1.4.12 terminating
+1524288909: mosquitto version 1.4.12 (build date 2017-06-01 13:03:46+0000) starting
+1524288909: Config loaded from /mosquitto/config/mosquitto.conf.
+1524288909: Opening websockets listen socket on port 9001.
+1524288909: Opening ipv4 listen socket on port 1883.
+1524288909: Opening ipv6 listen socket on port 1883.
+1524288915: New connection from 192.168.1.6 on port 1883.
+1524288915: New client connected from 192.168.1.6 as collector-worker (c1, k60, u'mqttku').
+1524288921: New connection from 172.17.0.4 on port 1883.
+1524288921: New client connected from 172.17.0.4 as FLUENTD-worker (c1, k15, u'mqttku').
+1524288936: Socket error on client collector-worker, disconnecting.
+1524288939: New connection from 192.168.1.6 on port 1883.
+1524288939: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524289029: Client FLUENTD-worker disconnected.
+1524289032: Socket error on client COLLECTOR-worker, disconnecting.
+1524289043: New connection from 172.17.0.4 on port 1883.
+1524289043: New client connected from 172.17.0.4 as FLUENTD-worker (c1, k15, u'mqttku').
+1524289044: New connection from 192.168.1.6 on port 1883.
+1524289044: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524289046: Socket error on client COLLECTOR-worker, disconnecting.
+1524289082: New connection from 192.168.1.6 on port 1883.
+1524289082: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524289299: Client FLUENTD-worker disconnected.
+1524289303: New connection from 172.17.0.4 on port 1883.
+1524289303: New client connected from 172.17.0.4 as FLUENTD-worker (c1, k15, u'mqttku').
+1524289807: Socket error on client COLLECTOR-worker, disconnecting.
+1524289809: New connection from 192.168.1.6 on port 1883.
+1524289809: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524289813: Client FLUENTD-worker disconnected.
+1524289817: New connection from 172.17.0.4 on port 1883.
+1524289817: New client connected from 172.17.0.4 as FLUENTD-worker (c1, k15, u'mqttku').
+1524290710: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524292511: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524294312: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524294642: Socket error on client COLLECTOR-worker, disconnecting.
+1524296113: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524296720: New connection from 192.168.1.6 on port 1883.
+1524296720: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524296738: Client FLUENTD-worker disconnected.
+1524296745: New connection from 172.17.0.4 on port 1883.
+1524296745: New client connected from 172.17.0.4 as FLUENTD-worker (c1, k15, u'mqttku').
+1524296757: Socket error on client COLLECTOR-worker, disconnecting.
+1524296920: New connection from 192.168.1.6 on port 1883.
+1524296920: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524296948: Socket error on client COLLECTOR-worker, disconnecting.
+1524296980: New connection from 192.168.1.6 on port 1883.
+1524296980: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524296993: Socket error on client COLLECTOR-worker, disconnecting.
+1524297200: New connection from 192.168.1.6 on port 1883.
+1524297200: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524297224: Socket error on client COLLECTOR-worker, disconnecting.
+1524297723: New connection from 192.168.1.6 on port 1883.
+1524297723: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524297828: Socket error on client COLLECTOR-worker, disconnecting.
+1524297830: New connection from 192.168.1.6 on port 1883.
+1524297830: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524297914: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524297933: Socket error on client COLLECTOR-worker, disconnecting.
+1524297934: New connection from 192.168.1.6 on port 1883.
+1524297934: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524298081: Socket error on client COLLECTOR-worker, disconnecting.
+1524298197: New connection from 192.168.1.6 on port 1883.
+1524298197: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524298200: Client FLUENTD-worker disconnected.
+1524298205: New connection from 172.17.0.4 on port 1883.
+1524298205: New client connected from 172.17.0.4 as FLUENTD-worker (c1, k15, u'mqttku').
+1524298428: Socket error on client COLLECTOR-worker, disconnecting.
+1524298429: New connection from 192.168.1.6 on port 1883.
+1524298429: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524298470: Socket error on client COLLECTOR-worker, disconnecting.
+1524298512: New connection from 192.168.1.6 on port 1883.
+1524298512: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524298589: Socket error on client COLLECTOR-worker, disconnecting.
+1524298590: New connection from 192.168.1.6 on port 1883.
+1524298590: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524298876: Socket error on client COLLECTOR-worker, disconnecting.
+1524298878: New connection from 192.168.1.6 on port 1883.
+1524298878: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524298973: Socket error on client COLLECTOR-worker, disconnecting.
+1524298974: New connection from 192.168.1.6 on port 1883.
+1524298974: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524299187: Socket error on client COLLECTOR-worker, disconnecting.
+1524299188: New connection from 192.168.1.6 on port 1883.
+1524299188: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524299212: Socket error on client COLLECTOR-worker, disconnecting.
+1524299223: New connection from 192.168.1.6 on port 1883.
+1524299223: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524299245: Socket error on client COLLECTOR-worker, disconnecting.
+1524299293: New connection from 192.168.1.6 on port 1883.
+1524299293: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524299344: Socket error on client COLLECTOR-worker, disconnecting.
+1524299352: Client FLUENTD-worker disconnected.
+1524299356: New connection from 172.17.0.4 on port 1883.
+1524299356: New client connected from 172.17.0.4 as FLUENTD-worker (c1, k15, u'mqttku').
+1524299359: New connection from 192.168.1.6 on port 1883.
+1524299359: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524299464: Socket error on client COLLECTOR-worker, disconnecting.
+1524299465: New connection from 192.168.1.6 on port 1883.
+1524299465: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524299715: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524301199: Socket error on client COLLECTOR-worker, disconnecting.
+1524301200: New connection from 192.168.1.6 on port 1883.
+1524301200: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524301215: Socket error on client COLLECTOR-worker, disconnecting.
+1524301253: New connection from 192.168.1.6 on port 1883.
+1524301253: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524301261: Socket error on client COLLECTOR-worker, disconnecting.
+1524301363: New connection from 192.168.1.6 on port 1883.
+1524301363: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524301370: Socket error on client COLLECTOR-worker, disconnecting.
+1524301426: New connection from 192.168.1.6 on port 1883.
+1524301426: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524301435: Socket error on client COLLECTOR-worker, disconnecting.
+1524301453: New connection from 192.168.1.6 on port 1883.
+1524301453: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524301516: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524302870: Socket error on client COLLECTOR-worker, disconnecting.
+1524302871: New connection from 192.168.1.6 on port 1883.
+1524302871: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524302894: Socket error on client COLLECTOR-worker, disconnecting.
+1524302909: New connection from 192.168.1.6 on port 1883.
+1524302909: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524302926: Socket error on client COLLECTOR-worker, disconnecting.
+1524303001: New connection from 192.168.1.6 on port 1883.
+1524303001: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524303016: Socket error on client COLLECTOR-worker, disconnecting.
+1524303056: New connection from 192.168.1.6 on port 1883.
+1524303056: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524303073: Socket error on client COLLECTOR-worker, disconnecting.
+1524303136: New connection from 192.168.1.6 on port 1883.
+1524303136: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524303158: Socket error on client COLLECTOR-worker, disconnecting.
+1524303206: New connection from 192.168.1.6 on port 1883.
+1524303206: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524303317: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524305020: Socket error on client COLLECTOR-worker, disconnecting.
+1524305021: New connection from 192.168.1.6 on port 1883.
+1524305021: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524305027: Socket error on client COLLECTOR-worker, disconnecting.
+1524305028: Client FLUENTD-worker disconnected.
+1524305035: New connection from 192.168.1.6 on port 1883.
+1524305035: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524305048: New connection from 172.17.0.4 on port 1883.
+1524305048: New client connected from 172.17.0.4 as FLUENTD-worker (c1, k15, u'mqttku').
+1524305055: Socket error on client COLLECTOR-worker, disconnecting.
+1524305118: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524305253: New connection from 192.168.1.6 on port 1883.
+1524305253: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524305282: Socket error on client COLLECTOR-worker, disconnecting.
+1524306919: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524308720: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524310521: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524312322: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524312547: New connection from 192.168.1.6 on port 1883.
+1524312547: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524312671: Socket error on client COLLECTOR-worker, disconnecting.
+1524312672: New connection from 192.168.1.6 on port 1883.
+1524312672: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524312940: Socket error on client COLLECTOR-worker, disconnecting.
+1524312941: New connection from 192.168.1.6 on port 1883.
+1524312941: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524313550: Socket error on client COLLECTOR-worker, disconnecting.
+1524313551: New connection from 192.168.1.6 on port 1883.
+1524313551: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524313581: Socket error on client COLLECTOR-worker, disconnecting.
+1524313838: New connection from 192.168.1.6 on port 1883.
+1524313838: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524313842: Client FLUENTD-worker disconnected.
+1524313846: New connection from 172.17.0.4 on port 1883.
+1524313846: New client connected from 172.17.0.4 as FLUENTD-worker (c1, k15, u'mqttku').
+1524313859: Socket error on client COLLECTOR-worker, disconnecting.
+1524313923: New connection from 192.168.1.6 on port 1883.
+1524313923: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524313932: Socket error on client COLLECTOR-worker, disconnecting.
+1524314041: Client FLUENTD-worker disconnected.
+1524314044: New connection from 172.17.0.4 on port 1883.
+1524314044: New client connected from 172.17.0.4 as FLUENTD-worker (c1, k15, u'mqttku').
+1524314088: New connection from 192.168.1.6 on port 1883.
+1524314088: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524314105: Socket error on client COLLECTOR-worker, disconnecting.
+1524314123: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524314168: New connection from 192.168.1.6 on port 1883.
+1524314168: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524314199: Socket error on client COLLECTOR-worker, disconnecting.
+1524314262: New connection from 192.168.1.6 on port 1883.
+1524314262: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524314289: Socket error on client COLLECTOR-worker, disconnecting.
+1524314334: New connection from 192.168.1.6 on port 1883.
+1524314334: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524314364: Socket error on client COLLECTOR-worker, disconnecting.
+1524314730: New connection from 192.168.1.6 on port 1883.
+1524314730: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524314771: Socket error on client COLLECTOR-worker, disconnecting.
+1524315288: New connection from 192.168.1.6 on port 1883.
+1524315288: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524315320: Socket error on client COLLECTOR-worker, disconnecting.
+1524315339: New connection from 192.168.1.6 on port 1883.
+1524315339: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524315391: Client FLUENTD-worker disconnected.
+1524315398: New connection from 172.17.0.4 on port 1883.
+1524315398: New client connected from 172.17.0.4 as FLUENTD-worker (c1, k15, u'mqttku').
+1524315415: Socket error on client COLLECTOR-worker, disconnecting.
+1524315464: New connection from 192.168.1.6 on port 1883.
+1524315464: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524315482: Socket error on client COLLECTOR-worker, disconnecting.
+1524315627: New connection from 192.168.1.6 on port 1883.
+1524315627: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524315658: Socket error on client COLLECTOR-worker, disconnecting.
+1524315806: New connection from 192.168.1.6 on port 1883.
+1524315806: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524315833: Socket error on client COLLECTOR-worker, disconnecting.
+1524315911: New connection from 192.168.1.6 on port 1883.
+1524315911: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524315924: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524315949: Socket error on client COLLECTOR-worker, disconnecting.
+1524315950: New connection from 192.168.1.6 on port 1883.
+1524315950: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524315963: Socket error on client COLLECTOR-worker, disconnecting.
+1524316175: New connection from 192.168.1.6 on port 1883.
+1524316175: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524316206: Socket error on client COLLECTOR-worker, disconnecting.
+1524316223: New connection from 192.168.1.6 on port 1883.
+1524316223: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524316337: Socket error on client COLLECTOR-worker, disconnecting.
+1524316387: New connection from 192.168.1.6 on port 1883.
+1524316387: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524316499: Socket error on client COLLECTOR-worker, disconnecting.
+1524316500: New connection from 192.168.1.6 on port 1883.
+1524316500: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524316515: Socket error on client COLLECTOR-worker, disconnecting.
+1524317725: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524319201: New connection from 192.168.1.6 on port 1883.
+1524319201: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524319224: Socket error on client COLLECTOR-worker, disconnecting.
+1524319526: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524319930: New connection from 192.168.1.6 on port 1883.
+1524319930: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524319951: Socket error on client COLLECTOR-worker, disconnecting.
+1524320016: New connection from 192.168.1.6 on port 1883.
+1524320016: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524320039: Socket error on client COLLECTOR-worker, disconnecting.
+1524320067: New connection from 192.168.1.6 on port 1883.
+1524320067: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524320072: Client FLUENTD-worker disconnected.
+1524320076: New connection from 172.17.0.4 on port 1883.
+1524320076: New client connected from 172.17.0.4 as FLUENTD-worker (c1, k15, u'mqttku').
+1524320082: Socket error on client COLLECTOR-worker, disconnecting.
+1524320098: New connection from 192.168.1.6 on port 1883.
+1524320098: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524320106: Socket error on client COLLECTOR-worker, disconnecting.
+1524320247: New connection from 192.168.1.6 on port 1883.
+1524320247: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524320265: Socket error on client COLLECTOR-worker, disconnecting.
+1524320426: New connection from 192.168.1.6 on port 1883.
+1524320426: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524320447: Socket error on client COLLECTOR-worker, disconnecting.
+1524320491: New connection from 192.168.1.6 on port 1883.
+1524320491: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524320653: Socket error on client COLLECTOR-worker, disconnecting.
+1524320683: New connection from 192.168.1.6 on port 1883.
+1524320683: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524320749: Socket error on client COLLECTOR-worker, disconnecting.
+1524320766: New connection from 192.168.1.6 on port 1883.
+1524320766: New client connected from 192.168.1.6 as COLLECTOR-worker (c1, k60, u'mqttku').
+1524320973: Socket error on client COLLECTOR-worker, disconnecting.
+1524321068: Client FLUENTD-worker disconnected.
+1524321072: New connection from 172.17.0.4 on port 1883.
+1524321072: New client connected from 172.17.0.4 as FLUENTD.HoneypotPublisher (c1, k15, u'mqttku').
+1524321093: New connection from 192.168.1.6 on port 1883.
+1524321093: New client connected from 192.168.1.6 as COLLECTOR.HoneypotSubscriber (c1, k60, u'mqttku').
+1524321099: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1524321209: New connection from 192.168.1.6 on port 1883.
+1524321209: New client connected from 192.168.1.6 as COLLECTOR.HoneypotSubscriber (c1, k60, u'mqttku').
+1524321216: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1524321238: New connection from 192.168.1.6 on port 1883.
+1524321238: New client connected from 192.168.1.6 as COLLECTOR.HoneypotSubscriber (c1, k60, u'mqttku').
+1524321248: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1524321327: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524323128: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524324380: New connection from 192.168.1.6 on port 1883.
+1524324380: New client connected from 192.168.1.6 as COLLECTOR.HoneypotSubscriber (c1, k60, u'mqttku').
+1524324408: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1524324441: New connection from 192.168.1.6 on port 1883.
+1524324441: New client connected from 192.168.1.6 as COLLECTOR.HoneypotSubscriber (c1, k60, u'mqttku').
+1524324459: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1524324471: New connection from 192.168.1.6 on port 1883.
+1524324471: New client connected from 192.168.1.6 as COLLECTOR.HoneypotSubscriber (c1, k60, u'mqttku').
+1524324493: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1524324521: New connection from 192.168.1.6 on port 1883.
+1524324521: New client connected from 192.168.1.6 as COLLECTOR.HoneypotSubscriber (c1, k60, u'mqttku').
+1524324596: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1524324598: Client FLUENTD.HoneypotPublisher disconnected.
+1524324602: New connection from 172.17.0.4 on port 1883.
+1524324602: New client connected from 172.17.0.4 as FLUENTD.HoneypotPublisher (c1, k15, u'mqttku').
+1524324627: New connection from 192.168.1.6 on port 1883.
+1524324627: New client connected from 192.168.1.6 as COLLECTOR.HoneypotSubscriber (c1, k60, u'mqttku').
+1524324929: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524326730: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524328531: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524330332: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524332133: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524373104: mosquitto version 1.4.12 (build date 2017-06-01 13:03:46+0000) starting
+1524373104: Config loaded from /mosquitto/config/mosquitto.conf.
+1524373104: Error: Unable to open pwfile "/etc/mosquitto/auth/passwd".
+1524373104: Error opening password file "/etc/mosquitto/auth/passwd".
+1524373170: mosquitto version 1.4.12 (build date 2017-06-01 13:03:46+0000) starting
+1524373170: Config loaded from /mosquitto/config/mosquitto.conf.
+1524373170: Opening websockets listen socket on port 9001.
+1524373170: Opening ipv4 listen socket on port 1883.
+1524373170: Opening ipv6 listen socket on port 1883.
+1524373182: New connection from 192.168.1.17 on port 1883.
+1524373182: New client connected from 192.168.1.17 as COLLECTOR.HoneypotSubscriber (c1, k60, u'mqttku').
+1524373465: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1524373466: New connection from 192.168.1.17 on port 1883.
+1524373466: Socket error on client <unknown>, disconnecting.
+1524373467: New connection from 192.168.1.17 on port 1883.
+1524373467: Socket error on client <unknown>, disconnecting.
+1524373469: New connection from 192.168.1.17 on port 1883.
+1524373469: Socket error on client <unknown>, disconnecting.
+1524373479: New connection from 192.168.1.17 on port 1883.
+1524373479: Socket error on client <unknown>, disconnecting.
+1524373480: New connection from 192.168.1.17 on port 1883.
+1524373480: Socket error on client <unknown>, disconnecting.
+1524373482: New connection from 192.168.1.17 on port 1883.
+1524373482: Socket error on client <unknown>, disconnecting.
+1524373486: New connection from 192.168.1.17 on port 1883.
+1524373486: Socket error on client <unknown>, disconnecting.
+1524373494: New connection from 192.168.1.17 on port 1883.
+1524373494: Socket error on client <unknown>, disconnecting.
+1524373505: New connection from 192.168.1.17 on port 1883.
+1524373505: Socket error on client <unknown>, disconnecting.
+1524373506: New connection from 192.168.1.17 on port 1883.
+1524373506: Socket error on client <unknown>, disconnecting.
+1524373508: New connection from 192.168.1.17 on port 1883.
+1524373508: Socket error on client <unknown>, disconnecting.
+1524373532: New connection from 192.168.1.17 on port 1883.
+1524373532: New client connected from 192.168.1.17 as COLLECTOR.HoneypotSubscriber (c1, k60, u'mqttku').
+1524373547: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1524373550: New connection from 192.168.1.17 on port 1883.
+1524373550: Socket error on client <unknown>, disconnecting.
+1524373551: New connection from 192.168.1.17 on port 1883.
+1524373551: Socket error on client <unknown>, disconnecting.
+1524373556: New connection from 192.168.1.17 on port 1883.
+1524373556: Socket error on client <unknown>, disconnecting.
+1524373557: New connection from 192.168.1.17 on port 1883.
+1524373557: Socket error on client <unknown>, disconnecting.
+1524373636: mosquitto version 1.4.12 terminating
+1524373643: mosquitto version 1.4.12 (build date 2017-06-01 13:03:46+0000) starting
+1524373643: Config loaded from /mosquitto/config/mosquitto.conf.
+1524373643: Opening websockets listen socket on port 9001.
+1524373643: Opening ipv4 listen socket on port 1883.
+1524373643: Opening ipv6 listen socket on port 1883.
+1524373645: New connection from 192.168.1.17 on port 1883.
+1524373645: New client connected from 192.168.1.17 as COLLECTOR.HoneypotSubscriber (c1, k60, u'mycollector').
+1524373967: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1524375444: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524375736: Error in poll: Interrupted system call.
+1524375736: mosquitto version 1.4.12 terminating
+1524407392: mosquitto version 1.4.12 (build date 2017-06-01 13:03:46+0000) starting
+1524407392: Config loaded from /mosquitto/config/mosquitto.conf.
+1524407392: Opening websockets listen socket on port 9001.
+1524407392: Opening ipv4 listen socket on port 1883.
+1524407392: Opening ipv6 listen socket on port 1883.
+1524407407: New connection from 172.17.0.4 on port 1883.
+1524407407: New client connected from 172.17.0.4 as FLUENTD.HoneypotPublisher (c1, k15, u'fluentd').
+1524407516: New connection from 192.168.1.3 on port 1883.
+1524407516: New client connected from 192.168.1.3 as COLLECTOR.HoneypotSubscriber (c1, k60, u'mycollector').
+1524407603: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1524407605: New connection from 192.168.1.3 on port 1883.
+1524407605: New client connected from 192.168.1.3 as COLLECTOR.HoneypotSubscriber (c1, k60, u'mycollector').
+1524407642: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1524407645: New connection from 192.168.1.3 on port 1883.
+1524407645: New client connected from 192.168.1.3 as COLLECTOR.HoneypotSubscriber (c1, k60, u'mycollector').
+1524407724: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1524407765: New connection from 192.168.1.3 on port 1883.
+1524407765: New client connected from 192.168.1.3 as COLLECTOR.HoneypotSubscriber (c1, k60, u'mycollector').
+1524407780: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1524407843: New connection from 192.168.1.3 on port 1883.
+1524407843: New client connected from 192.168.1.3 as COLLECTOR.HoneypotSubscriber (c1, k60, u'mycollector').
+1524407873: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1524407925: New connection from 192.168.1.3 on port 1883.
+1524407925: New client connected from 192.168.1.3 as COLLECTOR.HoneypotSubscriber (c1, k60, u'mycollector').
+1524407939: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1524408079: New connection from 192.168.1.3 on port 1883.
+1524408079: New client connected from 192.168.1.3 as COLLECTOR.HoneypotSubscriber (c1, k60, u'mycollector').
+1524408106: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1524408386: New connection from 192.168.1.3 on port 1883.
+1524408386: New client connected from 192.168.1.3 as COLLECTOR.HoneypotSubscriber (c1, k60, u'mycollector').
+1524408528: Client FLUENTD.HoneypotPublisher disconnected.
+1524409192: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524410993: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524412794: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524414393: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1524414508: Error in poll: Interrupted system call.
+1524414508: mosquitto version 1.4.12 terminating
