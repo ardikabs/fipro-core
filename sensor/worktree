@@ -1,0 +1,31 @@
+
+
+
+
+- app
+  # terdiri dari sebuah web service yang digunakan untuk berinteraksi dengan REST API docker untuk 
+    melakukan proses deployment berdasarkan informasi yang dikirimkan oleh server
+
+    -> server mengajukan request deployment honeypot -> sensor web service melakukan proses sesuai dengan request -> komunikasi dengan service docker
+    -> container berhasil berjalan -> memberikan respond pada server bahwa honeypot telah aktif
+    
+- docker
+  # terdiri dari dockerfile pada service yang disediakan di sensor
+  -> honeypot cowrie
+  -> honeypot dionaea
+  -> honeypot glastopf
+  -> transport-agent fluent-bit (akan di kustomisasi)
+
+- installation
+  # terdiri dari file shell yang digunakan untuk tujuan khusus seperti
+    -> membuat file log sesuai honeypot
+    -> mengaktifkan cronjob untuk mengatur isi log file honeypot 
+
+
+
+
+
+# Instalasi dimulai dengan membuat user dengan uid,gid,groups yang digunakan sebagai basis user docker
+
+# Kemudian dilanjutkan dengan membentuk directory [/data] sebagai directory seluruh data dari sensor yang kemudian dikirimkan dengan transport agent
+  - directory [/data] memiki ownership sesuai dengan user yang telah dibuat saat pertama kali proses instalasi

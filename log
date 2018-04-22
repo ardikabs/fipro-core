@@ -1,0 +1,19 @@
+docker run -it --rm \
+	-v ~/Dev/fipro/test-data:/data \
+	-v ~/Dev/fipro/sensor/docker/fluentbit/conf:/fluent-bit/etc \
+	fluent/fluent-bit:0.12
+
+
+docker run -d -p 1883:1883 -p 9001:9001 \
+	-v ~/Dev/fipro/server/collector/mqtt/config/:/mosquitto/config/ \
+	-v ~/Dev/fipro/server/collector/mqtt/data/:/mosquitto/data/ \
+	-v ~/Dev/fipro/server/collector/mqtt/log/:/mosquitto/log/ \
+	-v ~/Dev/fipro/server/collector/mqtt/auth:/etc/mosquitto/auth \
+	--name mqtt eclipse-mosquitto:latest
+
+docker run -it --rm -p 24224:24224 \
+	-v ~/Dev/fipro/sensor/docker/fluentd/conf:/fluentd/etc \
+	--link mongodb --link mqtt --name myfluentd myfluentd:1.2
+
+docker run -d -v ~/mongodata/db00:/data/db \
+	--name mongodb -p 27017:27017 mongo:latest

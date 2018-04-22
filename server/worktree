@@ -1,0 +1,21 @@
+
+
+
+
+- app
+  # terdiri dari directory aplikasi, yaitu server python yang berhubungan dengan service mongodb, fluentd
+  # menghasilkan API dan dapat juga disebutkan sebagai API Server yang kemudian diakses oleh client
+  # server menggunakan python/php dengan skala service application level
+  # front-end akan menggunakan framework atau menjadi 1 bundle
+
+
+
+
+- docker
+  # terdiri dari dockerfile pada service yang disediakan di server
+
+
+- installation
+  # merupakan directory yang terdiri dari file shell yang digunakan untuk melakukan proses instalasi server
+  # serta file shell yang digunakan untuk melakukan deployment pada sensor
+    = install_sensorws.sh
