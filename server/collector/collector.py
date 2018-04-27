@@ -23,17 +23,7 @@ coll_sec    = db.sensor_event_counts
 coll_cc     = db.credentials_counts
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-def on_message(client,userdata,message):
-    # insertion data to database
-    if message.topic == "honeypot/cowrie":
-        cowrie_resolver(json.loads(message.payload))
-    elif message.topic == "honeypot/dionaea":
-        dionaea_resolver(json.loads(message.payload))
-    elif message.topic == "honeypot/glastopf":
-        glastopf_resolver(json.loads(message.payload))
-
-    coll_log.insert(json.loads(message.payload))
-
+####################################
 # [START] Honeypot Resolver
 def cowrie_resolver(data):
     exist_session = [c for c in coll_log.find({"honeypot":"cowrie"}).distinct("session")]
@@ -53,14 +43,15 @@ def dionaea_resolver(data):
     attacked_port_counter(data)
     sensor_event_counter(data)
 
-
 def glastopf_resolver(data):
     attack_daily_counter(data)
     attacked_port_counter(data)
     sensor_event_counter(data)
 
 # [END] Honeypot Resolver
+####################################
 
+####################################
 # [START] Processing
 def attack_daily_counter(data):
     date= get_date(data["timestamp"])
@@ -128,28 +119,51 @@ def sensor_event_counter(data):
         coll_sec.update({"date":date,"identifier":identifier}, 
                         existdata.to_update())
 
+def geoip_process(data):
+    pass
 # [END] Processing
+####################################
+
+####################################
+# [START] MQTT Component
+def on_connect(client, userdata, flags, rc):
+    print ("... %s is Listening ..." % client._client_id)
+    client.subscribe("honeypot/cowrie")
+    client.subscribe("honeypot/dionaea")
+    client.subscribe("honeypot/glastopf")
+
+def on_message(client,userdata,message):
+    # insertion data to database
+    if message.topic == "honeypot/cowrie":
+        cowrie_resolver(json.loads(message.payload))
+    elif message.topic == "honeypot/dionaea":
+        dionaea_resolver(json.loads(message.payload))
+    elif message.topic == "honeypot/glastopf":
+        glastopf_resolver(json.loads(message.payload))
+
+    coll_log.insert(json.loads(message.payload))
+
+# [END] MQTT Component
+####################################
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
 
 ########################################################################
 ###################### MAIN WORKER PROGRAM #############################
 ########################################################################
+def main():
+    client = mqtt.Client("COLLECTOR.HoneypotSubscriber")
+    client.username_pw_set("mycollector",password="rustygear125")
+    client.connect(constant.MQTT_URL)
+    client.on_connect = on_connect
+    client.on_message = on_message
 
-client = mqtt.Client("COLLECTOR.HoneypotSubscriber")
-client.username_pw_set("mycollector",password="rustygear125")
-client.connect(constant.MQTT_URL)
-client.on_message = on_message
-
-client.subscribe("honeypot/cowrie")
-client.subscribe("honeypot/dionaea")
-client.subscribe("honeypot/glastopf")
-
-
-try:
-    print ("### START SESSION of Python MQTT Client ###")
-    print ("... COLLECTOR.HoneypotSubscriber is Listening ...")
     client.loop_forever()
-except KeyboardInterrupt:
-    print ("### END SESSION of Python MQTT Client ###")
+
+if __name__ == "__main__":
+    try:
+        print ("### START SESSION of Python MQTT Client ###")
+        main()
+    except KeyboardInterrupt:
+        print ("### END SESSION of Python MQTT Client ###")
+    sys.exit(0)

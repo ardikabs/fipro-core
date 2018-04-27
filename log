@@ -1,5 +1,5 @@
 docker run -it --rm \
-	-v ~/Dev/fipro/test-data:/data \
+	-v ~/Dev/fipro/data:/data \
 	-v ~/Dev/fipro/sensor/docker/fluentbit/conf:/fluent-bit/etc \
 	fluent/fluent-bit:0.12
 

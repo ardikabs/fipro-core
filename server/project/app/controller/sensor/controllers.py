@@ -5,6 +5,4 @@ from . import sensor
 
 @sensor.route('/')
 def index():
-    return jsonify({
-        "message":"Hello Sensor"
-    })
+    return render_template('sensor/index.html')

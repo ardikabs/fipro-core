@@ -1,7 +1,7 @@
 
 from flask import Blueprint, request, jsonify, render_template
 
-deploy = Blueprint('deploy', __name__, url_prefix='/deploy')
+deploy = Blueprint('deploy', __name__)
 
 
 from . import controllers

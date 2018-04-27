@@ -844,3 +844,11 @@
 1524414393: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
 1524414508: Error in poll: Interrupted system call.
 1524414508: mosquitto version 1.4.12 terminating
+1524513419: mosquitto version 1.4.12 (build date 2017-06-01 13:03:46+0000) starting
+1524515129: mosquitto version 1.4.12 (build date 2017-06-01 13:03:46+0000) starting
+1524515129: Config loaded from /mosquitto/config/mosquitto.conf.
+1524515129: Opening websockets listen socket on port 9001.
+1524515129: Opening ipv4 listen socket on port 1883.
+1524515129: Opening ipv6 listen socket on port 1883.
+1524515967: Error in poll: Interrupted system call.
+1524515967: mosquitto version 1.4.12 terminating

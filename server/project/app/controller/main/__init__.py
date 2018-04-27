@@ -1,6 +1,6 @@
 
 from flask import Blueprint, request, jsonify, render_template
 
-main = Blueprint('main', __name__, url_prefix='/')
+main = Blueprint('main', __name__)
 
-from . import controller
+from . import controllers

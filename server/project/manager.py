@@ -1,9 +1,9 @@
 
-
+import os
 from flask_script import Manager, Shell
 from app import create_app
 
-app = create_app('development')
+app = create_app(os.getenv('APP_SETTINGS') or 'default')
 manager = Manager(app)
 
 @manager.command

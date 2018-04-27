@@ -5,6 +5,4 @@ from . import deploy
 
 @deploy.route('/')
 def index():
-    return jsonify({
-        "message":"Hello Deploy"
-    })
+    return render_template('deploy/index.html')

@@ -4,9 +4,15 @@ import sys
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
+''' Environment Variable Configuration '''
+if os.path.exists('.env'):
+    for line in open('.env'):
+        var = line.strip().split('=')
+        if len(var) == 2:
+            os.environ[var[0]] = var[1]
+            
 class Config:
     APP_NAME = os.environ.get('APP_NAME') or 'Sensor-Side Web Service'
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     
     if os.environ.get('SECRET_KEY'):
@@ -42,7 +48,6 @@ class TestingConfig(Config):
 
 
 
-    
 config = {
     'development': DevelopmentConfig,
     'testing': TestingConfig,

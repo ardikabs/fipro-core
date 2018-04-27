@@ -1,0 +1,18 @@
+<html>
+<head>
+    {% include 'partials/_head.html' %}
+</head>
+<body class="fiver-zero-zero">
+    <div class="five-zero-zero-container">
+        <div class="error-code">500</div>
+        <div class="error-message">Internal Server Error</div>
+        <div class="button-place">
+            <a href="../../index.html" class="btn btn-default btn-lg waves-effect">GO TO HOMEPAGE</a>
+        </div>
+    </div>
+
+     <script src="{{ url_for('static', filename='vendors/jquery/jquery.min.js') }}"></script>
+     <script src="{{ url_for('static', filename='vendors/bootstrap/js/bootstrap.js') }}"></script>  
+     <script src="{{ url_for('static', filename='vendors/node-waves/waves.js') }}"></script>  
+</body>
+</html>
