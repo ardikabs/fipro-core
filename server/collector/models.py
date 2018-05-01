@@ -103,6 +103,7 @@ class SensorEventCounts:
     
     def to_update(self):
         return {"$inc": {"event_counts": 1}}
+        
     def to_mongo(self):
         return dict(type = self._type, 
                     date = self._date, 

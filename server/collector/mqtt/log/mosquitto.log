@@ -852,3 +852,109 @@
 1524515129: Opening ipv6 listen socket on port 1883.
 1524515967: Error in poll: Interrupted system call.
 1524515967: mosquitto version 1.4.12 terminating
+1524822392: mosquitto version 1.4.12 (build date 2017-06-01 13:03:46+0000) starting
+1524822392: Config loaded from /mosquitto/config/mosquitto.conf.
+1524822392: Opening websockets listen socket on port 9001.
+1524822393: Opening ipv4 listen socket on port 1883.
+1524822393: Opening ipv6 listen socket on port 1883.
+1524822533: New connection from 192.168.1.5 on port 1883.
+1524822533: New client connected from 192.168.1.5 as COLLECTOR.HoneypotSubscriber (c1, k60, u'mycollector').
+1524822784: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1524822786: New connection from 192.168.1.5 on port 1883.
+1524822786: New client connected from 192.168.1.5 as COLLECTOR.HoneypotSubscriber (c1, k60, u'mycollector').
+1524822787: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1524822807: New connection from 192.168.1.5 on port 1883.
+1524822807: New client connected from 192.168.1.5 as COLLECTOR.HoneypotSubscriber (c1, k60, u'mycollector').
+1524822808: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1524822816: New connection from 192.168.1.5 on port 1883.
+1524822816: New client connected from 192.168.1.5 as COLLECTOR.HoneypotSubscriber (c1, k60, u'mycollector').
+1524822817: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1524822827: New connection from 192.168.1.5 on port 1883.
+1524822827: New client connected from 192.168.1.5 as COLLECTOR.HoneypotSubscriber (c1, k60, u'mycollector').
+1524822828: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1524822995: New connection from 192.168.1.5 on port 1883.
+1524822995: New client connected from 192.168.1.5 as COLLECTOR.HoneypotSubscriber (c1, k60, u'mycollector').
+1524822996: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1524823005: New connection from 192.168.1.5 on port 1883.
+1524823005: New client connected from 192.168.1.5 as COLLECTOR.HoneypotSubscriber (c1, k60, u'mycollector').
+1524823033: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1524823034: New connection from 192.168.1.5 on port 1883.
+1524823034: New client connected from 192.168.1.5 as COLLECTOR.HoneypotSubscriber (c1, k60, u'mycollector').
+1524823074: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1524823076: New connection from 192.168.1.5 on port 1883.
+1524823076: New client connected from 192.168.1.5 as COLLECTOR.HoneypotSubscriber (c1, k60, u'mycollector').
+1524823142: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1524823143: New connection from 192.168.1.5 on port 1883.
+1524823143: New client connected from 192.168.1.5 as COLLECTOR.HoneypotSubscriber (c1, k60, u'mycollector').
+1524823366: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1524824193: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524825994: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524827795: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524829596: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524830412: New connection from 192.168.1.5 on port 1883.
+1524830412: New client connected from 192.168.1.5 as COLLECTOR.HoneypotSubscriber (c1, k60, u'mycollector').
+1524830953: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1524831137: New connection from 192.168.1.5 on port 1883.
+1524831137: Socket error on client <unknown>, disconnecting.
+1524831138: New connection from 192.168.1.5 on port 1883.
+1524831138: Socket error on client <unknown>, disconnecting.
+1524831140: New connection from 192.168.1.5 on port 1883.
+1524831140: Socket error on client <unknown>, disconnecting.
+1524831144: New connection from 192.168.1.5 on port 1883.
+1524831144: Socket error on client <unknown>, disconnecting.
+1524831152: New connection from 192.168.1.5 on port 1883.
+1524831152: Socket error on client <unknown>, disconnecting.
+1524831183: New connection from 192.168.1.5 on port 1883.
+1524831183: Socket error on client <unknown>, disconnecting.
+1524831184: New connection from 192.168.1.5 on port 1883.
+1524831184: Socket error on client <unknown>, disconnecting.
+1524831186: New connection from 192.168.1.5 on port 1883.
+1524831186: Socket error on client <unknown>, disconnecting.
+1524831190: New connection from 192.168.1.5 on port 1883.
+1524831190: Socket error on client <unknown>, disconnecting.
+1524831206: New connection from 192.168.1.5 on port 1883.
+1524831206: Socket error on client <unknown>, disconnecting.
+1524831207: New connection from 192.168.1.5 on port 1883.
+1524831207: Socket error on client <unknown>, disconnecting.
+1524831244: New connection from 192.168.1.5 on port 1883.
+1524831244: New client connected from 192.168.1.5 as COLLECTOR.HoneypotSubscriber (c1, k60, u'mycollector').
+1524831248: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1524831260: New connection from 192.168.1.5 on port 1883.
+1524831260: New client connected from 192.168.1.5 as COLLECTOR.HoneypotSubscriber (c1, k60, u'mycollector').
+1524831261: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1524831307: New connection from 192.168.1.5 on port 1883.
+1524831307: New client connected from 192.168.1.5 as COLLECTOR.HoneypotSubscriber (c1, k60, u'mycollector').
+1524831313: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1524831327: New connection from 192.168.1.5 on port 1883.
+1524831327: New client connected from 192.168.1.5 as COLLECTOR.HoneypotSubscriber (c1, k60, u'mycollector').
+1524831397: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524831436: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1524831437: New connection from 192.168.1.5 on port 1883.
+1524831437: New client connected from 192.168.1.5 as COLLECTOR.HoneypotSubscriber (c1, k60, u'mycollector').
+1524831448: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1524831455: New connection from 192.168.1.5 on port 1883.
+1524831455: New client connected from 192.168.1.5 as COLLECTOR.HoneypotSubscriber (c1, k60, u'mycollector').
+1524831464: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1524831493: New connection from 192.168.1.5 on port 1883.
+1524831493: New client connected from 192.168.1.5 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1524831575: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1524831576: New connection from 192.168.1.5 on port 1883.
+1524831576: Client COLLECTOR.HoneypotSubscriber disconnected.
+1524831576: New client connected from 192.168.1.5 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1524831583: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1524833198: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524834999: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524836800: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524838601: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524840402: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524842203: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524844004: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524845805: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524847606: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524849407: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524851208: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524853009: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524854810: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524856611: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1524857018: Error in poll: Interrupted system call.
+1524857018: mosquitto version 1.4.12 terminating
