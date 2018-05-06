@@ -1,12 +1,11 @@
-
-
 from pymongo import MongoClient
 import time
+import datetime
 mongoconn = MongoClient('mongodb://192.168.1.100:27017/')
 db = mongoconn.fipro
+start_ts = time.time()
 
-start = time.time()
-optimasi_sensor_event_count = db.raw_log.aggregate([
+aggregate = db.logs.aggregate([
     {
         "$group": 
         {
@@ -56,48 +55,41 @@ optimasi_sensor_event_count = db.raw_log.aggregate([
         }
     },
     {
-        "$out": "coba-cok"
+        "$out": "honeypot_events_metric"
     }
 ])
 
+aggregate_event = db.logs.aggregate([
+    {
+        "$match": {
+            "identifier": "uid-1921681100",
+            "timestamp": {"$gte": datetime.datetime.today() - datetime.timedelta(weeks=52) }
+        }
+    },
 
-end = time.time()
-now = end - start
-minute = now / 60
-seconds = now % 60
-print (minute)
-print (seconds)
+    {
+        "$group": {
+            "_id": {
+                "honeypot": "$honeypot",
+                "date": {"$dateToString": {"format": "%Y%m%d", "date": "$timestamp", "timezone": "Asia/Jakarta"}},
+                "hourly": {"$hour": {"date": "$timestamp", "timezone": "Asia/Jakarta"}},
+            },
+            "counts": {"$sum": 1}
+        }
+    },
 
-
-
-
-
-
-
-
-
-
-
-# import geoip2.database
-
-# reader = geoip2.database.Reader('./db/GeoLite2-City.mmdb')
-# reader_asn = geoip2.database.Reader('./db/GeoLite2-ASN.mmdb')
-# reader_country = geoip2.database.Reader('./db/GeoLite2-Country.mmdb')
-
-# response = reader.city('85.25.43.84')
-# response_asn = reader_asn.asn('103.24.56.245')
-# response_country = reader_country.country('103.24.56.245')
-
-# # print (response.city.names['en'])
-
-# # print (response.continent.names['en'])
-# # print (response.country.names['en'])
-
-# # print (response.location.longitude)
-# # print (response.location.latitude)
-# # print (response.location.time_zone)
-
-# # print (response.registered_country)
-# print (response.subdivisions.most_specific.names['en'])
-# print (response.subdivisions.most_specific.iso_code)
-# print (response.postal.code)
+    {
+        "$project":{
+            "_id": 0,
+            "honeypot": "$_id.honeypot",
+            "date": "$_id.date",
+            "hourly": "$_id.hourly",
+            "counts": 1
+        }
+    },
+    {
+        "$out": "honeypot_events_metric"
+    }
+])
+end_ts = time.time()
+print (end_ts - start_ts)

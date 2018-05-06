@@ -7,3 +7,6 @@ def get_date(timestamp):
 
 def get_hour(timestamp):
     return datetime.datetime.fromtimestamp(float(timestamp)).strftime("%H")
+
+def get_year(timestamp):
+    return datetime.datetime.fromtimestamp(float(timestamp)).strftime("%Y")

@@ -20,7 +20,7 @@ function init_docker_services {
     curl -L https://github.com/docker/compose/releases/download/1.18.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
     chmod +x /usr/local/bin/docker-compose
 
-    sleep 2
+    sleep 3
     # Restart SSH Service after change SSH Port 22 to 2222
     restart_ssh_service
 }
@@ -39,7 +39,7 @@ function init_directory_set {
 
     chown -R 3500:3500 /data
 
-    sleep 2
+    sleep 3
 }
 
 function init_web_service {
@@ -62,7 +62,7 @@ function init_web_service {
     echo 'SECRET_KEY=@!sensor-side-ku-yang_paling-oke-123' >> .env
 
     screen -d -m -S sensor_ws bash 'python3 manage.py runserver'
-    sleep 2
+    sleep 3
 }
 
 function check_status {
@@ -75,7 +75,7 @@ function restart_ssh_service {
     sudo apt-get install openssh-server
     sed -i 's/Port 22/Port 2222/g' /etc/ssh/sshd_config
     service ssh restart
-    sleep 2
+    sleep 3
 }
 
 
