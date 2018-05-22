@@ -131,33 +131,15 @@ def sensor_event_proc(data):
         coll_metrics.update({"type": type, "date": date,"identifier": identifier}, 
                         existdata.to_update())
 
-# def unique_ip_proc(data):
-#     type = "src_ip.count"
-#     dt = coll_metrics.find({"type": type}).count()
-#     if dt == 0:
-#         data = {"type": type, "date": get_year(data["timestamp"])}
-#         data.update({"src_ip": data["src_ip"]})
-#         data['count']= 1
-#         coll_metrics.insert(data)
-#     else:
-#         coll_metrics.update({"type": type, "src_ip": data["src_ip"]},
-#             {"$inc": {"count": 1}})
-        
+       
 
+def data_to_hmaps(data):
+    pass
 
 
 def data_to_mongo(data):
-    doc = json.loads(data)
-    doc['timestamp'] = datetime.datetime.fromtimestamp(doc['timestamp'])
-    
-    geoip = GeoIP(doc["src_ip"])
-
-    if geoip.not_found() == True:
-        doc['geoip'] = None
-    else:
-        doc['geoip'] = geoip.to_dict() 
-    
-    coll_log.insert(doc)
+    data['timestamp'] = datetime.datetime.fromtimestamp(data['timestamp'])
+    coll_log.insert(data)
 
 
 # [END] Processing
@@ -176,15 +158,26 @@ def on_connect(client, userdata, flags, rc):
 
 def on_message(client,userdata,message):
     # insertion data to database
+    data = json.loads(message.payload.decode("utf-8"))
+
+    if "::ffff:" in data["src_ip"]:
+        data["src_ip"] = data["src_ip"].replace("::ffff:","")
+
+    geoip = GeoIP(data["src_ip"])
+    if geoip.not_found() == True:
+        data['geoip'] = None
+    else:
+        data['geoip'] = geoip.to_dict()
+
     if message.topic == "honeypot/cowrie":
-        cowrie_resolver(json.loads(message.payload))
+        cowrie_resolver(data)
     elif message.topic == "honeypot/dionaea":
-        dionaea_resolver(json.loads(message.payload))
+        dionaea_resolver(data)
     elif message.topic == "honeypot/glastopf":
-        glastopf_resolver(json.loads(message.payload))
+        glastopf_resolver(data)
 
-
-    data_to_mongo(message.payload)
+    data_to_hmaps(data)
+    data_to_mongo(data)
 
 def main():
     client = mqtt.Client(client_id="COLLECTOR.HoneypotSubscriber", clean_session=False)

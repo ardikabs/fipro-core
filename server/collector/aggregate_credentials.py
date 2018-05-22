@@ -1,3 +1,5 @@
+# Query untuk mendapatkan Metrics Credentials untuk username dan password
+
 from pymongo import MongoClient
 import time
 from datetime import datetime, timedelta
@@ -10,6 +12,7 @@ db.logs.aggregate([
     {
         "$match":
         {
+            "identifier": "uid-1921681100",
             "$and": [ {"username": {"$ne": None} }, {"username": {"$ne": ""}} ]
         }
     },
@@ -33,6 +36,7 @@ db.logs.aggregate([
     {
         "$match":
         {
+            "identifier": "uid-1921681100",
             "$and": [ {"password": {"$ne": None} }, {"password": {"$ne": ""}} ]
         }
     },

@@ -5,7 +5,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_wtf import CSRFProtect
 from flask_assets import Environment
-
 from config import config
 from app import errors as err
 from .assets import assets_bundles
@@ -14,7 +13,9 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 db = SQLAlchemy()
 csrf = CSRFProtect()
 
-
+login_manager = LoginManager()
+login_manager.session_protection = "strong"
+login_manager.login_view = "accounts.login"
 
 
 def create_app(config_name):
@@ -28,7 +29,7 @@ def create_app(config_name):
     ''' Extension Configuration '''
     db.init_app(app)
     csrf.init_app(app)
-    
+    login_manager.init_app(app)
     ''' Assets Configuration '''
     '''
     assets_env = Environment(app)

@@ -1,4 +1,5 @@
 
+# Query untuk mendapatkan Top 10 Countries
 
 from pymongo import MongoClient
 import time

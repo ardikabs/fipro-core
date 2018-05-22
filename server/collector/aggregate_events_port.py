@@ -1,3 +1,7 @@
+
+# Query untuk mendapatkan Data Metrics Destination Ports
+# berdasarkan waktu
+
 from pymongo import MongoClient
 import time
 import datetime
@@ -36,7 +40,7 @@ aggregate_event = db.logs.aggregate([
     },
 
     {
-        "$out": "honeypot_events_dest_port_metric"
+        "$out": "honeypot_events_destport_timebased_metric"
     }
 ])
 end_ts = time.time()

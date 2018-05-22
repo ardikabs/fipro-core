@@ -1,4 +1,7 @@
 
+# Query untuk mendapatkan Top 10 ASN berdasarkan
+# waktu tertentu dan/atau tanpa keterangan waktu tertentu
+
 
 from pymongo import MongoClient
 import time
@@ -35,16 +38,20 @@ start = time.time()
 #     {}
 # ])
 
-match_without_time = {"$match": 
+match_without_time = {
+    "$match": 
         {
             "honeypot": {"$ne": "cowrie"},
+            "identifier": "uid-1921681100",
             "geoip.autonomous_system_number" : {"$ne": None}
         }
     }
 
-match_with_time = {"$match": 
+match_with_time = {
+    "$match": 
         {
             "honeypot": {"$ne": "cowrie"},
+            "identifier": "uid-1921681100",
             "geoip.autonomous_system_number" : {"$ne": None},
             "timestamp":{"$gte": datetime.now() - timedelta(hours=10)}
         }

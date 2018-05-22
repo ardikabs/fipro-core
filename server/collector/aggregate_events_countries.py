@@ -1,19 +1,17 @@
 
-# Query untuk mendapatkan Data berdasarkan Metrics Country dan Port
-
 from pymongo import MongoClient
 import time
-from datetime import datetime, timedelta
-mongoconn = MongoClient('mongodb://192.168.1.100:27017/')
+import datetime
+mongoconn = MongoClient('mongodb://206.189.149.230:27017/')
 db = mongoconn.fipro
 start_ts = time.time()
 
-by_country_and_port = db.logs.aggregate([
+aggregate = db.logs.aggregate([
     {
         "$match": {
-            "identifier": "uid-1921681100",
             "geoip.country": {"$ne": None},
-            "dst_port": {"$ne": None}
+            "identifier": "uid-206189149201",
+            "timestamp": {"$gte": datetime.datetime.today() - datetime.timedelta(weeks=80) }
         }
     },
     {
@@ -21,25 +19,25 @@ by_country_and_port = db.logs.aggregate([
             "_id": {
                 "country": "$geoip.country",
                 "country_code": "$geoip.country_code",
-                "dst_port": "$dst_port"
+                "date": {"$dateToString": {"format": "%Y-%m-%d %H:00", "date": "$timestamp", "timezone": "Asia/Jakarta"}}
             },
             "counts": {"$sum": 1}
         }
     },
     {
-        "$sort": {"counts": -1}
+        "$sort": {"date": -1}
     },
     {
         "$project": {
             "_id": 0,
             "country": "$_id.country",
             "country_code": "$_id.country_code",
-            "port": "$_id.dst_port",
+            "date": "$_id.date",
             "counts": "$counts"
         }
     },
     {
-        "$out": "honeypot_by_country_and_port_metric"
+        "$out": "honeypot_events_countries_timebased_metric"
     }
 ])
 
