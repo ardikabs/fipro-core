@@ -160,9 +160,6 @@ def on_message(client,userdata,message):
     # insertion data to database
     data = json.loads(message.payload.decode("utf-8"))
 
-    if "::ffff:" in data["src_ip"]:
-        data["src_ip"] = data["src_ip"].replace("::ffff:","")
-
     geoip = GeoIP(data["src_ip"])
     if geoip.not_found() == True:
         data['geoip'] = None
