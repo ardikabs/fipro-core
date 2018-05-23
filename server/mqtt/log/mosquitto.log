@@ -1243,3 +1243,30 @@
 1527009969: Client FLUENTD.HoneypotPublisher disconnected.
 1527010006: Error in poll: Interrupted system call.
 1527010006: mosquitto version 1.4.12 terminating
+1527079009: mosquitto version 1.4.12 (build date 2017-06-01 13:03:46+0000) starting
+1527079009: Config loaded from /mosquitto/config/mosquitto.conf.
+1527079009: Opening websockets listen socket on port 9001.
+1527079009: Opening ipv4 listen socket on port 1883.
+1527079009: Opening ipv6 listen socket on port 1883.
+1527079574: New connection from 172.17.0.1 on port 1883.
+1527079574: Client COLLECTOR.HoneypotSubscriber disconnected.
+1527079574: New client connected from 172.17.0.1 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1527079618: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1527079787: New connection from 172.17.0.1 on port 1883.
+1527079787: Client COLLECTOR.HoneypotSubscriber disconnected.
+1527079787: New client connected from 172.17.0.1 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1527080809: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1527081842: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1527081888: New connection from 172.17.0.3 on port 1883.
+1527081888: Client COLLECTOR.HoneypotSubscriber disconnected.
+1527081888: New client connected from 172.17.0.3 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1527081900: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1527081908: New connection from 172.17.0.3 on port 1883.
+1527081908: Client COLLECTOR.HoneypotSubscriber disconnected.
+1527081908: New client connected from 172.17.0.3 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1527081930: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1527082002: New connection from 172.17.0.3 on port 1883.
+1527082002: Client COLLECTOR.HoneypotSubscriber disconnected.
+1527082002: New client connected from 172.17.0.3 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1527082610: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1527084411: Saving in-memory database to /mosquitto/data/mosquitto.db.

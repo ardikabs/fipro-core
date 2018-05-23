@@ -4,7 +4,7 @@
 from pymongo import MongoClient
 import time
 from datetime import datetime, timedelta
-mongoconn = MongoClient('mongodb://192.168.1.100:27017/')
+mongoconn = MongoClient('mongodb://206.189.149.230:27017/')
 db = mongoconn.fipro
 start_ts = time.time()
 
@@ -12,7 +12,7 @@ aggregate = db.logs.aggregate([
     {
         "$match": {
             "geoip.country": {"$ne": None},
-            "identifier": "uid-1921681100"
+            "identifier": "uid-206189149201"
         }
     },
     {
@@ -26,6 +26,9 @@ aggregate = db.logs.aggregate([
     },
     {
         "$sort": {"counts": -1}
+    },
+    {
+        "$limit": 10
     },
     {
         "$project": {
