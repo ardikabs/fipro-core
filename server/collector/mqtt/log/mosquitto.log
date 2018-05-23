@@ -1210,3 +1210,36 @@
 1525612472: Client FLUENTD.HoneypotPublisher disconnected.
 1525612482: Error in poll: Interrupted system call.
 1525612482: mosquitto version 1.4.12 terminating
+1527008659: mosquitto version 1.4.12 (build date 2017-06-01 13:03:46+0000) starting
+1527008659: Config loaded from /mosquitto/config/mosquitto.conf.
+1527008659: Opening websockets listen socket on port 9001.
+1527008659: Opening ipv4 listen socket on port 1883.
+1527008659: Opening ipv6 listen socket on port 1883.
+1527008757: New connection from 172.17.0.4 on port 1883.
+1527008757: New client connected from 172.17.0.4 as FLUENTD.HoneypotPublisher (c1, k15, u'fluentd').
+1527008769: New connection from 192.168.1.4 on port 1883.
+1527008769: Client COLLECTOR.HoneypotSubscriber disconnected.
+1527008769: New client connected from 192.168.1.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1527008827: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1527008865: New connection from 192.168.1.4 on port 1883.
+1527008865: Client COLLECTOR.HoneypotSubscriber disconnected.
+1527008865: New client connected from 192.168.1.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1527009038: Client FLUENTD.HoneypotPublisher disconnected.
+1527009041: New connection from 172.17.0.4 on port 1883.
+1527009041: New client connected from 172.17.0.4 as FLUENTD.HoneypotPublisher (c1, k15, u'fluentd').
+1527009578: Client FLUENTD.HoneypotPublisher disconnected.
+1527009581: New connection from 172.17.0.4 on port 1883.
+1527009581: New client connected from 172.17.0.4 as FLUENTD.HoneypotPublisher (c1, k15, u'fluentd').
+1527009761: Client FLUENTD.HoneypotPublisher disconnected.
+1527009764: New connection from 172.17.0.4 on port 1883.
+1527009764: New client connected from 172.17.0.4 as FLUENTD.HoneypotPublisher (c1, k15, u'fluentd').
+1527009807: Client FLUENTD.HoneypotPublisher disconnected.
+1527009811: New connection from 172.17.0.4 on port 1883.
+1527009811: New client connected from 172.17.0.4 as FLUENTD.HoneypotPublisher (c1, k15, u'fluentd').
+1527009865: Client FLUENTD.HoneypotPublisher disconnected.
+1527009868: New connection from 172.17.0.4 on port 1883.
+1527009868: New client connected from 172.17.0.4 as FLUENTD.HoneypotPublisher (c1, k15, u'fluentd').
+1527009928: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1527009969: Client FLUENTD.HoneypotPublisher disconnected.
+1527010006: Error in poll: Interrupted system call.
+1527010006: mosquitto version 1.4.12 terminating
