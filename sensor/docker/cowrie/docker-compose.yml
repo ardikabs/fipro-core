@@ -1,0 +1,26 @@
+version: '3'
+
+networks:
+  cowrie_local:
+
+services:
+
+# Cowrie service
+    cowrie:
+      build: .
+      container_name: cowrie
+      restart: always
+      networks:
+      - cowrie_local
+      restart: always
+      cap_add:
+      - NET_BIND_SERVICE
+      ports:
+      - "22:2222"
+      - "23:2223"
+      image: "ardikabs/cowrie:1.0"
+      volumes:
+      - /data/cowrie/keys:/home/cowrie/cowrie/etc
+      - /data/cowrie/downloads:/home/cowrie/cowrie/dl
+      - /data/cowrie/log:/home/cowrie/cowrie/log
+      - /data/cowrie/log/tty:/home/cowrie/cowrie/log/tty

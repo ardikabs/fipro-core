@@ -1,0 +1,41 @@
+
+
+{% macro render_form(form, method='POST', extra_classes='') %}
+    {% set flashes = {
+        'error'     : get_flashed_message(category_filter=['form-error']),
+        'warning'   : get_flashed_message(category_filter=['form-warning']),
+        'info'      : get_flashed_message(category_filter=['form-info']),
+        'success'   : get_flashed_message(category_filter=['form-success'])
+    } %}
+
+    {{ begin_form(form, flashes, method=method, extra_classes=extra_classes) }}
+
+
+
+{% endmacro %}
+
+
+{% macro end_form(form) %}
+    </form>
+{% endmacro %}
+
+{% macro begin_form(form, flashes, method='POST', extra_classes='') %}
+
+    <form action="" method="{{ method }}">
+
+{% endmacro %}
+
+{% macro render_form_field() %}
+{% endmacro %}
+
+{% macro render_alert_message(message) %}
+    <div class="alert 
+    {% if form.errors or flashes['error'] %}alert-danger
+    {% elif flashes['warning'] %}alert-warning
+    {% elif flashes['info'] %}alert-info
+    {% elif flashes['success'] %}alert-success
+    {% endif %}
+    ">
+    {{ message }}
+    </div>
+{% endmacro %}
