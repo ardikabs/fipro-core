@@ -2,7 +2,7 @@
 import os
 from flask_script import Manager, Shell
 from app import create_app, db
-from app.models import Role, User, Agent, Sensor
+from app.models import Role, User, Agent, Sensor, ApiKey
 import datetime
 
 app = create_app(os.getenv('APP_SETTINGS') or 'default')
@@ -37,12 +37,17 @@ def setup_general():
                 lastname='Fipro',
                 password= "admin",
                 registered_at= datetime.datetime.today(),
-                email="admin@fipro.com",
-                APIKey= key)
+                email="admin@fipro.com")
             db.session.add(user)
             db.session.commit()
+
+            apikey = ApiKey(
+                apikey=key,
+                user_id=user.id)
+            db.session.add(apikey)
+            db.session.commit()
             print('Added Administrator : {}'.format(user.fullname()))
-            print ("API-Key Administrator : {}".format(user.get_apikey()))
+            print (apikey)
 
                 
 

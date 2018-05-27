@@ -145,8 +145,9 @@ class GeoIP:
     def to_dict(self):
         self.readerCity.close()
         self.readerASN.close()
+
         data = dict(
-            location= {'longitude': self._response_city.location.longitude, 'latitude': self._response_city.location.latitude},
+            location= {'longitude': self._response_city.location.longitude or None, 'latitude': self._response_city.location.latitude or None},
             country= self._response_city.country.name or None,
             country_code= self._response_city.country.iso_code or None,
             state= self._response_city.subdivisions.most_specific.name or None,

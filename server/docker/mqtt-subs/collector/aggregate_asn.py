@@ -6,7 +6,7 @@
 from pymongo import MongoClient
 import time
 from datetime import datetime, timedelta
-mongoconn = MongoClient('mongodb://192.168.1.100:27017/')
+mongoconn = MongoClient('mongodb://206.189.149.230:27017/')
 db = mongoconn.fipro
 
 start = time.time()
@@ -42,7 +42,7 @@ match_without_time = {
     "$match": 
         {
             "honeypot": {"$ne": "cowrie"},
-            "identifier": "uid-1921681100",
+            "identifier": "uid-206189149201",
             "geoip.autonomous_system_number" : {"$ne": None}
         }
     }
@@ -67,6 +67,18 @@ group_top10_asn = {"$group":
         }
     }
 
+group_top10_asn_cowrie = {"$group":
+        {
+            "_id": {
+                "autonomous_system_number": "$_id.autonomous_system_number",
+                "autonomous_system_organization": "$_id.autonomous_system_organization"
+            },
+            "counts": {"$sum": 1}
+        }
+    }
+
+
+
 sort_desc_counts = {"$sort": {"counts": -1}}
 
 projects_top10_asn = {"$project":
@@ -82,7 +94,7 @@ match_with_time_cowrie = {"$match":
     {
         "honeypot": {"$eq": "cowrie"},
         "geoip.autonomous_system_number" : {"$ne": None},
-        "timestamp":{"$gte": datetime.now() - timedelta(hours=10)}
+        "timestamp":{"$gte": datetime.now() - timedelta(hours=30)}
     }
 }
 
@@ -102,6 +114,7 @@ group_asn_cowrie = {"$group":
         "session": { "$addToSet": "$session"}
     }
 }
+limit = {"$limit": 10}
 unwind_cowrie = {"$unwind": "$session"}
 
 
@@ -110,8 +123,9 @@ top_10_asn_aggregate_cowrie = db.logs.aggregate([
     match_without_time_cowrie,
     group_asn_cowrie,
     unwind_cowrie,
-    group_top10_asn,
+    group_top10_asn_cowrie,
     sort_desc_counts,
+    limit,
     projects_top10_asn
 ])
 
@@ -120,12 +134,12 @@ top_10_asn_aggregate = db.logs.aggregate([
     match_without_time,
     group_top10_asn,
     sort_desc_counts,
+    limit,
     projects_top10_asn
 ])
 
 docs_cowrie = [doc for doc in top_10_asn_aggregate_cowrie]
 databaru = []
-
 
 for doc in top_10_asn_aggregate:
     for doc_cowrie in docs_cowrie:

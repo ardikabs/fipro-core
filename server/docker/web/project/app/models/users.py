@@ -5,6 +5,7 @@ from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from itsdangerous import BadSignature, SignatureExpired
 from werkzeug.security import check_password_hash, generate_password_hash
 from app import db, login_manager
+import datetime
 class Permission:
     GENERAL = 0x01
     ADMINISTER = 0xff
@@ -53,9 +54,9 @@ class User(UserMixin, db.Model):
     email           = db.Column(db.String(100), unique=True, index=True)
     password_hash   = db.Column(db.String(128))
     registered_at   = db.Column(db.DateTime)
-    APIKey          = db.Column(db.String(32), nullable=False, unique=True)
     role_id         = db.Column(db.Integer, db.ForeignKey('roles.id'))
     agents          = db.relationship('Agent', backref='user', lazy='dynamic')
+    apikey          = db.relationship('ApiKey', backref='user', lazy='dynamic')
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
@@ -105,6 +106,19 @@ class User(UserMixin, db.Model):
         db.session.add(self)
         db.session.commit()
         return True
+
+class ApiKey(db.Model):
+    __tablename__ = 'apikey'
+    id  = db.Column(db.Integer, primary_key=True)
+    apikey = db.Column(db.String(64), unique=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    created_at = db.Column(db.DateTime, default=datetime.datetime.today())
+
+    def __str__(self):
+        return "ApiKey: {}".format(self.apikey)
+    
+    def __repr__(self):
+        return "<ApiKey of {}>".format(self.user.email)
 
 @login_manager.user_loader
 def load_user(user_id):

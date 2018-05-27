@@ -1270,3 +1270,5 @@
 1527082002: New client connected from 172.17.0.3 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
 1527082610: Saving in-memory database to /mosquitto/data/mosquitto.db.
 1527084411: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1527086212: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1527088013: Saving in-memory database to /mosquitto/data/mosquitto.db.
