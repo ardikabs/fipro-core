@@ -33,7 +33,10 @@ aggregate_event = db.logs.aggregate([
         "$sort": { "count": -1}
     },
     {
-        "$out": "honeypot_source_ip"
+        "$limit": 10
+    },
+    {
+        "$out": "honeypot_top10_source_ip_metric"
     }
 ])
 end_ts = time.time()

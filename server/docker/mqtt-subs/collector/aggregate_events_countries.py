@@ -11,7 +11,7 @@ aggregate = db.logs.aggregate([
         "$match": {
             "geoip.country": {"$ne": None},
             "identifier": "uid-206189149201",
-            "timestamp": {"$gte": datetime.datetime.today() - datetime.timedelta(weeks=80) }
+            "timestamp": {"$gte": datetime.datetime.today() - datetime.timedelta(days=2) }
         }
     },
     {

@@ -186,10 +186,16 @@ def main():
     client.loop_forever()
 
 # [END] MQTT Component
-if __name__ == "__main__":
+def runner():
     try:
         print ("### START SESSION of Python MQTT Client ###")
         main()
     except KeyboardInterrupt:
         print ("### END SESSION of Python MQTT Client ###")
-    sys.exit(0)
+        sys.exit(0)
+    except Exception as e:
+        print ("Unexpected Error: ", sys.exc_info()[0])
+        runner()
+
+if __name__ == "__main__":
+    runner()

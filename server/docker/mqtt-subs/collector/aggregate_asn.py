@@ -155,7 +155,7 @@ for doc in top_10_asn_aggregate:
                 
     databaru.append(doc)
 
-db.honeypot_top_asn_metric.insert_many(databaru)
+db.honeypot_top10_asn_metric.insert_many(databaru)
 end_ts = time.time()
 
 print (end_ts - start_ts)

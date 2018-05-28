@@ -69,7 +69,7 @@ aggregate_event = db.logs.aggregate([
     {
         "$match": {
             "identifier": "uid-206189149201",
-            "timestamp": {"$gte": datetime.datetime.today() - datetime.timedelta(weeks=52) }
+            "timestamp": {"$gte": datetime.datetime.today() - datetime.timedelta(days=2) }
         }
     },
 
@@ -116,7 +116,7 @@ aggregate_event = db.logs.aggregate([
     },
 
     {
-        "$out": "honeypot_events_metric"
+        "$out": "honeypot_events_timebased_metric"
     }
 ])
 end_ts = time.time()

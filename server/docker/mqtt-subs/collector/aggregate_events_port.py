@@ -5,16 +5,16 @@
 from pymongo import MongoClient
 import time
 import datetime
-mongoconn = MongoClient('mongodb://192.168.1.100:27017/')
+mongoconn = MongoClient('mongodb://206.189.149.230:27017/')
 db = mongoconn.fipro
 start_ts = time.time()
 
 aggregate_event = db.logs.aggregate([
     {
         "$match": {
-            "identifier": "uid-1921681100",
+            "identifier": "uid-206189149201",
             "dst_port": {"$ne": None},
-            "timestamp": {"$gte": datetime.datetime.today() - datetime.timedelta(weeks=80) }
+            "timestamp": {"$gte": datetime.datetime.today() - datetime.timedelta(days=2) }
         }
     },
 
@@ -40,7 +40,7 @@ aggregate_event = db.logs.aggregate([
     },
 
     {
-        "$out": "honeypot_events_destport_timebased_metric"
+        "$out": "honeypot_events_port_timebased_metric"
     }
 ])
 end_ts = time.time()
