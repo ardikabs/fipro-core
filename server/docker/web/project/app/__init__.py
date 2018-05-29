@@ -64,7 +64,8 @@ def create_app(config_name):
     app.register_blueprint(logs_blueprint, url_prefix='/logs')
     
     from .controller.api import api_v1 
-    app.register_blueprint(api_v1, url_prefix="/api/v1")
+    app.register_blueprint(api_v1)
+    csrf.exempt(api_v1)
 
 
     ''' Error Handler Configuration '''
