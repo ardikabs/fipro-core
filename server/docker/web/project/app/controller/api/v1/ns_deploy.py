@@ -1,0 +1,46 @@
+       
+
+from flask import jsonify, request, send_file, url_for
+from flask_restplus import Namespace, Resource, fields
+from flask_login import current_user
+from app.models import User, ApiKey, DeployKey, Agents
+from app import db, csrf
+
+ns_deploy = Namespace('deploy', description='Deploy related operations')
+
+@ns_deploy.route('/')
+class Deploy(Resource):
+
+    def get(self):
+        apikey  = ApiKey.query.filter_by(apikey=request.args.get('apikey')).first()
+        deploykey = DeployKey.query.filter_by(deploykey=request.args.get('deploykey')).first()
+
+        if apikey and deploykey:
+            return jsonify(dict(
+                data=deploykey.to_dict(),
+                status=True)
+            )
+        else:
+            return jsonify(dict(
+                message= "API Key and/or DEPLOY Key is Missing or not Available",
+                status= False)
+            )
+    def post(self):
+        apikey  = ApiKey.query.filter_by(apikey=request.args.get('apikey')).first()
+
+        if apikey:
+            uid = apikey.user.id
+
+            deploykey = DeployKey(user_id=uid)
+            db.session.add(deploykey)
+            db.session.commit()
+
+            return jsonify(dict(
+                data=deploykey.to_dict(),
+                status=True)
+            )
+        else:
+            return jsonify(dict(
+                message= "API Key is Missing or not Authorized",
+                status= False)
+            )
