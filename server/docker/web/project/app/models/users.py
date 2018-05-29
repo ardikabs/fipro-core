@@ -54,6 +54,7 @@ class User(UserMixin, db.Model):
     email           = db.Column(db.String(100), unique=True, index=True)
     password_hash   = db.Column(db.String(128))
     registered_at   = db.Column(db.DateTime)
+    identifier      = db.Column(db.String(32))
     role_id         = db.Column(db.Integer, db.ForeignKey('roles.id'))
     agents          = db.relationship('Agent', backref='user', lazy='dynamic')
     apikey          = db.relationship('ApiKey', backref='user', lazy='dynamic')

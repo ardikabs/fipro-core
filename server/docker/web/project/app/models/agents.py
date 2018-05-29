@@ -11,9 +11,8 @@ class Agent(db.Model):
     registered_at   = db.Column(db.DateTime)
     status          = db.Column(db.String(10))
     user_id         = db.Column(db.Integer, db.ForeignKey("users.id"))
-    identifier      = db.Column(db.String(64))
-    sensor          = db.relationship('Sensor', backref='sensor', lazy='dynamic')
+    sensor          = db.relationship('Sensor', backref='agent', lazy='dynamic')
 
     def __repr__(self):
-        return '<Agent %r>' % self.name
+        return '<Agent %r>' % self.ipaddr
     

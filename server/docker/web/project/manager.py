@@ -31,13 +31,14 @@ def setup_general():
     if admin_query.first() is not None:
         if User.query.filter_by(email= "admin@fipro.com").first() is None:
             import uuid
-            key = str(uuid.uuid4()).replace("-","")
+            key = str(uuid.uuid4().hex)
             user = User(
                 firstname='Admin',
                 lastname='Fipro',
                 password= "admin",
                 registered_at= datetime.datetime.today(),
-                email="admin@fipro.com")
+                email="admin@fipro.com",
+                identifier=str(uuid.uuid4()).split("-")[-1])
             db.session.add(user)
             db.session.commit()
 
@@ -47,6 +48,7 @@ def setup_general():
             db.session.add(apikey)
             db.session.commit()
             print('Added Administrator : {}'.format(user.fullname()))
+            print('User identifier : {}'.format(user.identifier))
             print (apikey)
 
                 
