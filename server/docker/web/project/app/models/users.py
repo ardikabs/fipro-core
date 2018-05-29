@@ -6,6 +6,13 @@ from itsdangerous import BadSignature, SignatureExpired
 from werkzeug.security import check_password_hash, generate_password_hash
 from app import db, login_manager
 import datetime
+import string
+from random import choice
+
+
+el = string.ascii_letters + string.digits
+rand_str = lambda n: ''.join(choice(el) for _ in range(n))
+
 class Permission:
     GENERAL = 0x01
     ADMINISTER = 0xff
@@ -56,8 +63,10 @@ class User(UserMixin, db.Model):
     registered_at   = db.Column(db.DateTime)
     identifier      = db.Column(db.String(32))
     role_id         = db.Column(db.Integer, db.ForeignKey('roles.id'))
-    agents          = db.relationship('Agent', backref='user', lazy='dynamic')
+    agents          = db.relationship('Agents', backref='user', lazy='dynamic')
     apikey          = db.relationship('ApiKey', backref='user', lazy='dynamic')
+    deploykey       = db.relationship('DeployKey', backref='user', lazy='dynamic')
+
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
@@ -110,16 +119,41 @@ class User(UserMixin, db.Model):
 
 class ApiKey(db.Model):
     __tablename__ = 'apikey'
-    id  = db.Column(db.Integer, primary_key=True)
-    apikey = db.Column(db.String(64), unique=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
-    created_at = db.Column(db.DateTime, default=datetime.datetime.today())
+    id          = db.Column(db.Integer, primary_key=True)
+    apikey      = db.Column(db.String(64), unique=True)
+    user_id     = db.Column(db.Integer, db.ForeignKey("users.id"))
+    created_at  = db.Column(db.DateTime, default=datetime.datetime.today())
 
     def __str__(self):
         return "ApiKey: {}".format(self.apikey)
     
     def __repr__(self):
         return "<ApiKey of {}>".format(self.user.email)
+
+class DeployKey(db.Model):
+    __tablename__ = 'deploykey'
+    id          = db.Column(db.Integer, primary_key=True)
+    name        = db.Column(db.String(32), default="Agent {}".format(rand_str(3)))
+    deploykey   = db.Column(db.String(10), unique=True, default=rand_str(8))
+    created_at  = db.Column(db.DateTime, default=datetime.datetime.today())
+    expired_at  = db.Column(db.DateTime, default=(datetime.datetime.today() + datetime.timedelta(days=7)) )
+    status      = db.Column(db.Boolean, default=True)
+    user_id     = db.Column(db.Integer, db.ForeignKey("users.id"))
+
+    def __str__(self):
+        return "DeployKey: {}".format(self.deploykey)
+
+    def __repr__(self):
+        return "<DeployKey of {}>".format(self.user.email)
+
+    def to_dict(self):
+        return dict(
+            name=self.name,
+            deploykey=self.deploykey,
+            expired_at=self.expired_at,
+            identifier=self.user.identifier,
+            status= "valid" if self.status is True else "expired"
+        )
 
 @login_manager.user_loader
 def load_user(user_id):

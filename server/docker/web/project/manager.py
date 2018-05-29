@@ -2,7 +2,7 @@
 import os
 from flask_script import Manager, Shell
 from app import create_app, db
-from app.models import Role, User, Agent, Sensor, ApiKey
+from app.models import Role, User, Agents, Sensor, ApiKey, DeployKey
 import datetime
 
 app = create_app(os.getenv('APP_SETTINGS') or 'default')
