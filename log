@@ -23,3 +23,25 @@ docker run -d -p 80:5000 -v /path/to/project:/project \
 		-v /var/run/:/var/run --name smart-agent ardikabs/smart-agent
 		
 docker run -d -v /path/to/collector:/collector --name mqtt-subscriber ardikabs/mqtt-subs
+
+
+identifier = {identifier agent}
+
+type counter:
+	- attack.daily.stats
+	- attacked.port.stats
+	- honeypot.events.count
+	- credential.count
+
+type metric:
+	- Top 10 ASN
+	- Top 10 Countries and port
+	- Top 10 Countries
+	- Top 10 Source IP
+
+type windowing:
+	- Honeypot events (Events Statistics)
+	- Honeypot events of sensor (Sensor Statistics)
+	- Honeypot events of agents (Agent Statistics)
+	- Honeypot events based port (Destination Port Statistics)
+	- Honeypot events based countries (Countries Attacker Statistics)

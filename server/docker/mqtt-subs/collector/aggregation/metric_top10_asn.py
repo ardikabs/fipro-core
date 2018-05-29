@@ -34,8 +34,7 @@ start = time.time()
 #             "_id": 0,
 #             "honeypot": "$_id.honeypot"
 #         }
-#     },
-#     {}
+#     }
 # ])
 
 match_without_time = {
