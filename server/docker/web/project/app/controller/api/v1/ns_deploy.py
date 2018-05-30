@@ -1,42 +1,42 @@
        
 
-from flask import jsonify, request, send_file, url_for
+from flask import jsonify, request, send_file, url_for, make_response, current_app
 from flask_restplus import Namespace, Resource, fields
 from flask_login import current_user
 from app.models import User, ApiKey, DeployKey, Agents
+from app.controller.api import api
 from app import db, csrf
 
-ns_deploy = Namespace('deploy', description='Deploy related operations')
+ns = api.namespace('deploy', description='Deploy related operations')
 
-@ns_deploy.route('/')
+@ns.route('/')
 class Deploy(Resource):
 
     def get(self):
-        apikey  = ApiKey.query.filter_by(apikey=request.args.get('apikey')).first()
-        deploykey = DeployKey.query.filter_by(deploykey=request.args.get('deploykey')).first()
-
-        if apikey and deploykey:
-            return jsonify(dict(
-                data=deploykey.to_dict(),
-                status=True)
-            )
+        api_key  = ApiKey.query.filter_by(api_key=request.args.get('api_key')).first()
+        
+        if api_key:
+            text = current_app.send_static_file('deploy.txt')
+            response = make_response(text)
+            response.headers['Content-Disposition'] = 'attachment; filename=deploy.sh'
+            return response
         else:
             return jsonify(dict(
                 message= "API Key and/or DEPLOY Key is Missing or not Available",
                 status= False)
             )
     def post(self):
-        apikey  = ApiKey.query.filter_by(apikey=request.args.get('apikey')).first()
+        api_key  = ApiKey.query.filter_by(api_key=request.args.get('api_key')).first()
 
-        if apikey:
-            uid = apikey.user.id
+        if api_key:
+            uid = api_key.user.id
 
-            deploykey = DeployKey(user_id=uid)
-            db.session.add(deploykey)
+            deploy_key = DeployKey(user_id=uid)
+            db.session.add(deploy_key)
             db.session.commit()
 
             return jsonify(dict(
-                data=deploykey.to_dict(),
+                data=deploy_key.to_dict(),
                 status=True)
             )
         else:

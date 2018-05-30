@@ -10,6 +10,4 @@ api = Api(
     description='Server-Side API'
 )
 
-from .v1 import ns_agent, ns_deploy
-api.add_namespace(ns_agent)
-api.add_namespace(ns_deploy)
+from .v1 import *

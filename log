@@ -45,3 +45,6 @@ type windowing:
 	- Honeypot events of agents (Agent Statistics)
 	- Honeypot events based port (Destination Port Statistics)
 	- Honeypot events based countries (Countries Attacker Statistics)
+
+
+wget <script_url> -O deploy.sh && sudo bash deploy.sh <server_url> <api_key> <deploy_key> <identifier>; sudo rm -rf sudo bash deploy.sh

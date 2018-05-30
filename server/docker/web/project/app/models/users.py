@@ -64,7 +64,7 @@ class User(UserMixin, db.Model):
     identifier      = db.Column(db.String(32))
     role_id         = db.Column(db.Integer, db.ForeignKey('roles.id'))
     agents          = db.relationship('Agents', backref='user', lazy='dynamic')
-    apikey          = db.relationship('ApiKey', backref='user', lazy='dynamic')
+    api_key          = db.relationship('ApiKey', backref='user', lazy='dynamic')
     deploykey       = db.relationship('DeployKey', backref='user', lazy='dynamic')
 
 
@@ -120,12 +120,12 @@ class User(UserMixin, db.Model):
 class ApiKey(db.Model):
     __tablename__ = 'apikey'
     id          = db.Column(db.Integer, primary_key=True)
-    apikey      = db.Column(db.String(64), unique=True)
+    api_key      = db.Column(db.String(64), unique=True)
     user_id     = db.Column(db.Integer, db.ForeignKey("users.id"))
     created_at  = db.Column(db.DateTime, default=datetime.datetime.today())
 
     def __str__(self):
-        return "ApiKey: {}".format(self.apikey)
+        return "ApiKey: {}".format(self.api_key)
     
     def __repr__(self):
         return "<ApiKey of {}>".format(self.user.email)
@@ -134,14 +134,14 @@ class DeployKey(db.Model):
     __tablename__ = 'deploykey'
     id          = db.Column(db.Integer, primary_key=True)
     name        = db.Column(db.String(32), default="Agent {}".format(rand_str(3)))
-    deploykey   = db.Column(db.String(10), unique=True, default=rand_str(8))
+    deploy_key  = db.Column(db.String(10), unique=True, default=rand_str(8))
     created_at  = db.Column(db.DateTime, default=datetime.datetime.today())
     expired_at  = db.Column(db.DateTime, default=(datetime.datetime.today() + datetime.timedelta(days=7)) )
     status      = db.Column(db.Boolean, default=True)
     user_id     = db.Column(db.Integer, db.ForeignKey("users.id"))
 
     def __str__(self):
-        return "DeployKey: {}".format(self.deploykey)
+        return "DeployKey: {}".format(self.deploy_key)
 
     def __repr__(self):
         return "<DeployKey of {}>".format(self.user.email)
@@ -149,7 +149,7 @@ class DeployKey(db.Model):
     def to_dict(self):
         return dict(
             name=self.name,
-            deploykey=self.deploykey,
+            deploy_key=self.deploy_key,
             expired_at=self.expired_at,
             identifier=self.user.identifier,
             status= "valid" if self.status is True else "expired"

@@ -4,18 +4,19 @@ from flask import jsonify, request, send_file, url_for
 from flask_restplus import Namespace, Resource, fields
 from flask_login import current_user
 from app.models import User, ApiKey, DeployKey, Agents
+from app.controller.api import api
 from app import db, csrf
 
-ns_agent = Namespace('agent', description='Agent related operations')
+ns = api.namespace('agent', description='Agent related operations')
 
-@ns_agent.route("/")
+@ns.route("/")
 class Agent(Resource):
     
     # Get List of Agent
     def get(self):
-        apikey = ApiKey.query.filter_by(apikey=request.args.get('apikey')).first()
-        if apikey:
-            agents = [agent.to_dict() for agent in Agent.query.filter_by(user_id=apikey.user.id)]
+        api_key = ApiKey.query.filter_by(api_key=request.args.get('api_key')).first()
+        if api_key:
+            agents = [agent.to_dict() for agent in Agent.query.filter_by(user_id=api_key.user.id)]
             return jsonify(
                 dict(
                     agents = agents,
@@ -33,18 +34,17 @@ class Agent(Resource):
     # Create Agent
     def post(self):
         data        = request.json
-        apikey      = ApiKey.query.filter_by(apikey=request.args.get('apikey')).first()
-        deploykey   = DeployKey.query.filter_by(deploykey=data['deploykey']).first()
+        api_key     = ApiKey.query.filter_by(api_key=request.args.get('api_key')).first()
+        deploy_key   = DeployKey.query.filter_by(deploy_key=data['deploy_key']).first()
 
-        if apikey and deploykey:
-            identifier = apikey.user.identifier
+        if api_key and deploy_key:
+            identifier = api_key.user.identifier
             agent = Agents(
-                name    = deploykey.name, 
+                name    = deploy_key.name, 
                 ipaddr  = request.remote_addr,
-                user_id = apikey.user.id)
+                user_id = api_key.user.id)
             db.session.add(agent)
-            deploykey.status = False
-                
+            deploy_key.status = False
             db.session.commit()
 
             return jsonify(dict(
