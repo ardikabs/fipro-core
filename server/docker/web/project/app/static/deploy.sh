@@ -16,11 +16,11 @@ API_KEY=$2
 DEPLOY_KEY=$3
 
 sudo apt-get update
-sudo apt-get install git curl dig
+sudo apt-get install git curl
 
 mkdir -p /var/fipro/agent
 
-git clone https://github.com/ardikabs/fipro/agent.git /var/fipro/agent
+git clone https://github.com/ardikabs/fipro-agent.git /var/fipro/agent
 
 cd /var/fipro/agent
 

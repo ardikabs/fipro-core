@@ -35,7 +35,7 @@ aggregate_uid_only = db.logs.aggregate([
         }
     },
     {
-        "$out": "honeypot_allevents_metric"
+        "$out": "honeypot_alltime_events_metric"
     }
 ])
 

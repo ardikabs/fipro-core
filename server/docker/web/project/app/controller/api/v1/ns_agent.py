@@ -17,19 +17,13 @@ class Agent(Resource):
         api_key = ApiKey.query.filter_by(api_key=request.args.get('api_key')).first()
         if api_key:
             agents = [agent.to_dict() for agent in Agent.query.filter_by(user_id=api_key.user.id)]
-            return jsonify(
-                dict(
+            return dict(
                     agents = agents,
-                    status = True
-                )
-            )
+                    status = True)
         
-        return jsonify(
-            dict(
+        return dict(
                 status=False,
-                message="ApiKey are missing"
-            )
-        )
+                message="ApiKey are missing")
 
     # Create Agent
     def post(self):

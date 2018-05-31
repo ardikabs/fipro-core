@@ -64,7 +64,7 @@ class User(UserMixin, db.Model):
     identifier      = db.Column(db.String(32))
     role_id         = db.Column(db.Integer, db.ForeignKey('roles.id'))
     agents          = db.relationship('Agents', backref='user', lazy='dynamic')
-    api_key          = db.relationship('ApiKey', backref='user', lazy='dynamic')
+    api_key         = db.relationship('ApiKey', backref='user', lazy='dynamic')
     deploykey       = db.relationship('DeployKey', backref='user', lazy='dynamic')
 
 
@@ -122,7 +122,7 @@ class ApiKey(db.Model):
     id          = db.Column(db.Integer, primary_key=True)
     api_key      = db.Column(db.String(64), unique=True)
     user_id     = db.Column(db.Integer, db.ForeignKey("users.id"))
-    created_at  = db.Column(db.DateTime, default=datetime.datetime.today())
+    created_at  = db.Column(db.DateTime, default=datetime.datetime.now())
 
     def __str__(self):
         return "ApiKey: {}".format(self.api_key)

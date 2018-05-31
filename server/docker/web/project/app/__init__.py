@@ -47,7 +47,9 @@ def create_app(config_name):
     ''' Configure SSL if platform supports it '''
     if not app.debug and not app.testing and not app.config['SSL_DISABLE']:
         from flask_sslify import SSLify
+        app.config['SERVER_BASE_URL'][0] = "https://"
         SSLify(app)
+   
 
     ''' Blueprint Configuration '''
     from .controller.main import main as main_blueprint

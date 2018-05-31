@@ -25,8 +25,6 @@ docker run -d -p 80:5000 -v /path/to/project:/project \
 docker run -d -v /path/to/collector:/collector --name mqtt-subscriber ardikabs/mqtt-subs
 
 
-identifier = {identifier agent}
-
 type counter:
 	- attack.daily.stats
 	- attacked.port.stats
@@ -47,4 +45,5 @@ type windowing:
 	- Honeypot events based countries (Countries Attacker Statistics)
 
 
-wget <script_url> -O deploy.sh && sudo bash deploy.sh <server_url> <api_key> <deploy_key> <identifier>; sudo rm -rf sudo bash deploy.sh
+	wget <script_url> -O deploy.sh \
+		&& sudo bash deploy.sh <server_url> <api_key> <deploy_key> <identifier>; sudo rm -rf deploy.sh
