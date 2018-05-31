@@ -4,9 +4,9 @@ if [[ "$(whoami)" != "root" ]]; then
 	exit 1
 fi
 
-if [[ $# -ne 4 ]]; then
+if [[ $# -ne 3 ]]; then
 	echo "Wrong number of arguments supplied"
-	echo "Usage: $0 <server_url> <api_key> <deploy_key> <identifier>"
+	echo "Usage: $0 <server_url> <api_key> <deploy_key>"
 	exit 1
 fi
 

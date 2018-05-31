@@ -9,22 +9,9 @@ from app import db, csrf
 
 ns = api.namespace('deploy', description='Deploy related operations')
 
+
 @ns.route('/')
 class Deploy(Resource):
-
-    def get(self):
-        api_key  = ApiKey.query.filter_by(api_key=request.args.get('api_key')).first()
-        
-        if api_key:
-            text = current_app.send_static_file('deploy.txt')
-            response = make_response(text)
-            response.headers['Content-Disposition'] = 'attachment; filename=deploy.sh'
-            return response
-        else:
-            return jsonify(dict(
-                message= "API Key and/or DEPLOY Key is Missing or not Available",
-                status= False)
-            )
     def post(self):
         api_key  = ApiKey.query.filter_by(api_key=request.args.get('api_key')).first()
 
@@ -44,3 +31,21 @@ class Deploy(Resource):
                 message= "API Key is Missing or not Authorized",
                 status= False)
             )
+
+@ns.route('/script')
+@ns.route('/script/')
+class DeployScript(Resource):
+
+    def get(self):
+        api_key  = ApiKey.query.filter_by(api_key=request.args.get('api_key')).first()
+        
+        if api_key:
+            text = current_app.send_static_file('deploy.sh')
+            response = make_response(text)
+            response.headers['Content-Disposition'] = 'attachment; filename=deploy.sh'
+            return response
+
+        else:
+            return dict(
+                message= "API Key and/or DEPLOY Key is Missing or not Available",
+                status= False)
