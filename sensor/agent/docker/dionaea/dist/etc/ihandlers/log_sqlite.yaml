@@ -1,3 +1,0 @@
-- name: log_sqlite
-  config:
-    file: /opt/dionaea/var/dionaea/dionaea.sqlite
