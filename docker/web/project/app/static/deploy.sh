@@ -30,4 +30,4 @@ DATA_DIR=$PWD/data
 
 chmod +x $SCRIPT_DIR/install.sh
 
-sudo ./install.sh
+sudo ./install.sh $1 $2 $3

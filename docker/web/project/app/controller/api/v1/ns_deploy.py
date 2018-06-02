@@ -22,15 +22,17 @@ class Deploy(Resource):
             db.session.add(deploy_key)
             db.session.commit()
 
-            return jsonify(dict(
-                data=deploy_key.to_dict(),
-                status=True)
-            )
+            return make_response(
+                jsonify(dict(
+                    data=deploy_key.to_dict(),
+                    status=True
+                )), 200)
         else:
-            return jsonify(dict(
-                message= "API Key is Missing or not Authorized",
-                status= False)
-            )
+            return make_response(
+                jsonify(dict(
+                    message= "API Key is Missing or not Authorized",
+                    status= False
+                )), 404)
 
 @ns.route('/script')
 @ns.route('/script/')
@@ -46,6 +48,8 @@ class DeployScript(Resource):
             return response
 
         else:
-            return dict(
-                message= "API Key and/or DEPLOY Key is Missing or not Available",
-                status= False)
+            return make_response(
+                jsonify(dict(
+                    message= "API Key and/or DEPLOY Key is Missing or not Available",
+                    status= False
+                )), 404)

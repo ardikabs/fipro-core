@@ -6,6 +6,7 @@ class Sensor(db.Model):
 
     __tablename__ = "sensor"
     id              = db.Column(db.Integer, primary_key=True)
+    container_id    = db.Column(db.String(100))
     name            = db.Column(db.String(64), nullable=False)
     type            = db.Column(db.String(64), nullable=False)
     status_sensor   = db.Column(db.String(10))
@@ -31,3 +32,14 @@ class Sensor(db.Model):
     
     def __repr__(self):
         return '<Agent %r>' % self.name
+
+    @property
+    def container(self):
+        return self.container_id
+    
+    @container.setter
+    def container(self, id):
+        self.container_id = id
+    
+    
+    

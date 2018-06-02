@@ -15,7 +15,7 @@ if os.path.exists('.env'):
 class Config:
     APP_NAME = os.environ.get('APP_NAME') or 'Sensor-Side Web Service'
     SERVER_IP = requests.get('http://httpbin.org/ip').json()['origin']
-    SERVER_URL = ['http://',SERVER_IP] 
+    SERVER_BASE_URL = ['http://',SERVER_IP] 
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     
     if os.environ.get('SECRET_KEY'):

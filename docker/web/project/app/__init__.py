@@ -4,10 +4,10 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_wtf import CSRFProtect
-from flask_assets import Environment
+# from flask_assets import Environment
+# from .assets import assets_bundles
 from config import config
 from app import errors as err
-from .assets import assets_bundles
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 db = SQLAlchemy()

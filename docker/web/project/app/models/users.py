@@ -118,7 +118,7 @@ class User(UserMixin, db.Model):
         return True
 
 class ApiKey(db.Model):
-    __tablename__ = 'apikey'
+    __tablename__ = 'api_key'
     id          = db.Column(db.Integer, primary_key=True)
     api_key      = db.Column(db.String(64), unique=True)
     user_id     = db.Column(db.Integer, db.ForeignKey("users.id"))
@@ -131,7 +131,7 @@ class ApiKey(db.Model):
         return "<ApiKey of {}>".format(self.user.email)
 
 class DeployKey(db.Model):
-    __tablename__ = 'deploykey'
+    __tablename__ = 'deploy_key'
     id          = db.Column(db.Integer, primary_key=True)
     name        = db.Column(db.String(32), default="Agent {}".format(rand_str(3)))
     deploy_key  = db.Column(db.String(10), unique=True, default=rand_str(8))
