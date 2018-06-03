@@ -12,7 +12,7 @@ db.logs.aggregate([
     {
         "$match":
         {
-            "identifier": "uid-206189149201",
+            "identifier": "5c3669d44b6a",
             "$and": [ {"username": {"$ne": None} }, {"username": {"$ne": ""}} ]
         }
     },
@@ -39,7 +39,7 @@ db.logs.aggregate([
     {
         "$match":
         {
-            "identifier": "uid-206189149201",
+            "identifier": "5c3669d44b6a",
             "$and": [ {"password": {"$ne": None} }, {"password": {"$ne": ""}} ]
         }
     },

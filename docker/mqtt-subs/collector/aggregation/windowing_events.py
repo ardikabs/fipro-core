@@ -11,7 +11,7 @@ start_ts = time.time()
 aggregate = db.logs.aggregate([
     {
         "$match": {
-            "identifier": "uid-206189149201",
+            "identifier": "5c3669d44b6a",
             "timestamp": {"$gte": datetime.datetime.today() - datetime.timedelta(days=30) }
         }
     },

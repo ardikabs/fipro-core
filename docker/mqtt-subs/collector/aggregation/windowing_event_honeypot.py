@@ -8,11 +8,12 @@ mongoconn = MongoClient('mongodb://206.189.149.230:27017/')
 db = mongoconn.fipro
 start_ts = time.time()
 
-
-aggregate = db.logs.aggregate([
+user    = "5c3669d44b6a"
+agent   = "206.189.153.245"
+aggregate_user = db.logs.aggregate([
     {
         "$match": {
-            "identifier": "5c3669d44b6a",
+            "identifier": user,
             "timestamp": {"$gte": datetime.datetime.today() - datetime.timedelta(days=30) }
         }
     },
@@ -22,7 +23,6 @@ aggregate = db.logs.aggregate([
         "$group": {
             "_id": {
                 "honeypot": "$honeypot",
-                "dst_ip": "$dst_ip",
                 "date": {
                     "$dateFromParts": {
                         "year": {"$year": {"date": "$timestamp", "timezone": "Asia/Jakarta"}},
@@ -42,9 +42,7 @@ aggregate = db.logs.aggregate([
         "$group": {
             "_id": {
                 "honeypot": "$_id.honeypot",
-                "dst_ip": "$_id.dst_ip",
                 "date": "$_id.date"
-
             },
             "hourly":{
                 "$push": {
@@ -71,9 +69,8 @@ aggregate = db.logs.aggregate([
         "$group": {
             "_id": {
                 "date": "$_id.date",
-                "dst_ip": "$_id.dst_ip",
+                "honeypot": "$_id.honeypot",
                 "hour": "$hourly.hour"
-
             },
             "count": {"$sum": "$hourly.count"}
         }
@@ -83,9 +80,8 @@ aggregate = db.logs.aggregate([
     {
         "$group": {
             "_id": {
-                "date": "$_id.date",
-                "dst_ip": "$_id.dst_ip"
-
+                "honeypot": "$_id.honeypot",
+                "date": "$_id.date"
             },
             "hourly": {
                 "$push": {
@@ -105,7 +101,7 @@ aggregate = db.logs.aggregate([
         "$project":{
             "_id": 0,
             "date": "$_id.date",
-            "agent": "$_id.dst_ip",
+            "honeypot":"$_id.honeypot",
             "hourly": {"$mergeObjects": "$hourly"},
             "counts": 1
         }
@@ -114,10 +110,15 @@ aggregate = db.logs.aggregate([
         "$sort": {"date": 1}
     },
     {
-        "$out": "honeypot_events_agent_timebased_metric"
+        "$out": "honeypot_event_honeypot_{}_timebased_metric".format(user)
     }
 ])
 
 end_ts = time.time()
 print (end_ts - start_ts)
 
+# for a in aggregate:
+#     if a['counts'] == 17458:
+#         import collections
+#         new_hourly = {int(old_key): val for old_key, val in a["hourly"].items()}
+#         print (sorted(new_hourly.items())) 

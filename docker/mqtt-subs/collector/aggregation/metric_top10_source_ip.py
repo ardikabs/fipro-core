@@ -8,7 +8,7 @@ start_ts = time.time()
 aggregate_event = db.logs.aggregate([
     {
         "$match": {
-            "identifier": "uid-206189149201",
+            "identifier": "5c3669d44b6a",
             "geoip": {"$ne": None}
         }
     },

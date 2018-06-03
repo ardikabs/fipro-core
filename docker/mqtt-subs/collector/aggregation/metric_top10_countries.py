@@ -12,7 +12,7 @@ aggregate = db.logs.aggregate([
     {
         "$match": {
             "geoip.country": {"$ne": None},
-            "identifier": "uid-206189149201"
+            "identifier": "5c3669d44b6a"
         }
     },
     {

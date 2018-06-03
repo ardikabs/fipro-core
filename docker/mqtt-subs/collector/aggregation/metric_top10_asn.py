@@ -41,7 +41,7 @@ match_without_time = {
     "$match": 
         {
             "honeypot": {"$ne": "cowrie"},
-            "identifier": "uid-206189149201",
+            "identifier": "5c3669d44b6a",
             "geoip.autonomous_system_number" : {"$ne": None}
         }
     }
@@ -50,7 +50,7 @@ match_with_time = {
     "$match": 
         {
             "honeypot": {"$ne": "cowrie"},
-            "identifier": "uid-1921681100",
+            "identifier": "5c3669d44b6a",
             "geoip.autonomous_system_number" : {"$ne": None},
             "timestamp":{"$gte": datetime.now() - timedelta(hours=10)}
         }

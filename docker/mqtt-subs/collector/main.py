@@ -10,7 +10,9 @@ import sys
 import json
 import time
 import datetime
-import constant
+import logging
+
+logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
 ''' Environment Variable Configuration '''
 if os.path.exists('.env'):
@@ -83,6 +85,9 @@ def attack_daily_proc(data):
                             existdata.to_inc())  
 
 def attacked_port_proc(data):
+    if "dst_port" not in data:
+        return
+
     date= get_date(data["timestamp"])
     type= "attacked.port.stats"
     dt = coll_metrics.find({"type": type, "date": get_date(data["timestamp"])}).count()
@@ -193,8 +198,12 @@ def runner():
     except KeyboardInterrupt:
         print ("### END SESSION of Python MQTT Client ###")
         sys.exit(0)
-    except Exception as e:
-        print ("Unexpected Error: ", sys.exc_info()[0])
+    except Exception:
+        import traceback
+        logging.warning("Raised Error")
+        print (">>> Error raised <<<\n\n")
+        traceback.print_exc(file=sys.stdout)
+        print ("\n\n################################\n\n")
         runner()
 
 if __name__ == "__main__":
