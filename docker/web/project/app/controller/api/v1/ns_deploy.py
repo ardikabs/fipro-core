@@ -12,6 +12,23 @@ ns = api.namespace('deploy', description='Deploy related operations')
 
 @ns.route('/')
 class Deploy(Resource):
+    def get(self):
+        api_key  = ApiKey.query.filter_by(api_key=request.args.get('api_key')).first()
+
+        if api_key:
+            deploy_key = [deploy_key.to_dict() for deploy_key in DeployKey.query.filter_by(user_id=api_key.user.id)]
+            return make_response(
+                jsonify(dict(
+                    deploy_key = deploy_key,
+                    status= True
+                )), 200)
+
+        return make_response(
+            jsonify(dict(
+                message= "API Key is missing or not Authorized",
+                status= False
+            )), 401)
+
     def post(self):
         api_key  = ApiKey.query.filter_by(api_key=request.args.get('api_key')).first()
 
@@ -26,13 +43,21 @@ class Deploy(Resource):
                 jsonify(dict(
                     data=deploy_key.to_dict(),
                     status=True
-                )), 200)
+                )), 201)
         else:
             return make_response(
                 jsonify(dict(
                     message= "API Key is Missing or not Authorized",
                     status= False
-                )), 404)
+                )), 401)
+
+@ns.route('/<string:deploy_key>')
+class DeployKeyItem(Resource):
+    def get(self, deploy_key):
+        pass
+    
+    def delete(sellf, deploy_key):
+        pass
 
 @ns.route('/script')
 @ns.route('/script/')

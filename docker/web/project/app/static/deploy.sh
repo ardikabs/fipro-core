@@ -1,3 +1,4 @@
+#!/bin/bash
 
 if [[ "$(whoami)" != "root" ]]; then
 	echo "You must be root to run this script"
@@ -10,7 +11,7 @@ if [[ $# -ne 3 ]]; then
 	exit 1
 fi
 
-CURRENT_DIR=`dirname "$(readlink -f "$0")"`
+BASE_DIR=`dirname "$(readlink -f "$0")"`
 SERVER_URL=$1
 API_KEY=$2
 DEPLOY_KEY=$3
@@ -30,4 +31,4 @@ DATA_DIR=$PWD/data
 
 chmod +x $SCRIPT_DIR/install.sh
 
-sudo ./install.sh $1 $2 $3
+sudo $SCRIPT_DIR/install.sh $1 $2 $3

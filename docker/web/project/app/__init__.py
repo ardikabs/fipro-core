@@ -54,6 +54,7 @@ def create_app(config_name):
     ''' Blueprint Configuration '''
     from .controller.main import main as main_blueprint
     from .controller.accounts import accounts as accounts_blueprint
+    from .controller.agents import agents as agents_blueprint
     from .controller.sensor import sensor as sensor_blueprint
     from .controller.deploy import deploy as deploy_blueprint
     from .controller.logs import logs as logs_blueprint
@@ -61,6 +62,7 @@ def create_app(config_name):
 
     app.register_blueprint(main_blueprint)
     app.register_blueprint(accounts_blueprint, url_prefix='/accounts')
+    app.register_blueprint(agents_blueprint, url_prefix='/agents')
     app.register_blueprint(sensor_blueprint, url_prefix='/sensor')
     app.register_blueprint(deploy_blueprint, url_prefix='/deploy')
     app.register_blueprint(logs_blueprint, url_prefix='/logs')

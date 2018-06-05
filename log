@@ -46,4 +46,4 @@ type windowing:
 
 
 	wget <script_url> -O deploy.sh \
-		&& sudo bash deploy.sh <server_url> <api_key> <deploy_key> <identifier>; sudo rm -rf deploy.sh
+		&& sudo bash deploy.sh <server_url> <api_key> <deploy_key>; sudo rm -rf deploy.sh

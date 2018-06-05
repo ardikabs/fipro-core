@@ -156,10 +156,9 @@ def data_to_mongo(data):
 # [START] MQTT Component
 def on_connect(client, userdata, flags, rc):
     print ("... %s is Listening ..." % client._client_id)
-    client.subscribe("honeypot/cowrie")
-    client.subscribe("honeypot/dionaea")
-    client.subscribe("honeypot/glastopf")
-    client.subscribe("honeypot")
+    client.subscribe("honeypot/cowrie",qos=2)
+    client.subscribe("honeypot/dionaea",qos=2)
+    client.subscribe("honeypot/glastopf",qos=2)
 
 def on_message(client,userdata,message):
     # insertion data to database
