@@ -1,0 +1,205 @@
+{% extends 'layouts/base.html' %}
+
+{% block custom_css %}
+<link href="{{ url_for('static',filename='vendors/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css') }}" rel="stylesheet">
+
+{% endblock %}
+
+{% block content %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>
+                            GLASTOPF LOGS
+                        </h2>
+                        <ul class="header-dropdown m-r--5">
+                            <li class="dropdown">
+                                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <i class="material-icons">more_vert</i>
+                                </a>
+                                <ul class="dropdown-menu pull-right">
+                                    <li><a href="javascript:void(0);">Action</a></li>
+                                    <li><a href="javascript:void(0);">Another action</a></li>
+                                    <li><a href="javascript:void(0);">Something else here</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                <thead>
+                                    <tr>
+                                        <th>Source_IP</th>
+                                        <th>Destination_IP</th>
+                                        <th>Destination_Port</th>
+                                        <th>Methods</th>
+                                        <th>Path</th>
+                                        <th>GeoIP.location</th>
+                                        <th>GeoIP.country</th>
+                                        <th>GeoIP.country_code</th>
+                                        <th>GeoIP.state</th>
+                                        <th>GeoIP.city</th>
+                                        <th>GeoIP.postal_code</th>                                                                                                   
+                                        <th>GeoIP.asn</th>
+                                        <th>GeoIP.aso</th>
+                                        <th>Timestamp</th>
+
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>Source_IP</th>
+                                        <th>Destination_IP</th>
+                                        <th>Destination_Port</th>
+                                        <th>Methods</th>
+                                        <th>Path</th>
+                                        <th>GeoIP.location</th>
+                                        <th>GeoIP.country</th>
+                                        <th>GeoIP.country_code</th>
+                                        <th>GeoIP.state</th>
+                                        <th>GeoIP.city</th>
+                                        <th>GeoIP.postal_code</th>                                                                                                   
+                                        <th>GeoIP.asn</th>
+                                        <th>GeoIP.aso</th>
+                                        <th>Timestamp</th>
+
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    <tr>
+                                        <td>66.249.64.13</td>
+                                        <td>192.168.72.129</td>
+                                        <td>80</td>
+                                        <td><span class="label label-default">GET</span></td>
+                                        <td>/tutorials/new</td>
+                                        <td>(55.1544, 61.4297)</td>
+                                        <td>Russia</td>
+                                        <td>RU</td>
+                                        <td>Chelyabinsk</td>
+                                        <td>Chelyabinsk</td>
+                                        <td>454008</td>
+                                        <td>8369</td>
+                                        <td>Intersvyaz-2 JSC</td>
+                                        <td>2017-11-01 07:00:02.000Z</td>
+                                    </tr>
+                                    <tr>
+                                        <td>66.249.64.13</td>
+                                        <td>192.168.72.129</td>
+                                        <td>80</td>
+                                        <td><span class="label label-success">POST</span></td>
+                                        <td>/tutorials/new</td>
+                                        <td>(55.1544, 61.4297)</td>
+                                        <td>Russia</td>
+                                        <td>RU</td>
+                                        <td>Chelyabinsk</td>
+                                        <td>Chelyabinsk</td>
+                                        <td>454008</td>
+                                        <td>8369</td>
+                                        <td>Intersvyaz-2 JSC</td>
+                                        <td>2017-11-01 07:00:02.000Z</td>
+                                    </tr>
+                                    <tr>
+                                        <td>66.249.64.13</td>
+                                        <td>192.168.72.129</td>
+                                        <td>80</td>
+                                        <td><span class="label label-info">PUT</span></td>
+                                        <td>/tutorials/new</td>
+                                        <td>(55.1544, 61.4297)</td>
+                                        <td>Russia</td>
+                                        <td>RU</td>
+                                        <td>Chelyabinsk</td>
+                                        <td>Chelyabinsk</td>
+                                        <td>454008</td>
+                                        <td>8369</td>
+                                        <td>Intersvyaz-2 JSC</td>
+                                        <td>2017-11-01 07:00:02.000Z</td>
+                                    </tr>
+                                    <tr>
+                                        <td>66.249.64.13</td>
+                                        <td>192.168.72.129</td>
+                                        <td>80</td>
+                                        <td><span class="label label-danger">DELETE</span></td>
+                                        <td>/tutorials/new</td>
+                                        <td>(55.1544, 61.4297)</td>
+                                        <td>Russia</td>
+                                        <td>RU</td>
+                                        <td>Chelyabinsk</td>
+                                        <td>Chelyabinsk</td>
+                                        <td>454008</td>
+                                        <td>8369</td>
+                                        <td>Intersvyaz-2 JSC</td>
+                                        <td>2017-11-01 07:00:02.000Z</td>
+                                    </tr>
+                                    <tr>
+                                        <td>66.249.64.13</td>
+                                        <td>192.168.72.129</td>
+                                        <td>80</td>
+                                        <td><span class="label label-primary">HEAD</span></td>
+                                        <td>/tutorials/new</td>
+                                        <td>(55.1544, 61.4297)</td>
+                                        <td>Russia</td>
+                                        <td>RU</td>
+                                        <td>Chelyabinsk</td>
+                                        <td>Chelyabinsk</td>
+                                        <td>454008</td>
+                                        <td>8369</td>
+                                        <td>Intersvyaz-2 JSC</td>
+                                        <td>2017-11-01 07:00:02.000Z</td>
+                                    </tr>
+                                    <tr>
+                                        <td>66.249.64.13</td>
+                                        <td>192.168.72.129</td>
+                                        <td>80</td>
+                                        <td><span class="label label-warning">OPTIONS</span></td>
+                                        <td>/tutorials/new</td>
+                                        <td>(55.1544, 61.4297)</td>
+                                        <td>Russia</td>
+                                        <td>RU</td>
+                                        <td>Chelyabinsk</td>
+                                        <td>Chelyabinsk</td>
+                                        <td>454008</td>
+                                        <td>8369</td>
+                                        <td>Intersvyaz-2 JSC</td>
+                                        <td>2017-11-01 07:00:02.000Z</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block custom_btmscripts %}
+<script src="{{ url_for('static', filename='vendors/jquery-countto/jquery.countTo.js') }}"></script>
+<script src="{{ url_for('static', filename='vendors/jquery-datatable/jquery.dataTables.js') }}"></script>
+<script src="{{ url_for('static', filename='vendors/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js') }}"></script>
+<script src="{{ url_for('static', filename='vendors/jquery-datatable/extensions/export/dataTables.buttons.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendors/jquery-datatable/extensions/export/buttons.flash.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendors/jquery-datatable/extensions/export/jszip.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendors/jquery-datatable/extensions/export/pdfmake.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendors/jquery-datatable/extensions/export/vfs_fonts.js') }}"></script>
+<script src="{{ url_for('static', filename='vendors/jquery-datatable/extensions/export/buttons.html5.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendors/jquery-datatable/extensions/export/buttons.print.min.js') }}"></script>
+
+<script>
+    $(function () {
+
+        //Exportable table
+        $('.js-exportable').DataTable({
+            dom: 'Bfrtip',
+            responsive: true,
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+    });
+</script>
+{% endblock %}

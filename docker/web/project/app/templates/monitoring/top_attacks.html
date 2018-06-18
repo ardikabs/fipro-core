@@ -1,0 +1,142 @@
+{% extends 'layouts/base.html' %}
+
+{% block custom_css %}
+
+{% endblock %}
+
+{% block content %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row clearfix">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>
+                            ASN - Top 10
+                        </h2>
+                    </div>
+                    <div class="body">                       
+                        <div class="row clearfix">
+                            <div class="col-md-4">
+                                <b>Select Date</b>
+                                <div class="input-group">
+                                    <div class="form-line">
+                                        <input type="text" class="datepicker form-control" placeholder="Ex: 01/01/2018">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-md-12">
+                                <!-- Sensor Event Histogram -->
+                                <canvas id="sensor_histogram" height="75"></canvas>
+                            </div>
+                        </div>
+            
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>
+                            Source IP - Top 10 
+                        </h2>
+                    </div>
+                    <div class="body">                       
+                        <div class="row clearfix">
+                            <div class="col-md-4">
+                                <b>Select Date</b>
+                                <div class="input-group">
+                                    <div class="form-line">
+                                        <input type="text" class="datepicker form-control" placeholder="Ex: 01/01/2018">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-md-12">
+                                <!-- Sensor Event Histogram -->
+                                <canvas id="sensor_histogram" height="75"></canvas>
+                            </div>
+                        </div>
+            
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        
+        <div class="row clearfix">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>
+                            Countries - Top 10
+                        </h2>
+                    </div>
+                    <div class="body">                       
+                        <div class="row clearfix">
+                            <div class="col-md-4">
+                                <b>Select Date</b>
+                                <div class="input-group">
+                                    <div class="form-line">
+                                        <input type="text" class="datepicker form-control" placeholder="Ex: 01/01/2018">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-md-12">
+                                <!-- Sensor Event Histogram -->
+                                <canvas id="sensor_histogram" height="75"></canvas>
+                            </div>
+                        </div>
+            
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>
+                            Source IP - Top 10 
+                        </h2>
+                    </div>
+                    <div class="body">                       
+                        <div class="row clearfix">
+                            <div class="col-md-4">
+                                <b>Select Date</b>
+                                <div class="input-group">
+                                    <div class="form-line">
+                                        <input type="text" class="datepicker form-control" placeholder="Ex: 01/01/2018">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-md-12">
+                                <!-- Sensor Event Histogram -->
+                                <canvas id="sensor_histogram" height="75"></canvas>
+                            </div>
+                        </div>
+            
+                    </div>
+                </div>
+            </div>
+
+        </div>   
+        
+    </div>
+</section>
+{% endblock %}
+
+{% block custom_btmscripts %}
+<script src="{{ url_for('static', filename='vendors/chartjs/Chart.bundle.js') }}"></script>
+
+<script>
+
+</script>
+{% endblock %}

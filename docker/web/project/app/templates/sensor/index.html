@@ -3,9 +3,88 @@
 {% block content %}
 <section class="content">
     <div class="container-fluid">
-        <div class="block-header">
-            <h2>SENSOR PAGE</h2>
-        </div>
+        <div class="row clearfix">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>SENSOR LIST</h2>
+                        </div>
+    
+                        <div class="body">
+                            <button type="button" class="btn btn-success waves-effect" data-toggle="modal" data-target="#addKey">
+                                <i class="material-icons">add</i>
+                                <span>ADD SENSOR</span>
+                            </button>
+
+                            <br>
+                            <br>
+
+                            <div class="table-responsive">
+                                <table class="table table-hover dashboard-task-infos">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Type</th>
+                                            <th>IP Addr</th>
+                                            <th>Uptime</th>
+                                            <th>Status</th>
+                                            <th>Attack Count</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Dionaea</td>
+                                            <td>10.252.108.22</td>
+                                            <td>4 days</td>
+                                            <td><span class="label label-primary">Running</span></td>
+                                            <td>3.000</td>
+                                            <td>
+                                                <a href="{{ url_for('agents.details',agent_id=1) }}">
+                                                    <button type="button" class="btn btn-info waves-effect">DETAILS</button>
+                                                </a>
+                                                <button type="button" class="btn btn-warning waves-effect">STOP</button>
+                                                <button type="button" class="btn btn-danger waves-effect destroy-agent" data-agent-id="1" data-agent-name="Digital Ocean #1">DESTROY</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>Glastopf</td>
+                                            <td>10.252.108.10</td>
+                                            <td>21 days</td>
+                                            <td><span class="label label-danger">Error</span></td>
+                                            <td>3.000.000</td>
+                                            <td>
+                                                <a href="{{ url_for('agents.details',agent_id=1) }}">
+                                                    <button type="button" class="btn btn-info waves-effect">DETAILS</button>
+                                                </a>
+                                                <button type="button" class="btn btn-warning waves-effect">STOP</button>
+                                                <button type="button" class="btn btn-danger waves-effect destroy-agent" data-agent-id="1" data-agent-name="Digital Ocean #1">DESTROY</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>Cowrie</td>
+                                            <td>10.252.108.10</td>
+                                            <td>2 months</td>
+                                            <td><span class="label label-warning">Stopped</span></td>
+                                            <td>3.000.000</td>
+                                            <td>
+                                                <a href="{{ url_for('agents.details',agent_id=1) }}">
+                                                    <button type="button" class="btn btn-info waves-effect">DETAILS</button>
+                                                </a>
+                                                <button type="button" class="btn btn-warning waves-effect">STOP</button>
+                                                <button type="button" class="btn btn-danger waves-effect destroy-agent" data-agent-id="1" data-agent-name="Digital Ocean #1">DESTROY</button>
+                                            </td>
+                                        </tr>                                  
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
     </div>
 </section>
 {% endblock %}

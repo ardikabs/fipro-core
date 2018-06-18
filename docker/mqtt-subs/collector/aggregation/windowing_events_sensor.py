@@ -4,7 +4,7 @@
 from pymongo import MongoClient
 import time
 import datetime
-mongoconn = MongoClient('mongodb://206.189.149.230:27017/')
+mongoconn = MongoClient('mongodb://192.168.72.128:27017/')
 db = mongoconn.fipro
 start_ts = time.time()
 
@@ -12,8 +12,8 @@ start_ts = time.time()
 aggregate = db.logs.aggregate([
     {
         "$match": {
-            "identifier": "5c3669d44b6a",
-            "timestamp": {"$gte": datetime.datetime.today() - datetime.timedelta(days=30) }
+            "identifier": "uid-19216872129",
+            "timestamp": {"$gte": datetime.datetime.today() - datetime.timedelta(weeks=102) }
         }
     },
 
@@ -74,8 +74,8 @@ aggregate = db.logs.aggregate([
     {
         "$project":{
             "_id": 0,
-            "honeypot": "$_id.honeypot",
             "date": "$_id.date",
+            "honeypot": "$_id.honeypot",
             "hourly": {"$mergeObjects": "$hourly"},
             "counts": 1
         }

@@ -1,11 +1,352 @@
 {% extends 'layouts/base.html' %}
 
+{% block custom_css %}
+<link href="{{ url_for('static', filename='vendors/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css') }} " rel="stylesheet" />
+<link href="{{ url_for('static', filename='vendors/sweetalert/sweetalert.css') }} " rel="stylesheet" />
+
+{% endblock %}
+
 {% block content %}
 <section class="content">
     <div class="container-fluid">
-        <div class="block-header">
-            <h2>DEPLOY PAGES</h2>
+        <div class="row clearfix">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>DEPLOY KEY USAGE</h2>
+                    </div>
+
+                    <div class="body">
+                        <b><h4>Deployment Instruction</h4></b>
+                        <div class="panel panel-primary">
+                            <div class="panel-body">
+                                <p align="center">
+                                    Click <label class="label bg-teal"><i class="material-icons small">file_copy</i> COPY</label> button on one of the deploy key list to get the command and execute on your Linux machine.
+                                    <br>Always remember to have access on 
+                                    <label class="label label-warning">PUBLIC NETWORK</label> , unless your installation will be 
+                                    <label class="label label-danger">FAILED</label>.
+                                </p>            
+                            </div>           
+                        </div>
+
+                        <b><h4>Format Command</h4></b>
+                        <div class="well">
+                            <p align="center"><big>
+                                    <code><i> wget &ltscript_url&gt -O deploy.sh && sudo bash deploy.sh &ltserver_url&gt &ltapi_key&gt &ltdeploy_key&gt ;sudo rm -rf deploy.sh</i></code>
+                            </big></p>
+        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row clearfix">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>DEPLOY KEY LIST</h2>
+                    </div>
+
+                    <div class="body">
+                        
+                        <button type="button" class="btn btn-success waves-effect" data-toggle="modal" data-target="#addKey">
+                            <i class="material-icons">add</i>
+                            <span>ADD DEPLOY KEY</span>
+                        </button>
+                        
+                        <br>
+                        <br>
+
+                        <div class="table-responsive">
+                            <table class="table table-hover dashboard-task-infos">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Name</th>
+                                        <th>Key</th>
+                                        <th>Status</th>
+                                        <th>Expired At</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Digital Ocean #1</td>
+                                        <td>AgSX445</td>
+                                        <td><span class="label label-primary">Active</span></td>
+                                        <td>24 Jun 2018</td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary waves-effect" data-toggle="modal" data-target="#AgSX445">
+                                                <i class="material-icons">create</i>
+                                                EDIT
+                                            </button>
+                                            <button type="button" class="btn bg-teal waves-effect" onclick="copyToClipboard('AgSX445')">
+                                                <input type="text" id="AgSX445-script" class="hidden" value="AgSX445">
+                                                <i class="material-icons">file_copy</i>
+                                                COPY
+                                            </button>
+                                            <button type="button" class="btn btn-danger waves-effect delete-key" data-deploy-key="AgSX445">
+                                                <i class="material-icons">delete</i>
+                                                DELETE
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Digital Ocean #2</td>
+                                        <td>oKixlaSd</td>
+                                        <td><span class="label label-danger">Expired</span></td>
+                                        <td>24 Jun 2018</td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary waves-effect" data-toggle="modal" data-target="#AgSX445">
+                                                <i class="material-icons">create</i>
+                                                EDIT
+                                            </button>
+                                            <button type="button" class="btn bg-teal waves-effect" onclick="copyToClipboard('AgSX445')">
+                                                <input type="text" id="AgSX445-script" class="hidden" value="AgSX445">
+                                                <i class="material-icons">file_copy</i>
+                                                COPY
+                                            </button>
+                                            <button type="button" class="btn btn-danger waves-effect delete-key" data-deploy-key="AgSX445">
+                                                <i class="material-icons">delete</i>
+                                                DELETE
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>Digital Ocean #3</td>
+                                        <td>xaXzxw2</td>
+                                        <td><span class="label label-default">Used</span></td>
+                                        <td>24 Jun 2018</td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary waves-effect" data-toggle="modal" data-target="#AgSX445">
+                                                <i class="material-icons">create</i>
+                                                EDIT
+                                            </button>
+                                            <button type="button" class="btn bg-teal waves-effect" onclick="copyToClipboard('AgSX445')">
+                                                <input type="text" id="AgSX445-script" class="hidden" value="AgSX445">
+                                                <i class="material-icons">file_copy</i>
+                                                COPY
+                                            </button>
+                                            <button type="button" class="btn btn-danger waves-effect delete-key" data-deploy-key="AgSX445">
+                                                <i class="material-icons">delete</i>
+                                                DELETE
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Add Deploy Key Modal -->
+    <div class="modal fade" id="addKey" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="addKeyLabel">Add Deploy Key</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row clearfix">
+                        <div class="col-sm-12">
+                            <b>Name</b>
+                            <div class="input-group">
+                                <div class="form-line">
+                                    <input type="text" class="form-control" placeholder="Ex: Sensor #1">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <b>Expired Date (optional)</b>
+                            <div class="input-group">
+                                <div class="form-line">
+                                    <input type="text" class="datepicker form-control" placeholder="Ex: 01/01/2018">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-link waves-effect create-key-btn" data-dismiss="modal"
+                        data-placement-from="top" data-placement-align="center"
+                        data-animate-enter="animated fadeInDown" data-animate-exit="animated fadeOutUp"
+                        data-color-name="bg-black">ADD</button>
+                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCEL</button>
+                </div>
+            </div>
         </div>
     </div>
+
+    <!-- Deploy Key Item Modal -->
+    <div class="modal fade" id="AgSX445" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="AgSX445-label">Edit Deploy Key</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row clearfix">
+                        <div class="col-sm-12">
+                            <b>Name</b>
+                            <div class="input-group">
+                                <div class="form-line">
+                                    <input type="text" class="form-control" placeholder="Ex: Sensor #1">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <b>Deploy Key</b>
+                            <div class="input-group">
+                                <div class="form-line">
+                                    <input type="text" class="form-control" placeholder="Ex: AsXKL2">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <b>Status</b>
+                            <div class="input-group">
+                                <div class="form-line">
+                                    <input type="text" class="form-control" placeholder="Ex: Running">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <b>Expired Date</b>
+                            <div class="input-group">
+                                <div class="form-line">
+                                    <input type="text" class="datepicker form-control" placeholder="Ex: 01/01/2018">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-link waves-effect edit-key-btn" data-dismiss="modal">EDIT</button>
+                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCEL</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <input type="text" value="" id="just-for-copy" style="position:absolute;left:-9999px">
 </section>
+
+{% endblock %}
+
+{% block custom_btmscripts %}
+<script src="{{ url_for('static', filename='vendors/momentjs/moment.js') }}"></script>
+<script src="{{ url_for('static', filename='vendors/autosize/autosize.js') }}"></script>
+<script src="{{ url_for('static', filename='vendors/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js') }}"></script>
+<script src="{{ url_for('static', filename='vendors/bootstrap-notify/bootstrap-notify.js') }}"></script>
+<script src="{{ url_for('static', filename='vendors/sweetalert/sweetalert.min.js') }}"></script>
+
+<script>
+    $(function() {
+        autosize($('textarea.auto-growth'));
+
+
+        $('.datepicker').bootstrapMaterialDatePicker({
+            format: 'dddd DD MMMM YYYY',
+            clearButton: true,
+            weekStart: 1,
+            time: false
+        });
+
+
+
+    })
+
+    $('.delete-key').on('click', function() {
+        var key = $(this).data('deploy-key');
+        showConfirmMessage(key);
+    });
+
+    $('.create-key-btn').on('click', function() {
+        swal("Success!", "Deploy Key Sucessfully Added!", "success");
+    })
+
+    $('.edit-key-btn').on('click', function() {
+        swal("Success!", "Deploy Key Information Successfully Edited!", "success");
+    })
+
+
+    function showConfirmMessage(key) {
+        swal({
+            title: "Are you sure?",
+            text: "You will delete "+ key +" key information\nPlease make sure the key already expired or not used!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, delete it!",
+            closeOnConfirm: false
+        }, function () {
+            swal("Deleted!", key + " Key has been deleted!", "success");
+
+            
+        });
+    }
+
+    function showNotification(colorName, text, placementFrom, placementAlign, animateEnter, animateExit){
+        var allowDismiss = true;    
+        $.notify({
+                message: text
+        }, {
+            type: colorName,
+            allow_dismiss: allowDismiss,
+            newest_on_top: true,
+            timer: 1000,
+            placement: {
+                from: placementFrom,
+                align: placementAlign
+            },
+            animate: {
+                enter: animateEnter,
+                exit: animateExit
+            },
+            template: '<div data-notify="container" class="bootstrap-notify-container alert alert-dismissible {0} ' + (allowDismiss ? "p-r-35" : "") + '" role="alert">' +
+            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+            '<span data-notify="icon"></span> ' +
+            '<span data-notify="title">{1}</span> ' +
+            '<span data-notify="message">{2}</span>' +
+            '<div class="progress" data-notify="progressbar">' +
+            '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+            '</div>' +
+            '<a href="{3}" target="{4}" data-notify="url"></a>' +
+            '</div>'
+        });
+    }
+
+
+    function copyToClipboard(key){
+        var script = document.getElementById(key + "-script");
+        var justForCopy = document.getElementById('just-for-copy');
+
+        justForCopy.value = script.value;
+        justForCopy.select();
+        document.execCommand("copy");
+
+        // Send notification
+
+        var text = "(Key: "+ key + ") Command Copied"
+        var placementFrom = "top";
+        var placementAlign = "center";
+        var animateEnter = "animated fadeInDown";
+        var animateExit = "animated fadeOutUp";
+        var colorName = "bg-teal";
+
+        showNotification(colorName, text, placementFrom, placementAlign, animateEnter, animateExit, colorName);
+
+    }
+</script>
 {% endblock %}

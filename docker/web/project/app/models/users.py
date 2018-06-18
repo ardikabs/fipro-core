@@ -120,7 +120,7 @@ class User(UserMixin, db.Model):
 class ApiKey(db.Model):
     __tablename__ = 'api_key'
     id          = db.Column(db.Integer, primary_key=True)
-    api_key      = db.Column(db.String(64), unique=True)
+    api_key     = db.Column(db.String(64), unique=True)
     user_id     = db.Column(db.Integer, db.ForeignKey("users.id"))
     created_at  = db.Column(db.DateTime, default=datetime.datetime.now())
 

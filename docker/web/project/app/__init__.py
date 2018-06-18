@@ -58,6 +58,7 @@ def create_app(config_name):
     from .controller.sensor import sensor as sensor_blueprint
     from .controller.deploy import deploy as deploy_blueprint
     from .controller.logs import logs as logs_blueprint
+    from .controller.monitoring import monitoring as monitoring_blueprint
 
 
     app.register_blueprint(main_blueprint)
@@ -66,6 +67,7 @@ def create_app(config_name):
     app.register_blueprint(sensor_blueprint, url_prefix='/sensor')
     app.register_blueprint(deploy_blueprint, url_prefix='/deploy')
     app.register_blueprint(logs_blueprint, url_prefix='/logs')
+    app.register_blueprint(monitoring_blueprint, url_prefix='/monitoring')
     
     from .controller.api import api_v1 
     app.register_blueprint(api_v1)
@@ -76,4 +78,5 @@ def create_app(config_name):
     app.register_error_handler(404,err.page_not_found)
     app.register_error_handler(500,err.internal_problems)        
     
+    app.jinja_env.add_extension('jinja2.ext.do')
     return app

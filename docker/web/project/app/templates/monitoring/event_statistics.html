@@ -1,0 +1,283 @@
+{% extends 'layouts/base.html' %}
+
+{% block custom_css %}
+
+{% endblock %}
+
+{% block content %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>
+                            EVENT STATISTICS (HISTOGRAM)
+                        </h2>
+                    </div>
+                    <div class="body">
+                        <h2 class="card-inside-title">Sensor Event Histogram</h2>
+                        <div class="row clearfix">
+                            <div class="col-md-12">
+                                <!-- Sensor Event Histogram -->
+                                <canvas id="sensor_histogram" height="80"></canvas>
+                            </div>
+                        </div>
+
+                        <h2 class="card-inside-title">Sensor Event by Country Histogram</h2>
+                        <div class="row clearfix">
+                            <div class="col-md-12">
+                                <!-- Sensor Event by Country Histogram -->
+                                <canvas id="sensor_country_histogram" height="80"></canvas>
+                            </div>
+                        </div>
+    
+
+                        <h2 class="card-inside-title">Sensor Destination Port Histogram</h2>
+                        <div class="row clearfix">
+                            <div class="col-md-12">
+                                <!-- Sensor Destination Port Histogram -->
+                                <canvas id="sensor_destination_histogram" height="80"></canvas>
+ 
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>
+                            EVENT STATISTICS (BAR)
+                        </h2>
+                    </div>
+
+                    <div class="body">
+                        <div class="row clearfix">
+                            <div class="col-md-6">
+                                <h2 class="card-inside-title">Sensor Events</h2>
+                                <!-- Sensor Destination Port Histogram -->
+                                <canvas id="sensor_events_bar" height="120"></canvas>
+
+                            </div>
+                            <div class="col-md-6">
+                                <h2 class="card-inside-title">Sensor Events by Destination Port</h2>
+                                <!-- Sensor Destination Port Histogram -->
+                                <canvas id="sensor_countries_bar" height="120"></canvas>
+                            </div>        
+                        </div>
+
+                        <h2 class="card-inside-title">Sensor Event by Country and Port</h2>
+                        <div class="row clearfix">
+                            <div class="col-md-6">
+                                <canvas id="coba_1" height="150"></canvas>
+
+                            </div>
+                            <div class="col-md-6">
+                                <canvas id="coba_2" height="150"></canvas>
+    
+                            </div>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-md-6">
+                                <canvas id="coba_3" height="150"></canvas>
+    
+                            </div>
+                            <div class="col-md-6">
+                                <canvas id="coba_4" height="150"></canvas>
+    
+                            </div>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-md-6">
+                                <canvas id="coba_5" height="150"></canvas>    
+                            </div>
+                            <div class="col-md-6">
+                                <canvas id="coba_6" height="150"></canvas>
+
+                            </div>            
+        
+                        </div>
+                    </div>
+                </div>
+            </div>  
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block custom_btmscripts %}
+<script src="{{ url_for('static', filename='vendors/chartjs/Chart.bundle.js') }}"></script>
+
+<script>
+    new Chart(document.getElementById("sensor_histogram").getContext("2d"),getHistogramChart());
+    new Chart(document.getElementById("sensor_country_histogram").getContext("2d"),getHistogramChart());
+    new Chart(document.getElementById("sensor_destination_histogram").getContext("2d"),getHistogramChart());
+    new Chart(document.getElementById("sensor_countries_bar").getContext("2d"),getDoughnutBar());
+    new Chart(document.getElementById("sensor_events_bar").getContext("2d"),getSensorEventsBar());
+
+    new Chart(document.getElementById("coba_1").getContext("2d"),getCoba());
+    new Chart(document.getElementById("coba_2").getContext("2d"),getCoba());
+    new Chart(document.getElementById("coba_3").getContext("2d"),getCoba());
+    new Chart(document.getElementById("coba_4").getContext("2d"),getCoba());
+    new Chart(document.getElementById("coba_5").getContext("2d"),getCoba());
+    new Chart(document.getElementById("coba_6").getContext("2d"),getCoba());
+
+    function getCoba(){
+        var config = null;
+        config = {
+            type: 'doughnut',
+            data: {
+                labels:['445','22','23', '27017', '443','445','22','23', '5001', '443'],
+                datasets:[{
+                    label: 'Sensor Event by Countries',
+                    data: [50,30,40,10,30,50,30,40,10,30],
+                    backgroundColor: [
+                        "rgb(233, 30, 99)",
+                        "rgb(255, 193, 7)",
+                        "rgb(0, 188, 212)",
+                        "rgb(139, 195, 74)",
+                        "rgb(139, 195, 58)",
+                        "rgb(233, 30, 99)",
+                        "rgb(255, 193, 7)",
+                        "rgb(0, 188, 212)",
+                        "rgb(139, 195, 74)",
+                        "rgb(139, 195, 58)"
+
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'right',
+                    labels: {
+                        boxWidth: 15
+                    }
+                },
+                title: {
+                    display: true,
+                    text: 'France'
+                },
+                animation: {
+                    animateScale: true,
+                    animateRotate: true
+                }
+            }
+        };
+
+        return config;
+    }
+
+    function getHistogramChart(){
+        var config = null;
+        config = {
+            type: 'line',
+            data: {
+                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                datasets: [{
+                    label: "My First dataset",
+                    data: [65, 59, 80, 81, 56, 55, 40],
+                    borderColor: 'rgba(0, 188, 212, 0.75)',
+                    backgroundColor: 'rgba(0, 188, 212, 0.3)',
+                    pointBorderColor: 'rgba(0, 188, 212, 0)',
+                    pointBackgroundColor: 'rgba(0, 188, 212, 0.9)',
+                    pointBorderWidth: 1
+                }, 
+                {
+                    label: "My Second dataset",
+                    data: [28, 48, 40, 19, 86, 27, 90],
+                    borderColor: 'rgba(233, 30, 99, 0.75)',
+                    backgroundColor: 'rgba(233, 30, 99, 0.3)',
+                    pointBorderColor: 'rgba(233, 30, 99, 0)',
+                    pointBackgroundColor: 'rgba(233, 30, 99, 0.9)',
+                    pointBorderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                legend: false
+            }
+        };
+
+        return config;
+    }
+
+    function getDoughnutBar(){
+        var config = null;
+        config = {
+            type: 'doughnut',
+            data: {
+                labels:['Asu','Nyambek','Naga', 'Naga Bonar', 'Naga Asli'],
+                datasets:[{
+                    label: 'Sensor Event by Countries',
+                    data: [50,30,40,10,30],
+                    backgroundColor: [
+                        "rgb(233, 30, 99)",
+                        "rgb(255, 193, 7)",
+                        "rgb(0, 188, 212)",
+                        "rgb(139, 195, 74)",
+                        "rgb(139, 195, 58)"
+
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'right',
+                    labels: {
+                        boxWidth: 15
+                    }
+                },
+                animation: {
+                    animateScale: true,
+                    animateRotate: true
+                }
+            }
+        };
+
+        return config;
+    }
+
+    function getSensorEventsBar(){
+        var config = null;
+        config = {
+            type: 'doughnut',
+            data: {
+                labels:['Dionaea','Cowrie','Glastopf'],
+                datasets:[{
+                    label: 'Sensor Events',
+                    data: [800,300,100],
+                    backgroundColor: [
+                        "rgb(233, 30, 99)",
+                        "rgb(255, 193, 7)",
+                        "rgb(0, 188, 212)",
+
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'right',
+                    labels: {
+                        boxWidth: 15
+                    }
+                },
+                animation: {
+                    animateScale: true,
+                    animateRotate: true
+                }
+            }
+        };
+
+        return config;
+    }
+
+</script>
+{% endblock %}

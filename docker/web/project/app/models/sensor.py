@@ -9,9 +9,8 @@ class Sensor(db.Model):
     container_id    = db.Column(db.String(100))
     name            = db.Column(db.String(64), nullable=False)
     type            = db.Column(db.String(64), nullable=False)
-    status_sensor   = db.Column(db.String(10))
+    status          = db.Column(db.String(10))
     registered_at   = db.Column(db.DateTime)
-    last_updated_at = db.Column(db.DateTime)
     agent_id        = db.Column(db.Integer, db.ForeignKey("agents.id"))
    
     @property

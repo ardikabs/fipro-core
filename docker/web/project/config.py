@@ -13,7 +13,7 @@ if os.path.exists('.env'):
            
 
 class Config:
-    APP_NAME = os.environ.get('APP_NAME') or 'Sensor-Side Web Service'
+    APP_NAME = os.environ.get('APP_NAME') or 'Server-Side Web App'
     SERVER_IP = requests.get('http://httpbin.org/ip').json()['origin']
     SERVER_BASE_URL = ['http://',SERVER_IP] 
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True

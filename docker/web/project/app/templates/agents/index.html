@@ -1,11 +1,97 @@
 {% extends 'layouts/base.html' %}
 
+{% block custom_css %}
+<link href="{{ url_for('static', filename='vendors/sweetalert/sweetalert.css') }} " rel="stylesheet" />
+{% endblock %}
+
+
 {% block content %}
 <section class="content">
     <div class="container-fluid">
-        <div class="block-header">
-            <h2>AGENTS PAGES</h2>
+        <div class="row clearfix">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>AGENTS LIST</h2>
+                    </div>
+
+                    <div class="body">
+                        <div class="table-responsive">
+                            <table class="table table-hover dashboard-task-infos">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Name</th>
+                                        <th>IP Addr</th>
+                                        <th>Uptime</th>
+                                        <th>Sensor</th>
+                                        <th>Status</th>
+                                        <th>Attack Count</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Digital Ocean #1</td>
+                                        <td>10.252.108.22</td>
+                                        <td>7 days</td>
+                                        <td>3</td>
+                                        <td><span class="label label-primary">Running</span></td>
+                                        <td>3.000.000</td>
+                                        <td>
+                                            <a href="{{ url_for('agents.details',agent_id=1) }}">
+                                                <button type="button" class="btn btn-info waves-effect">DETAILS</button>
+                                            </a>
+                                            <button type="button" class="btn btn-danger waves-effect destroy-agent" data-agent-id="1" data-agent-name="Digital Ocean #1">DESTROY</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Digital Ocean #2</td>
+                                        <td>10.252.108.101</td>
+                                        <td>28 days</td>
+                                        <td>3</td>
+                                        <td><span class="label label-danger">Error</span></td>
+                                        <td>5.140</td>
+                                        <td>
+                                            <button type="button" class="btn btn-info waves-effect">DETAILS</button>
+                                            <button type="button" class="btn btn-danger waves-effect destroy-agent" data-agent-id="2" data-agent-name="Digital Ocean #2">DESTROY</button>    
+                                        </td>
+                                    </tr>                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
+{% endblock %}
+
+{% block custom_btmscripts %}
+<script src="{{ url_for('static', filename='vendors/sweetalert/sweetalert.min.js') }}"></script>
+
+<script>
+    $('.destroy-agent').on('click', function() {
+        var agent_id = $(this).data('agent-id');
+        var agent_name = $(this).data('agent-name');
+        showConfirmMessage(agent_id,agent_name);
+    });
+
+    function showConfirmMessage(id, name) {
+        swal({
+            title: "Are you sure?",
+            text: "You will destroy Agent "+ name +"\nAll sensor related to the agent will be stopped or destroyed!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, destroy it!",
+            closeOnConfirm: false
+        }, function () {
+            swal("Destroyed!", "Agent " + name + " has been destroyed!", "success");
+        });
+    }
+</script>
 {% endblock %}

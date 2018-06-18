@@ -1,0 +1,155 @@
+{% extends 'layouts/base.html' %}
+
+{% block custom_css %}
+<link href="{{ url_for('static',filename='vendors/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css') }}" rel="stylesheet">
+
+{% endblock %}
+
+{% block content %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>
+                            COWRIE LOGS
+                        </h2>
+                        <ul class="header-dropdown m-r--5">
+                            <li class="dropdown">
+                                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <i class="material-icons">more_vert</i>
+                                </a>
+                                <ul class="dropdown-menu pull-right">
+                                    <li><a href="javascript:void(0);">Action</a></li>
+                                    <li><a href="javascript:void(0);">Another action</a></li>
+                                    <li><a href="javascript:void(0);">Something else here</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                <thead>
+                                    <tr>
+                                        <th>Event_ID</th>
+                                        <th>Source_IP</th>
+                                        <th>Destination_IP</th>
+                                        <th>Destination_Port</th>
+                                        <th>Session</th>
+                                        <th>Message</th>
+                                        <th>GeoIP.location</th>
+                                        <th>GeoIP.country</th>
+                                        <th>GeoIP.country_code</th>
+                                        <th>GeoIP.state</th>
+                                        <th>GeoIP.city</th>
+                                        <th>GeoIP.postal_code</th>                                                                                                   
+                                        <th>GeoIP.asn</th>
+                                        <th>GeoIP.aso</th>
+                                        <th>Timestamp</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>Event_ID</th>
+                                        <th>Source_IP</th>
+                                        <th>Destination_IP</th>
+                                        <th>Destination_Port</th>
+                                        <th>Session</th>
+                                        <th>Message</th>
+                                        <th>GeoIP.location</th>
+                                        <th>GeoIP.country</th>
+                                        <th>GeoIP.country_code</th>
+                                        <th>GeoIP.state</th>
+                                        <th>GeoIP.city</th>
+                                        <th>GeoIP.postal_code</th>                                                                                                   
+                                        <th>GeoIP.asn</th>
+                                        <th>GeoIP.aso</th>
+                                        <th>Timestamp</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    {% set label_arr = ["label label-default", "label label-primary", "label label-success", "label label-info", "label label-warning", "label label-danger"] %}
+                                    {% set update_session = [] %}
+                                    {% set label_session = {} %}
+                                    {% set iterator = {'i': 0} %}
+
+                                    {% for dt in data %}
+                                    
+                                    {% if dt['session'] not in update_session %}
+                                        {% do label_session.update({dt['session']: label_arr[iterator.i] }) %}
+                                        {% do update_session.append(dt['session']) %}
+                                        
+                                        {% if iterator.i == 5 %}
+                                            {% do iterator.update({'i': 0}) %}
+                                        {% else %} 
+                                            {% do iterator.update({'i': (iterator.i + 1) }) %}
+                                        {% endif %}
+                                        
+                                    {% endif %}
+
+                                    <tr>
+                                        <td>{{ dt['eventid'] }}</td>
+                                        <td>{{ dt['src_ip'] }}</td>
+                                        <td>{{ dt['dst_ip'] }}</td>
+                                        <td>{{ dt['dst_port'] }}</td>
+                                        <td>
+                                            <span class="{{ label_session[dt['session']] }}">
+                                                {{ dt['session'] }}
+                                            </span>
+                                        </td>
+                                        <td>{{ dt['message'] }}</td>
+                                        <td>{{ dt['location'] }}</td>
+                                        <td>{{ dt['country'] }}</td>
+                                        <td>{{ dt['country_code'] }}</td>
+                                        <td>{{ dt['state'] }}</td>
+                                        <td>{{ dt['city'] }}</td>
+                                        <td>{{ dt['postal_code'] }}</td>
+                                        <td>{{ dt['asn'] }}</td>
+                                        <td>{{ dt['aso'] }}</td>
+                                        <td>{{ dt['timestamp'] }}</td>
+                                    </tr>
+
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block custom_btmscripts %}
+<script src="{{ url_for('static', filename='vendors/jquery-countto/jquery.countTo.js') }}"></script>
+<script src="{{ url_for('static', filename='vendors/jquery-datatable/jquery.dataTables.js') }}"></script>
+<script src="{{ url_for('static', filename='vendors/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js') }}"></script>
+<script src="{{ url_for('static', filename='vendors/jquery-datatable/extensions/export/dataTables.buttons.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendors/jquery-datatable/extensions/export/buttons.flash.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendors/jquery-datatable/extensions/export/jszip.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendors/jquery-datatable/extensions/export/pdfmake.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendors/jquery-datatable/extensions/export/vfs_fonts.js') }}"></script>
+<script src="{{ url_for('static', filename='vendors/jquery-datatable/extensions/export/buttons.html5.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendors/jquery-datatable/extensions/export/buttons.print.min.js') }}"></script>
+
+<script>
+    $(function () {
+
+        //Exportable table
+        $('.js-exportable').DataTable({
+            dom: 'Bfrtip',
+            responsive: true,
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+    });
+</script>
+{% endblock %}
+
+{% macro coba(session) %}
+    
+{% endmacro %}

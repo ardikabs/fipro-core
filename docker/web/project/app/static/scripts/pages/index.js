@@ -11,7 +11,7 @@
 
     initRealTimeChart();
     initDonutChart();
-    initSparkline();
+    // initSparkline();
 });
 
 var realtime = 'on';

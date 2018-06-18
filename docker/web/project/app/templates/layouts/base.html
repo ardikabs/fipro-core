@@ -4,7 +4,8 @@
     {% include 'partials/_head.html' %}
     {% block custom_head_tags %}{% endblock %}
 
-    {% block topscritps %}{% endblock %}
+    {% block custom_css %}{% endblock %}
+    {% block custom_topscripts %}{% endblock %}
 </head> 
 
 <body class="theme-blue">
@@ -256,8 +257,33 @@
                 ('deploy.index', 'Deploy', 'settings_input_composite'),
                 ('agents.index', 'Agents', 'developer_board'),
                 ('sensor.index', 'Sensor', 'router'),
-                ('logs.index', 'Data Logs', 'cloud'),
+                ('logs.index', 'Logs Management', 'cloud'),
+                ('monitoring.index', 'Monitoring', 'verified_user'),
                 
+            ]%}
+
+            {% set log_endpoint = [
+                'logs.dionaea_index',
+                'logs.cowrie_index',
+                'logs.glastopf_index']
+            %}
+
+            {% set logs_endpoints = [
+                ('logs.dionaea_index', 'Dionaea'),
+                ('logs.cowrie_index', 'Cowrie'),
+                ('logs.glastopf_index', 'Glastopf')                
+            ]%}
+
+            {% set monitoring_endpoint = [
+                'monitoring.event_statistics',
+                'monitoring.event_hourly_statistics', 
+                'monitoring.top_attacks'
+            ]%}
+
+            {% set monitoring_endpoints = [
+                ('monitoring.event_statistics', 'Event Statistics'),
+                ('monitoring.event_hourly_statistics', 'Event Hourly Statistics'),
+                ('monitoring.top_attacks', 'Top Attacks')          
             ]%}
 
             {% set settings_endpoints = [  
@@ -269,13 +295,44 @@
                 <ul class="list">
                     <li class="header">FEATURE</li>
                     {% for endpoint, name, icon in feature_endpoints %}
-                    <li {% if request.endpoint == endpoint%} class="active" {% endif %}>
-                        <a href="{{ url_for(endpoint) }}">
-                            <i class="material-icons">{{ icon }}</i>
+                    
+                    <li {% if request.endpoint == endpoint %} class="active" 
+                        {% elif request.endpoint in log_endpoint and name == "Logs Management" %} class="active" 
+                        {% elif request.endpoint in monitoring_endpoint and name == "Monitoring" %} class="active" 
+
+                        {% endif %} >
+                        <a {% if endpoint == 'logs.index' or endpoint == 'monitoring.index' %} class="menu-toggle" 
+                            {% else %} href="{{ url_for(endpoint) }}" {% endif %}>
+                            <i class="material-icons">{{ icon }}</i>    
                             <span>{{ name }}</span>
                         </a>
+                        
+                        {% if endpoint == 'logs.index' %}
+                        <ul class="ml-menu">
+                            {% for endpoint, name in logs_endpoints %}
+                            <li {% if request.endpoint == endpoint %} class="active" {% endif %}>
+                                <a href="{{ url_for(endpoint) }}">
+                                    <span>{{ name }}</span>
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+
+                        {% if endpoint == 'monitoring.index' %}
+                        <ul class="ml-menu">
+                            {% for endpoint, name in monitoring_endpoints %}
+                            <li {% if request.endpoint == endpoint %} class="active" {% endif %}>
+                                <a href="{{ url_for(endpoint) }}">
+                                    <span>{{ name }}</span>
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
                     </li>
                     {% endfor %}
+                    
                     <li class="header">PROFILES</li>
                     {% for endpoint, name, icon in settings_endpoints %}
                     <li {% if request.endpoint == endpoint%} class="active" {% endif %}>
@@ -292,11 +349,12 @@
             <!-- Footer -->
             <div class="legal">
                 <div class="copyright">
-                    &copy; 2018 <a href="javascript:void(0);">Final Project - Distributed Honeypot <br> Network based on Container</a>.
+                    &copy; 2018 <a href="javascript:void(0);"><p align="justify">Final Project - Distributed Honeypot Network <br>based on Linux Container using Docker</p></a>
                 </div>
                 <div class="version">
                     <b>Version: </b> 0.1.0
                 </div>
+               
             </div>
             <!-- #Footer -->
             
@@ -462,21 +520,10 @@
     <script src="{{ url_for('static', filename='vendors/bootstrap-select/js/bootstrap-select.js') }}"></script>
     <script src="{{ url_for('static', filename='vendors/jquery-slimscroll/jquery.slimscroll.js') }}"></script>
     <script src="{{ url_for('static', filename='vendors/node-waves/waves.js') }}"></script>
-    <script src="{{ url_for('static', filename='vendors/jquery-countto/jquery.countTo.js') }}"></script>
-    <script src="{{ url_for('static', filename='vendors/raphael/raphael.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='vendors/morrisjs/morris.js') }}"></script>
-    <script src="{{ url_for('static', filename='vendors/chartjs/Chart.bundle.js') }}"></script>
-    <script src="{{ url_for('static', filename='vendors/flot-charts/jquery.flot.js') }}"></script>
-    <script src="{{ url_for('static', filename='vendors/flot-charts/jquery.flot.resize.js') }}"></script>
-    <script src="{{ url_for('static', filename='vendors/flot-charts/jquery.flot.pie.js') }}"></script>
-    <script src="{{ url_for('static', filename='vendors/flot-charts/jquery.flot.categories.js') }}"></script>
-    <script src="{{ url_for('static', filename='vendors/flot-charts/jquery.flot.time.js') }}"></script>
-    <script src="{{ url_for('static', filename='vendors/jquery-sparkline/jquery.sparkline.js') }}"></script>
 
     <script src="{{ url_for('static', filename='scripts/admin.js') }}"></script>
-    <script src="{{ url_for('static', filename='scripts/demo.js') }}"></script>    
     
-    {% block bottomscripts %}{% endblock %}    
+    {% block custom_btmscripts %}{% endblock %}    
 </body>
 
 </html>
