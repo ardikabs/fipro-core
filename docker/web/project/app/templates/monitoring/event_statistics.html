@@ -20,7 +20,7 @@
                         <div class="row clearfix">
                             <div class="col-md-12">
                                 <!-- Sensor Event Histogram -->
-                                <canvas id="sensor_histogram" height="80"></canvas>
+                                <canvas id="sensor_histogram"></canvas>
                             </div>
                         </div>
 
@@ -28,7 +28,7 @@
                         <div class="row clearfix">
                             <div class="col-md-12">
                                 <!-- Sensor Event by Country Histogram -->
-                                <canvas id="sensor_country_histogram" height="80"></canvas>
+                                <canvas id="sensor_country_histogram"></canvas>
                             </div>
                         </div>
     
@@ -37,7 +37,7 @@
                         <div class="row clearfix">
                             <div class="col-md-12">
                                 <!-- Sensor Destination Port Histogram -->
-                                <canvas id="sensor_destination_histogram" height="80"></canvas>
+                                <canvas id="sensor_destination_histogram"></canvas>
  
                             </div>
                         </div>
@@ -111,15 +111,289 @@
 {% endblock %}
 
 {% block custom_btmscripts %}
-<script src="{{ url_for('static', filename='vendors/chartjs/Chart.bundle.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+<script src="{{ url_for('static', filename='vendors/momentjs/moment.js') }}"></script>
 
 <script>
-    new Chart(document.getElementById("sensor_histogram").getContext("2d"),getHistogramChart());
-    new Chart(document.getElementById("sensor_country_histogram").getContext("2d"),getHistogramChart());
-    new Chart(document.getElementById("sensor_destination_histogram").getContext("2d"),getHistogramChart());
+    window.colors = [
+        {
+            backgroundColor: 'rgb(213,0,0)',
+            borderColor: 'rgb(255,138,128)'
+        },
+        {
+            backgroundColor: 'rgb(0,145,234)',
+            borderColor: 'rgb(128,216,255)'
+        },
+        {
+            backgroundColor: 'rgb(255,179,0)',
+            borderColor: 'rgb(255,213,79)'
+        }
+    ]
+
+    window.colorsWithAlpha = [
+        {
+            backgroundColor: 'rgba(244,67,54, 0.3)',
+            borderColor: 'rgba(244,67,54, 0.75)',
+            pointBorderColor: 'rgba(244,67,54, 0)',
+            pointBackgroundColor: 'rgba(244,67,54, 0.9)'
+        },
+        
+        {
+            backgroundColor: 'rgba(74,20,140, 0.3)',
+            borderColor: 'rgba(74,20,140, 0.75)',
+            pointBorderColor: 'rgba(74,20,140, 0)',
+            pointBackgroundColor: 'rgba(74,20,140, 0.9)'
+        },
+        {
+            backgroundColor: 'rgba(255,214,0, 0.3)',
+            borderColor: 'rgba(255,214,0, 0.75)',
+            pointBorderColor: 'rgba(255,214,0, 0)',
+            pointBackgroundColor: 'rgba(255,214,0, 0.9)'
+        },
+        {
+            backgroundColor: 'rgba(104,159,56, 0.3)',
+            borderColor: 'rgba(104,159,56, 0.75)',
+            pointBorderColor: 'rgba(104,159,56, 0)',
+            pointBackgroundColor: 'rgba(104,159,56, 0.9)'
+        },
+        {
+            backgroundColor: 'rgba(0,121,107, 0.3)',
+            borderColor: 'rgba(0,121,107, 0.75)',
+            pointBorderColor: 'rgba(0,121,107, 0)',
+            pointBackgroundColor: 'rgba(0,121,107, 0.9)'
+        },
+        {
+            backgroundColor: 'rgba(84,110,122, 0.3)',
+            borderColor: 'rgba(84,110,122, 0.75)',
+            pointBorderColor: 'rgba(84,110,122, 0)',
+            pointBackgroundColor: 'rgba(84,110,122, 0.9)'
+        },
+        {
+            backgroundColor: 'rgba(94,53,177, 0.3)',
+            borderColor: 'rgba(94,53,177, 0.75)',
+            pointBorderColor: 'rgba(94,53,177, 0)',
+            pointBackgroundColor: 'rgba(94,53,177, 0.9)'
+        },
+
+        {
+            backgroundColor: 'rgba(67,160,71, 0.3)',
+            borderColor: 'rgba(67,160,71, 0.75)',
+            pointBorderColor: 'rgba(67,160,71, 0)',
+            pointBackgroundColor: 'rgba(67,160,71, 0.9)'
+        },
+        {
+            backgroundColor: 'rgba(255,235,59, 0.3)',
+            borderColor: 'rgba(255,235,59, 0.75)',
+            pointBorderColor: 'rgba(255,235,59, 0)',
+            pointBackgroundColor: 'rgba(255,235,59, 0.9)'
+        },
+        {
+            backgroundColor: 'rgba(251,140,0, 0.3)',
+            borderColor: 'rgba(251,140,0, 0.75)',
+            pointBorderColor: 'rgba(251,140,0, 0)',
+            pointBackgroundColor: 'rgba(251,140,0,0, 0.9)'
+        },
+    ]
+    window.honeypot = [
+        'Dionaea',
+        'Cowrie',
+        'Glastopf'
+    ]
+    window.country = [
+        'Russia',
+        'United States',
+        'Indonesia',
+        'Malaysia',
+        'China',
+        'Japan',
+        'Korea',
+        'Thailand',
+        'Russia',
+        'Italy'
+    ]
+
+    window.destPort = [
+        '445',
+        '443',
+        '22',
+        '23',
+        '3606',
+        '53',
+        '27017',
+        '5060',
+        '21',
+        '80'
+    ]
+
+    var labels = [];
+    var datasets1 = [];
+    var datasets2 = [];
+    var datasets3 = [];
+
+    {% for i in range(30) %}
+    labels.push(moment().add({{ i }}, 'day'));
+    {% endfor %}
+
+    {% for i in range(3) %}
+    datasets1.push(
+        {
+            label: window.honeypot[{{ i }}],
+            data: [
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }}
+            ],
+            backgroundColor: window.colors[{{ i }}].backgroundColor,
+            borderColor: window.colors[{{ i }}].borderColor,
+            type: 'bar',
+            borderWidth: 1
+        }
+    )
+    {% endfor %}
+
+
+    {% for i in range(0,10) %}
+    datasets2.push(
+        {
+            label: window.country[{{ i }}],
+            data: [
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }}
+            ],
+            backgroundColor:  window.colorsWithAlpha[{{ i }}].backgroundColor,
+            borderColor: window.colorsWithAlpha[{{ i }}].borderColor,
+            pointBorderColor: window.colorsWithAlpha[{{ i }}].pointBorderColor,
+            pointBackgroundColor: window.colorsWithAlpha[{{ i }}].pointBackgroundColor,
+            pointBorderWidth: 1,
+
+            type: 'line',
+            pointRadius: 1,
+            fill: true,
+            lineTension: 0.2,
+            borderWidth: 2  
+        }
+    )
+    {% endfor %}
+
+    {% for i in range(0,10) %}
+    datasets3.push(
+        {
+            label: window.destPort[{{ i }}],
+            data: [
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }},
+                {{ range(0,100000) | random }}
+            ],
+            backgroundColor:  window.colorsWithAlpha[{{ i }}].backgroundColor,
+            borderColor: window.colorsWithAlpha[{{ i }}].borderColor,
+            pointBorderColor: window.colorsWithAlpha[{{ i }}].pointBorderColor,
+            pointBackgroundColor: window.colorsWithAlpha[{{ i }}].pointBackgroundColor,
+            pointBorderWidth: 1,
+
+            type: 'line',
+            pointRadius: 1,
+            fill: true,
+            lineTension: 0.2,
+            borderWidth: 2  
+        }
+    )
+    {% endfor %}
+
+
+    // Histogram
+    window.sensorEventHist   = new Chart(document.getElementById("sensor_histogram").getContext("2d"),customHisto());
+    window.sensorCountryHist = new Chart(document.getElementById("sensor_country_histogram").getContext("2d"),customCountry());
+    window.sensorDestHist    = new Chart(document.getElementById("sensor_destination_histogram").getContext("2d"),customDestination());
+
+    
+    // For Bar Sensor Countries and Events
     new Chart(document.getElementById("sensor_countries_bar").getContext("2d"),getDoughnutBar());
     new Chart(document.getElementById("sensor_events_bar").getContext("2d"),getSensorEventsBar());
 
+
+    // For Bar Country and Port
     new Chart(document.getElementById("coba_1").getContext("2d"),getCoba());
     new Chart(document.getElementById("coba_2").getContext("2d"),getCoba());
     new Chart(document.getElementById("coba_3").getContext("2d"),getCoba());
@@ -127,12 +401,45 @@
     new Chart(document.getElementById("coba_5").getContext("2d"),getCoba());
     new Chart(document.getElementById("coba_6").getContext("2d"),getCoba());
 
+    function getOptions(){
+        var options = 
+        {
+            tooltips: {
+                mode: 'index',
+                intersect: false
+            },
+            responsive: true,
+            scales: {
+                xAxes: [{
+                    stacked: true,
+                }],
+                yAxes: [{
+                    stacked: true
+                }]
+            }
+        };
+        return options;
+    }
+
+    function getConfigHisto(type, labels, datasets, options){
+        var config = {
+            type: type,
+            data: {
+                labels: labels,
+                datasets: datasets
+            },
+            options: options
+        };
+
+        return config
+    }
+
     function getCoba(){
         var config = null;
         config = {
             type: 'doughnut',
             data: {
-                labels:['445','22','23', '27017', '443','445','22','23', '5001', '443'],
+                labels:['445','22','23', '27017', '443','445','22','23', '27017', '443'],
                 datasets:[{
                     label: 'Sensor Event by Countries',
                     data: [50,30,40,10,30,50,30,40,10,30],
@@ -154,9 +461,11 @@
             options: {
                 responsive: true,
                 legend: {
-                    position: 'right',
+                    display: true,
+                    position: 'top',
                     labels: {
-                        boxWidth: 15
+                        usePointStyle: true,
+                        fontSize: 11
                     }
                 },
                 title: {
@@ -173,39 +482,135 @@
         return config;
     }
 
-    function getHistogramChart(){
+    function customHisto(){
         var config = null;
         config = {
-            type: 'line',
+            type: 'bar',
             data: {
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
-                datasets: [{
-                    label: "My First dataset",
-                    data: [65, 59, 80, 81, 56, 55, 40],
-                    borderColor: 'rgba(0, 188, 212, 0.75)',
-                    backgroundColor: 'rgba(0, 188, 212, 0.3)',
-                    pointBorderColor: 'rgba(0, 188, 212, 0)',
-                    pointBackgroundColor: 'rgba(0, 188, 212, 0.9)',
-                    pointBorderWidth: 1
-                }, 
-                {
-                    label: "My Second dataset",
-                    data: [28, 48, 40, 19, 86, 27, 90],
-                    borderColor: 'rgba(233, 30, 99, 0.75)',
-                    backgroundColor: 'rgba(233, 30, 99, 0.3)',
-                    pointBorderColor: 'rgba(233, 30, 99, 0)',
-                    pointBackgroundColor: 'rgba(233, 30, 99, 0.9)',
-                    pointBorderWidth: 1
-                }]
+                labels: labels,
+                datasets: datasets1
             },
             options: {
+                tooltips: {
+                    mode: 'index',
+                    intersect: false
+                },
                 responsive: true,
-                legend: false
+                legend: {
+                    display: true,
+                    position: 'right',
+                    labels: {
+                        usePointStyle: true,
+                        fontSize: 11
+                    }
+                },
+                scales: {
+                    xAxes: [{
+                        type: "time",
+                        distribution: 'series',
+                        scaleLabel: {
+                            display:true,
+                            labelString: "Timestamp"
+                        }
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
             }
         };
 
         return config;
     }
+
+    function customCountry(){
+        var config = null;
+        config = {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: datasets2
+            },
+            options: {
+                tooltips: {
+                    mode: 'index',
+                    intersect: false
+                },
+                responsive: true,
+                legend: {
+                    display: true,
+                    position: 'top',
+                    labels: {
+                        usePointStyle: true,
+                        fontSize: 11
+                    }
+                },
+                scales: {
+                    xAxes: [{
+                        type: "time",
+                        distribution: 'series',
+                        scaleLabel: {
+                            display:true,
+                            labelString: "Timestamp"
+                        }
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        };
+
+        return config;
+    }
+
+    function customDestination(){
+        var config = null;
+        config = {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: datasets3
+            },
+            options: {
+                tooltips: {
+                    mode: 'index',
+                    intersect: false
+                },
+                responsive: true,
+                legend: {
+                    display: true,
+                    position: 'top',
+                    labels: {
+                        usePointStyle: true,
+                        fontSize: 11
+                    }
+                },
+                scales: {
+                    xAxes: [{
+                        type: "time",
+                        distribution: 'series',
+                        scaleLabel: {
+                            display:true,
+                            labelString: "Timestamp"
+                        }
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        };
+
+        return config;
+    }
+
 
     function getDoughnutBar(){
         var config = null;
@@ -231,7 +636,8 @@
                 legend: {
                     position: 'right',
                     labels: {
-                        boxWidth: 15
+                        usePointStyle: true,
+                        fontSize: 11
                     }
                 },
                 animation: {
@@ -264,9 +670,11 @@
             options: {
                 responsive: true,
                 legend: {
+                    display: true,
                     position: 'right',
                     labels: {
-                        boxWidth: 15
+                        usePointStyle: true,
+                        fontSize: 11
                     }
                 },
                 animation: {
@@ -279,5 +687,74 @@
         return config;
     }
 
+
+// TODO
+// Create 10 Colour Ready
+// Function for options
+// Function for config
+// Function for creating
+
+// window.colorsWithAlpha = {
+    //     red: {
+    //         backgroundColor: 'rgba(244,67,54, 0.3)',
+    //         borderColor: 'rgba(244,67,54, 0.75)',
+    //         pointBorderColor: 'rgba(244,67,54, 0)',
+    //         pointBackgroundColor: 'rgba(244,67,54, 0.9)'
+    //     },
+    //     blue: {
+    //         backgroundColor: 'rgba(33,150,243, 0.3)',
+    //         borderColor: 'rgba(33,150,243, 0.75)',
+    //         pointBorderColor: 'rgba(33,150,243, 0)',
+    //         pointBackgroundColor: 'rgba(33,150,243, 0.9)'
+    //     },
+    //     green: {
+    //         backgroundColor: 'rgba(67,160,71, 0.3)',
+    //         borderColor: 'rgba(67,160,71, 0.75)',
+    //         pointBorderColor: 'rgba(67,160,71, 0)',
+    //         pointBackgroundColor: 'rgba(67,160,71, 0.9)'
+    //     },
+    //     yellow: {
+    //         backgroundColor: 'rgba(255,235,59, 0.3)',
+    //         borderColor: 'rgba(255,235,59, 0.75)',
+    //         pointBorderColor: 'rgba(255,235,59, 0)',
+    //         pointBackgroundColor: 'rgba(255,235,59, 0.9)'
+    //     },
+    //     orange: {
+    //         backgroundColor: 'rgba(251,140,0, 0.3)',
+    //         borderColor: 'rgba(251,140,0, 0.75)',
+    //         pointBorderColor: 'rgba(251,140,0, 0)',
+    //         pointBackgroundColor: 'rgba(251,140,0,0, 0.9)'
+    //     },
+    //     blueGrey: {
+    //         backgroundColor: 'rgba(84,110,122, 0.3)',
+    //         borderColor: 'rgba(84,110,122, 0.75)',
+    //         pointBorderColor: 'rgba(84,110,122, 0)',
+    //         pointBackgroundColor: 'rgba(84,110,122, 0.9)'
+    //     },
+    //     deepPurple: {
+    //         backgroundColor: 'rgba(94,53,177, 0.3)',
+    //         borderColor: 'rgba(94,53,177, 0.75)',
+    //         pointBorderColor: 'rgba(94,53,177, 0)',
+    //         pointBackgroundColor: 'rgba(94,53,177, 0.9)'
+    //     },
+    //     purple: {
+    //         backgroundColor: 'rgba(74,20,140, 0.3)',
+    //         borderColor: 'rgba(74,20,140, 0.75)',
+    //         pointBorderColor: 'rgba(74,20,140, 0)',
+    //         pointBackgroundColor: 'rgba(74,20,140, 0.9)'
+    //     },
+    //     lightGreen: {
+    //         backgroundColor: 'rgba(104,159,56, 0.3)',
+    //         borderColor: 'rgba(104,159,56, 0.75)',
+    //         pointBorderColor: 'rgba(104,159,56, 0)',
+    //         pointBackgroundColor: 'rgba(104,159,56, 0.9)'
+    //     },
+    //     blackwood: {
+    //         backgroundColor: 'rgba(0,121,107, 0.3)',
+    //         borderColor: 'rgba(0,121,107, 0.75)',
+    //         pointBorderColor: 'rgba(0,121,107, 0)',
+    //         pointBackgroundColor: 'rgba(0,121,107, 0.9)'
+    //     }
+    // }
 </script>
 {% endblock %}

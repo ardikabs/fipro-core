@@ -20,17 +20,13 @@
                         <div class="row clearfix">
                             <div class="col-md-4">
                                 <b>Select Date</b>
-                                <div class="input-group">
-                                    <div class="form-line">
-                                        <input type="text" class="datepicker form-control" placeholder="Ex: 01/01/2018">
-                                    </div>
-                                </div>
+                                <input id="datepicker-se" type="text" class="form-control" placeholder="Ex: 01/01/2018">
                             </div>
                         </div>
                         <div class="row clearfix">
                             <div class="col-md-12">
                                 <!-- Sensor Event Histogram -->
-                                <canvas id="sensor_histogram" height="75"></canvas>
+                                <canvas id="sensor_event_statistics" height="75"></canvas>
                             </div>
                         </div>
            
@@ -44,18 +40,14 @@
                 <div class="card">
                     <div class="header">
                         <h2>
-                            DESTINATION PORTS EVENT STATISTICS
+                            DESTINATION PORT EVENT STATISTICS
                         </h2>
                     </div>
                     <div class="body">
                         <div class="row clearfix">
                             <div class="col-md-4">
                                 <b>Select Date</b>
-                                <div class="input-group">
-                                    <div class="form-line">
-                                        <input type="text" class="datepicker form-control" placeholder="Ex: 01/01/2018">
-                                    </div>
-                                </div>
+                                <input id="datepicker-dpe" type="text" class="form-control" placeholder="Ex: 01/01/2018">
                             </div>
                         </div>
                         <div class="row clearfix">
@@ -83,17 +75,13 @@
                         <div class="row clearfix">
                             <div class="col-md-4">
                                 <b>Select Date</b>
-                                <div class="input-group">
-                                    <div class="form-line">
-                                        <input type="text" class="datepicker form-control" placeholder="Ex: 01/01/2018">
-                                    </div>
-                                </div>
+                                <input id="datepicker-ce" type="text" class="form-control" placeholder="Ex: 01/01/2018">
                             </div>
                         </div>
                         <div class="row clearfix">
                             <div class="col-md-12">
                                 <!-- Sensor Event Histogram -->
-                                <canvas id="sensor_destination_histogram" height="75"></canvas>
+                                <canvas id="countries_event_statistics" height="75"></canvas>
                             </div>
                         </div>
             
@@ -113,17 +101,13 @@
                         <div class="row clearfix">
                             <div class="col-md-4">
                                 <b>Select Date</b>
-                                <div class="input-group">
-                                    <div class="form-line">
-                                        <input type="text" class="datepicker form-control" placeholder="Ex: 01/01/2018">
-                                    </div>
-                                </div>
+                                <input id="datepicker-ae" type="text" class="form-control" placeholder="Ex: 01/01/2018">
                             </div>
                         </div>
                         <div class="row clearfix">
                             <div class="col-md-12">
                                 <!-- Sensor Event Histogram -->
-                                <canvas id="sensor_country_histogram" height="75"></canvas>
+                                <canvas id="agent_event_statistics" height="75"></canvas>
                             </div>
                         </div>
             
@@ -145,60 +129,90 @@
 
 
 <script>
-    $(function(){
-        $('.datepicker').bootstrapMaterialDatePicker({
-            format: 'dddd DD MMMM YYYY',
-            clearButton: true,
-            weekStart: 1,
-            time: false,
-            currentDate: moment()
-        }).on('change',function(e, date){
-            console.log(date.toDate());
-        });
+    var configDatePicker = {
+        format: 'dddd, DD MMMM YYYY',
+        clearButton: false,
+        weekStart: 1,
+        time: false,
+        currentDate: moment()
+    };
 
-    });
-
-
-
-    new Chart(document.getElementById("sensor_histogram").getContext("2d"),getHistogramChart());
-    new Chart(document.getElementById("sensor_country_histogram").getContext("2d"),getHistogramChart());
-    new Chart(document.getElementById("sensor_destination_histogram").getContext("2d"),getHistogramChart());
-    new Chart(document.getElementById("destination_port_statistics").getContext("2d"),getHistogramChart());
-
-    function getHistogramChart(){
-        var config = null;
-        config = {
-            type: 'line',
-            data: {
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
-                datasets: [{
-                    label: "My First dataset",
-                    data: [65, 59, 80, 81, 56, 55, 50000],
-                    borderColor: 'rgba(0, 188, 212, 0.75)',
-                    backgroundColor: 'rgba(0, 188, 212, 0.3)',
-                    pointBorderColor: 'rgba(0, 188, 212, 0)',
-                    pointBackgroundColor: 'rgba(0, 188, 212, 0.9)',
-                    pointBorderWidth: 1
-                }, 
-                {
-                    label: "My Second dataset",
-                    data: [28, 48, 40, 19, 86, 27, 90],
-                    borderColor: 'rgba(233, 30, 99, 0.75)',
-                    backgroundColor: 'rgba(233, 30, 99, 0.3)',
-                    pointBorderColor: 'rgba(233, 30, 99, 0)',
-                    pointBackgroundColor: 'rgba(233, 30, 99, 0.9)',
-                    pointBorderWidth: 1
-                }]
+    var config = {
+        type: 'line',
+        data: {
+            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            datasets: [{
+                label: "Dionaea",
+                data: [65, 59, 80, 81, 56, 55, 50000],
+                borderColor: 'rgba(0, 188, 212, 0.75)',
+                backgroundColor: 'rgba(0, 188, 212, 0.3)',
+                pointBorderColor: 'rgba(0, 188, 212, 0)',
+                pointBackgroundColor: 'rgba(0, 188, 212, 0.9)',
+                pointBorderWidth: 1
+            }, 
+            {
+                label: "Cowrie",
+                data: [28, 48, 40, 19, 86, 27, 90],
+                borderColor: 'rgba(233, 30, 99, 0.75)',
+                backgroundColor: 'rgba(233, 30, 99, 0.3)',
+                pointBorderColor: 'rgba(233, 30, 99, 0)',
+                pointBackgroundColor: 'rgba(233, 30, 99, 0.9)',
+                pointBorderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            legend: {
+                position: 'top'
             },
-            options: {
-                responsive: true,
-                legend: false
+            title: {
+                display: true,
+                text: moment().format('dddd, DD MMMM YYYY')
             }
+        }
         };
 
-        return config;
+    window.onload = function(){
+        window.sensorEventStat = new Chart(document.getElementById("sensor_event_statistics").getContext("2d"),config);
+        window.agentEventStat = new Chart(document.getElementById("agent_event_statistics").getContext("2d"),config);
+        window.countriesEventStat = new Chart(document.getElementById("countries_event_statistics").getContext("2d"),config);
+        window.destEventStat = new Chart(document.getElementById("destination_port_statistics").getContext("2d"),config);
+
+
+        $(function(){
+            $('#datepicker-se').bootstrapMaterialDatePicker(configDatePicker)
+                .on('change',function(e, date){
+                    console.log(date.toDate());
+                    window.sensorEventStat.options.title.text = date.format('dddd, DD MMMM YYYY');
+                    console.log(config);
+                    window.sensorEventStat.update();
+                }
+            );
+
+            $('#datepicker-dpe').bootstrapMaterialDatePicker(configDatePicker)
+                .on('change',function(e, date){
+                    console.log(date.toDate());
+                    window.destEventStat.options.title.text = date.format('dddd, DD MMMM YYYY');
+                    window.destEventStat.update();
+                }
+            );
+            $('#datepicker-ce').bootstrapMaterialDatePicker(configDatePicker)
+                .on('change',function(e, date){
+                    console.log(date.toDate());
+                    window.countriesEventStat.options.title.text = date.format('dddd, DD MMMM YYYY');
+                    window.countriesEventStat.update();
+                }
+            );
+
+            $('#datepicker-ae').bootstrapMaterialDatePicker(configDatePicker)
+                .on('change',function(e, date){
+                    console.log(date.toDate());
+                    window.agentEventStat.options.title.text = date.format('dddd, DD MMMM YYYY');
+                    window.agentEventStat.update();
+                }
+            );
+
+        });
     }
-
-
 </script>
 {% endblock %}

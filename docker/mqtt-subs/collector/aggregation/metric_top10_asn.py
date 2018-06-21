@@ -6,7 +6,7 @@
 from pymongo import MongoClient
 import time
 from datetime import datetime, timedelta
-mongoconn = MongoClient('mongodb://206.189.149.230:27017/')
+mongoconn = MongoClient('mongodb://192.168.72.128:27017/')
 db = mongoconn.fipro
 
 start = time.time()
@@ -41,7 +41,7 @@ match_without_time = {
     "$match": 
         {
             "honeypot": {"$ne": "cowrie"},
-            "identifier": "5c3669d44b6a",
+            "identifier": "uid-19216872129",
             "geoip.autonomous_system_number" : {"$ne": None}
         }
     }
@@ -143,14 +143,7 @@ databaru = []
 for doc in top_10_asn_aggregate:
     for doc_cowrie in docs_cowrie:
         if doc_cowrie['autonomous_system_number'] == doc['autonomous_system_number']:
-            print("ASN: {}".format(doc_cowrie['autonomous_system_number']))
-            print("Before count: {}".format(doc_cowrie['counts']))
-
             doc['counts'] += doc_cowrie['counts']
-
-            print("ASN: {}".format(doc['autonomous_system_number']))
-            print("After count: {}".format(doc['counts']))
-
                 
     databaru.append(doc)
 

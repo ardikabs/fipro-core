@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% include 'partials/_head.html' %}
+    {% block custom_head_tags %}{% endblock %}
+
+    {% block custom_css %}{% endblock %}
+    {% block custom_topscripts %}{% endblock %}
+</head>
+
+<body class="theme-blue">
+    
+    {% include 'partials/_loader.html' %}
+    <div class="overlay"></div>
+    <!-- Search Bar -->
+
+    <div class="search-bar">
+        <div class="search-icon">
+            <i class="material-icons">search</i>
+        </div>
+        <input type="text" placeholder="START TYPING...">
+        <div class="close-search">
+            <i class="material-icons">close</i>
+        </div>
+    </div>
+    <!-- #END# Search Bar -->
+
+    <nav class="navbar">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
+                <a href="javascript:void(0);" class="bars"></a>
+                <a class="navbar-brand" href="{{ url_for('main.index') }}">{{ config.APP_NAME }}</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <!-- Call Search -->
+                    <li><a href="javascript:void(0);" class="js-search" data-close="true"><i class="material-icons">search</i></a></li>
+                    <!-- #END# Call Search -->
+                    <!-- #END# Tasks -->
+                    <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    {% block content %}{% endblock %}  
+
+
+    <script src="{{ url_for('static', filename='vendors/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/bootstrap/js/bootstrap.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/bootstrap-select/js/bootstrap-select.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/jquery-slimscroll/jquery.slimscroll.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/node-waves/waves.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='scripts/page.js') }}"></script>
+    
+    {% block custom_btmscripts %}{% endblock %}    
+</body>

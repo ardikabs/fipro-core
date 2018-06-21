@@ -95,9 +95,11 @@
                                         <td>{{ dt['dst_ip'] }}</td>
                                         <td>{{ dt['dst_port'] }}</td>
                                         <td>
+                                            <a href="{{ url_for('logs.cowrie_item', session=dt['session']) }}"> 
                                             <span class="{{ label_session[dt['session']] }}">
                                                 {{ dt['session'] }}
-                                            </span>
+                                            </span
+                                            ></a>
                                         </td>
                                         <td>{{ dt['message'] }}</td>
                                         <td>{{ dt['location'] }}</td>
@@ -135,7 +137,10 @@
 <script src="{{ url_for('static', filename='vendors/jquery-datatable/extensions/export/buttons.html5.min.js') }}"></script>
 <script src="{{ url_for('static', filename='vendors/jquery-datatable/extensions/export/buttons.print.min.js') }}"></script>
 
+<input type="hidden" value="{{ data }}" id="data-source">
 <script>
+    var dataSource = document.getElementById("data-source").value;
+
     $(function () {
 
         //Exportable table

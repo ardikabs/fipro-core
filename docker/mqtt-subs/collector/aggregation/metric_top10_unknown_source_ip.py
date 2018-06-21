@@ -9,7 +9,7 @@ aggregate_event = db.logs.aggregate([
     {
         "$match": {
             "identifier": "uid-19216872129",
-            "geoip": {"$ne": None}
+            "geoip": {"$eq": None}
         }
     },
 
@@ -17,8 +17,6 @@ aggregate_event = db.logs.aggregate([
         "$group": {
             "_id": {
                 "src_ip": "$src_ip",
-                "country": "$geoip.country",
-                "country_code": "$geoip.country_code"
             },
             "count": {"$sum": 1}
         }
@@ -28,8 +26,6 @@ aggregate_event = db.logs.aggregate([
         "$project":{
             "_id": 0,
             "src_ip": "$_id.src_ip",
-            "country": "$_id.country",
-            "country_code": "$_id.country_code",
             "count": 1
         }
     },
@@ -40,7 +36,7 @@ aggregate_event = db.logs.aggregate([
         "$limit": 10
     },
     {
-        "$out": "honeypot_top10_source_ip_metric"
+        "$out": "honeypot_top10_unkown_source_ip_metric"
     }
 ])
 end_ts = time.time()
