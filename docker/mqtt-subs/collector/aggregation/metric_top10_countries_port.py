@@ -60,7 +60,8 @@ aggregate = db.logs.aggregate([
             "counts":1
         }
     },
-    { "$limit": 10},
+    { 
+        "$limit": 10},
     
     {
         "$out": "honeypot_top10_countries_and_port_metric"

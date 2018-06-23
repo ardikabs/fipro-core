@@ -4,11 +4,11 @@
 from pymongo import MongoClient
 import time
 import datetime
-mongoconn = MongoClient('mongodb://192.168.72.128:27017/')
+mongoconn = MongoClient('mongodb://192.168.1.100:27017/')
 db = mongoconn.fipro
 start_ts = time.time()
 
-user    = "uid-19216872129"
+user    = "uid-1921681100"
 agent   = "206.189.153.245"
 aggregate_user = db.logs.aggregate([
     {

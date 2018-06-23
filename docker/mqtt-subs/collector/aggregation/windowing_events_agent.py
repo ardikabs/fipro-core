@@ -22,7 +22,7 @@ aggregate = db.logs.aggregate([
         "$group": {
             "_id": {
                 "honeypot": "$honeypot",
-                "dst_ip": "$dst_ip",
+                "agent_ip": "$agent_ip",
                 "date": {
                     "$dateFromParts": {
                         "year": {"$year": {"date": "$timestamp", "timezone": "Asia/Jakarta"}},
@@ -42,7 +42,7 @@ aggregate = db.logs.aggregate([
         "$group": {
             "_id": {
                 "honeypot": "$_id.honeypot",
-                "dst_ip": "$_id.dst_ip",
+                "agent_ip": "$_id.agent_ip",
                 "date": "$_id.date"
 
             },
@@ -71,7 +71,7 @@ aggregate = db.logs.aggregate([
         "$group": {
             "_id": {
                 "date": "$_id.date",
-                "dst_ip": "$_id.dst_ip",
+                "agent_ip": "$_id.agent_ip",
                 "hour": "$hourly.hour"
 
             },
@@ -84,7 +84,7 @@ aggregate = db.logs.aggregate([
         "$group": {
             "_id": {
                 "date": "$_id.date",
-                "dst_ip": "$_id.dst_ip"
+                "agent_ip": "$_id.agent_ip"
 
             },
             "hourly": {
@@ -105,7 +105,7 @@ aggregate = db.logs.aggregate([
         "$project":{
             "_id": 0,
             "date": "$_id.date",
-            "agent": "$_id.dst_ip",
+            "agent": "$_id.agent_ip",
             "hourly": {"$mergeObjects": "$hourly"},
             "counts": 1
         }

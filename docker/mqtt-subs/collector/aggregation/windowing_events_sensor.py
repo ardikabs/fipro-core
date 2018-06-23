@@ -4,7 +4,7 @@
 from pymongo import MongoClient
 import time
 import datetime
-mongoconn = MongoClient('mongodb://192.168.72.128:27017/')
+mongoconn = MongoClient('mongodb://192.168.1.100:27017/')
 db = mongoconn.fipro
 start_ts = time.time()
 
@@ -12,7 +12,7 @@ start_ts = time.time()
 aggregate = db.logs.aggregate([
     {
         "$match": {
-            "identifier": "uid-19216872129",
+            "identifier": "uid-1921681100",
             "timestamp": {"$gte": datetime.datetime.today() - datetime.timedelta(weeks=102) }
         }
     },

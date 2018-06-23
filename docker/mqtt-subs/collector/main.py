@@ -1,16 +1,12 @@
 
 from pymongo import MongoClient
 from models import AttackDailyStats, AttackedPortStats, CredentialCount, SensorEventsCount, GeoIP
-from utils import get_date, get_hour, get_year
 import paho.mqtt.client as mqtt
-import geoip2.database
-import geoip2.errors
 import os
 import sys
 import json
-import time
-import datetime
 import logging
+import utils
 
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
@@ -27,9 +23,13 @@ if os.path.exists('.env'):
 ########################################################################
 mongoconn = MongoClient(os.getenv('MONGODB_URL'))
 db = mongoconn.fipro
-coll_raw     = db.raw_log
 coll_log     = db.logs
 coll_metrics = db.metrics
+
+coll_daily   = db.daily_count
+coll_port    = db.port_count
+coll_hpot    = db.sensor_events_count
+coll_cred    = db.credential_count
 
 
 ########################################################################
@@ -39,111 +39,167 @@ coll_metrics = db.metrics
 def cowrie_resolver(data):
     exist_session = [c for c in coll_log.find({"honeypot":"cowrie"}).distinct("session")]
     if data["session"] not in exist_session: # Check Existing Session dengan Session Data yang masuk
-        attack_daily_proc(data) 
-        attacked_port_proc(data)
-        sensor_event_proc(data)
+        daily_counter(data) 
+        port_counter(data)
+        event_counter(data)
     
     if "username" in data:        
-         credential_counts_proc(data)
+        credential_counter(data)
               
 def dionaea_resolver(data):
     if "username" in data:        
-        credential_counts_proc(data)
+        credential_counter(data)
     
-    attack_daily_proc(data)
-    attacked_port_proc(data)
-    sensor_event_proc(data)
+    daily_counter(data)
+    port_counter(data)
+    event_counter(data)
 
 def glastopf_resolver(data):
-    attack_daily_proc(data)
-    attacked_port_proc(data)
-    sensor_event_proc(data)
+    daily_counter(data)
+    port_counter(data)
+    event_counter(data)
 
 # [END] Honeypot Resolver
 ########################################################################
 
 ########################################################################
 # [START] Processing
-def attack_daily_proc(data):
-    date= get_date(data["timestamp"])
-    hour= get_hour(data["timestamp"])
+def daily_counter(data):
+    type = "attack.daily.stats"
+    date = utils.get_date(data['timestamp'])
+    hour = utils.get_hour(data["timestamp"])
+    identifier = data['identifier'] 
 
-    type= "attack.daily.stats"
-    dt = coll_metrics.find({"type": type, "date": get_date(data["timestamp"])}).count() # Variable untuk mengetahui jumlah data pada collection ADS sesuai dengan tanggal
+    # Variable untuk mengetahui jumlah data pada collection ADS sesuai dengan tanggal
+    dt = coll_daily.find({"type": type, "date": date, "identifier": identifier }).count() 
     if dt == 0:  # Ketika jumlah data 0 maka membuat dokumen baru
         newdata = AttackDailyStats(data)
-        coll_metrics.insert(newdata.to_mongo())
+        coll_daily.insert(newdata.to_mongo())
+    
     else:
-        mongodata = coll_metrics.find({"type": type,"date": date},{"hourly."+ hour:{'$exists':True}}).count() # Digunakan untuk cek pada dokumen dan mengetahui telah terdapat tanggal sesuai dengan data baru atau tidak 
+        # Digunakan untuk cek pada dokumen dan mengetahui telah terdapat tanggal sesuai dengan data baru atau tidak
+        mongodata = coll_daily.find(
+            {
+                "type": type,
+                "date": date, 
+                "identifier": identifier 
+            }, 
+            {
+                "hourly."+ hour: {'$exists':True}
+            }).count()  
+
         existdata = AttackDailyStats(data)
         if mongodata == 0:
-            coll_metrics.update({"type": type, "date": get_date(data["timestamp"])}, 
-                            existdata.to_set(), 
-                            True, False)
+            coll_daily.update(
+                {
+                    "type": type, 
+                    "date": date
+                }, existdata.to_set(), True, False)
         else:
-            coll_metrics.update({"type": type, "date": get_date(data["timestamp"])}, 
-                            existdata.to_inc())  
+            coll_daily.update(
+                {
+                    "type": type, 
+                    "date": date
+                }, existdata.to_inc())  
 
-def attacked_port_proc(data):
+def port_counter(data):
     if "dst_port" not in data:
         return
 
-    date= get_date(data["timestamp"])
-    type= "attacked.port.stats"
-    dt = coll_metrics.find({"type": type, "date": get_date(data["timestamp"])}).count()
+    type = "attacked.port.stats"
+    date = utils.get_date(data['timestamp'])
+    identifier = data['identifier']
+
+    dt = coll_port.find({"type": type, "date": date, "identifier": identifier }).count()
+    
     if dt == 0:
         newdata = AttackedPortStats(data)
-        coll_metrics.insert(newdata.to_mongo())
+        coll_port.insert(newdata.to_mongo())
+
     else:
-        mongodata = coll_metrics.find({"type": type, "date": date}, {"ports."+ str(data["dst_port"]):{"$exists":True}}).count()
+        mongodata = coll_port.find(
+            {
+                "type": type, "date": date, "identifier": identifier 
+            },
+            {
+                "ports."+ str(data["dst_port"]):{"$exists":True}
+            }).count()
+                                    
         existdata = AttackedPortStats(data)
         if mongodata == 0:
-            coll_metrics.update({"type": type, "date": get_date(data["timestamp"])}, 
-                            existdata.to_set(), 
-                            True, False)
+            coll_port.update(
+                {
+                    "type": type, 
+                    "date": date,
+                    "identifier": identifier 
+                }, existdata.to_set(), True, False)
         else:
-            coll_metrics.update({"type": type, "date": get_date(data["timestamp"])},
-                            existdata.to_inc())
-        
-def credential_counts_proc(data):
+            coll_port.update(
+                {
+                    "type": type, 
+                    "date": date, 
+                    "identifier": identifier 
+                }, existdata.to_inc())
+
+def event_counter(data):
+    type= "{0}.events.count".format(data["honeypot"])
+    date= utils.get_date(data['timestamp'])
+    identifier= data["identifier"]
+
+    dt = coll_hpot.find({"type": type,"date": date,"identifier": identifier }).count()
+
+    if dt == 0:
+        newdata = SensorEventsCount(data)
+        coll_hpot.insert(newdata.to_mongo())
+
+    else:
+        existdata = SensorEventsCount(data)
+        coll_hpot.update(
+            {
+                "type": type, 
+                "date": date,
+                "identifier": identifier 
+            }, existdata.to_update())
+
+def credential_counter(data):
     type = "credential.count"
-    dt = coll_metrics.find({"type": type, "date": get_year(data['timestamp'])}).count()
+    date = utils.get_year(data['timestamp'])
+    identifier = data['identifier']
+
+    dt = coll_cred.find({"type": type, "date": date, "identifier": identifier }).count()
+    
     if dt == 0:
         newdata = CredentialCount(None,data)
-        coll_metrics.insert(newdata.to_mongo())
+        coll_cred.insert(newdata.to_mongo())
+
     else:
-        mongodata = coll_metrics.find_one({"type": type, "date":get_year(data['timestamp'])})
+        mongodata = coll_metrics.find_one(
+            {
+                "type": type, 
+                "date": date, 
+                "identifier": identifier 
+            })
+
         existdata = CredentialCount(mongodata,data)
         if existdata.checkNone():
             pass
         else:
-            coll_metrics.update({"type":type, "date":get_year(data['timestamp'])}, 
-                        existdata.to_update(), 
-                        True, False)     
+            coll_cred.update(
+                {
+                    "type":type, 
+                    "date": date, 
+                    "identifier": identifier 
+                }, existdata.to_update(), True, False)     
 
-def sensor_event_proc(data):
-    date= get_date(data["timestamp"])
-    identifier= data["identifier"]
-    type= "{0}.events.count".format(data["honeypot"])
-
-    dt = coll_metrics.find({"type": type,"date": date,"identifier": identifier}).count()
-
-    if dt == 0:
-        newdata = SensorEventsCount(data)
-        coll_metrics.insert(newdata.to_mongo())
-    else:
-        existdata = SensorEventsCount(data)
-        coll_metrics.update({"type": type, "date": date,"identifier": identifier}, 
-                        existdata.to_update())
 
        
-
+# [ONGOING] HONEYPOT MAPS
 def data_to_hmaps(data):
     pass
-
+# [ONGOING] HONEYPOT MAPS
 
 def data_to_mongo(data):
-    data['timestamp'] = datetime.datetime.fromtimestamp(data['timestamp'])
+    data['timestamp'] = utils.get_datetime(data['timestamp'])
     coll_log.insert(data)
 
 
@@ -185,6 +241,7 @@ def main():
     client.username_pw_set(os.getenv('USERNAME_MQTT') or 'mycollector',password=os.getenv('PASSWD_MQTT') or 'rustygear125')
     client.on_connect = on_connect
     client.on_message = on_message
+
     # client.tls_set('/etc/ssl/certs/DST_Root_CA_X3.pem', tls_version=ssl.PROTOCOL_TLSv1_2)
     client.connect(host="mqtt-broker", port=1883)
     client.loop_forever()

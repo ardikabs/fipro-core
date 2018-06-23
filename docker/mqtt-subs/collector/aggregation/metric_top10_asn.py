@@ -10,33 +10,6 @@ mongoconn = MongoClient('mongodb://192.168.72.128:27017/')
 db = mongoconn.fipro
 
 start = time.time()
-# hours_top_10_asn_aggregate = db.logs.aggregate([
-#     {
-#         "$match":{
-#             "timestamp":{
-#                 "$gte": datetime.now() - timedelta(hours=10)
-#             }
-#         }
-#     },
-#     {
-#         "$group":
-#         {
-#             "_id":{
-#                 "honeypot": "$honeypot",
-#                 "autonomous_system_number": "$location.autonomous_system_number"
-#             },
-#             "uniqueIP":{"$addToSet": "$src_ip"},
-#             "counts":{"$sum": 1}
-#         }
-#     },
-#     {
-#         "$project":{
-#             "_id": 0,
-#             "honeypot": "$_id.honeypot"
-#         }
-#     }
-# ])
-
 match_without_time = {
     "$match": 
         {
