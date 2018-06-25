@@ -1,6 +1,14 @@
 
 
-from flask import jsonify, render_template, abort, request
+from flask import (
+    current_app, 
+    jsonify, 
+    render_template, 
+    request, 
+    redirect, 
+    url_for, 
+    flash
+)
 from . import main
 from flask_login import(
     current_user,
@@ -17,7 +25,7 @@ from app.commons.MongoInterface import MongoInterface as MoI
 @main.route('/')
 @login_required
 def index():
-    moi = MoI("mongodb://192.168.1.100:27017/")
+    moi = MoI(current_app.config['MONGODB_URL'])
     dt = datetime.datetime.strptime('2017-11-01',"%Y-%m-%d")
 
     timezone        = pytz.timezone('Asia/Jakarta')

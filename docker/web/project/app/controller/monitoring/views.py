@@ -35,7 +35,7 @@ def top_attacks():
 
 @monitoring.route('/top-attacks/ajax/', methods=['GET','POST'])
 def top_attacks_ajax():
-    moi = MoI(mongodburl="mongodb://192.168.1.100:27017/")
+    moi = MoI(current_app.config['MONGODB_URL'])
 
     res = None
     type = request.args.get('type', None)
@@ -73,10 +73,7 @@ def top_attacks_ajax():
 def event_statistics():
     import json
     from bson import json_util
-    moi = MoI(mongodburl="mongodb://192.168.1.100:27017/")
-    # sensor_event_histogram = moi.logs.sensor_event_statistics(identifier= current_user.identifier, years_ago=2)
-    # countries_event_histogram = moi.logs.countries_event_statistics(identifier= current_user.identifier, years_ago=2)
-    # ports_event_histogram = moi.logs.ports_event_statistics(identifier= current_user.identifier, years_ago=2)
+    moi = MoI(current_app.config['MONGODB_URL'])
     
     events = moi.logs.events_histogram(identifier= current_user.identifier, limit=10)
     countries = moi.logs.countries_histogram(identifier= current_user.identifier, limit=10)
@@ -103,7 +100,7 @@ def event_statistics():
 
 @monitoring.route('/event-hourly-statistics/')
 def event_hourly_statistics():
-    moi = MoI(mongodburl="mongodb://192.168.1.100:27017/")
+    moi = MoI(current_app.config['MONGODB_URL'])
     
     ts = current_datetime()
     sensor_event = moi.logs.sensor_event_statistics(identifier= current_user.identifier, date=ts)
@@ -136,9 +133,9 @@ def event_hourly_ajax():
         return make_response(jsonify({'message': 'Date param is not initialized'}), 404)
 
     ts = datetime.datetime.strptime(date, '%Y-%m-%d')
-    moi = MoI(mongodburl="mongodb://192.168.1.100:27017/")
-
-
+    
+    
+    moi = MoI(current_app.config['MONGODB_URL'])
     data_source = {
         'sensor-event': moi.logs.sensor_event_statistics(identifier= current_user.identifier, date=ts),
         'ports-event': moi.logs.ports_event_statistics(identifier= current_user.identifier, date=ts),

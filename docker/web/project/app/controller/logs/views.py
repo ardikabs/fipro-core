@@ -1,6 +1,14 @@
 
 
-from flask import jsonify, render_template, request, make_response
+from flask import (
+    current_app, 
+    jsonify, 
+    render_template, 
+    request, 
+    redirect, 
+    url_for, 
+    flash
+)
 from flask_login import(
     current_user,
     login_required,
@@ -21,7 +29,7 @@ def dionaea_index():
 @logs.route('/cowrie/')
 def cowrie_index():
 
-    moi = MoI("mongodb://192.168.1.100:27017/")
+    moi = MoI(current_app.config['MONGODB_URL'])
 
     cowrie_logs = moi.logs.get(options={'limit': 1000, 'order_by': 'session'},identifier= current_user.identifier, honeypot= "cowrie")
 
@@ -48,7 +56,7 @@ def source_cowrie():
         except (ValueError, TypeError): 
             options['limit'] = 1000
 
-    moi = MoI("mongodb://192.168.1.100:27017/")
+    moi = MoI(current_app.config['MONGODB_URL'])
     cowrie_logs = moi.logs.get(options=options,identifier= current_user.identifier, honeypot= "cowrie")
     source = [cowrie.to_dict() for cowrie in cowrie_logs]
 
@@ -63,7 +71,7 @@ def source_dionaea():
         except (ValueError, TypeError): 
             options['limit'] = 1000
 
-    moi = MoI("mongodb://192.168.1.100:27017/")
+    moi = MoI(current_app.config['MONGODB_URL'])
     dionaea_logs = moi.logs.get(options=options,identifier= current_user.identifier, honeypot= "dionaea")
     source = [dionaea.to_dict() for dionaea in dionaea_logs]
 
@@ -78,7 +86,7 @@ def source_glastopf():
         except (ValueError, TypeError): 
             options['limit'] = 1000
     
-    moi = MoI("mongodb://192.168.1.100:27017/")
+    moi = MoI(current_app.config['MONGODB_URL'])
     glastopf_logs = moi.logs.get(options=options,identifier= current_user.identifier, honeypot= "glastopf")
     source = [glastopf.to_dict() for glastopf in glastopf_logs]
 
