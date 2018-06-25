@@ -5,14 +5,14 @@
 from pymongo import MongoClient
 import time
 import datetime
-mongoconn = MongoClient('mongodb://192.168.72.128:27017/')
+mongoconn = MongoClient('mongodb://192.168.1.100:27017/')
 db = mongoconn.fipro
 start_ts = time.time()
 
 aggregate = db.logs.aggregate([
     {
         "$match": {
-            "identifier": "uid-19216872129",
+            "identifier": "fb0963921f12",
             "dst_port": {"$ne": None},
             "timestamp": {"$gte": datetime.datetime.today() - datetime.timedelta(weeks=102) }
         }

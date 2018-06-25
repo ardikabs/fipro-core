@@ -1272,3 +1272,721 @@
 1527084411: Saving in-memory database to /mosquitto/data/mosquitto.db.
 1527086212: Saving in-memory database to /mosquitto/data/mosquitto.db.
 1527088013: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1529766549: mosquitto version 1.4.12 (build date 2017-06-01 13:03:46+0000) starting
+1529767136: mosquitto version 1.4.12 (build date 2017-06-01 13:03:46+0000) starting
+1529767136: Config loaded from /mosquitto/config/mosquitto.conf.
+1529767136: Opening websockets listen socket on port 9001.
+1529767136: Opening ipv4 listen socket on port 1883.
+1529767136: Opening ipv6 listen socket on port 1883.
+1529767149: New connection from 172.17.0.4 on port 1883.
+1529767149: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767149: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767296: New connection from 172.17.0.5 on port 1883.
+1529767296: New client connected from 172.17.0.5 as FLUENTD.HoneypotPublisher (c1, k15, u'fluentd').
+1529767672: Client FLUENTD.HoneypotPublisher disconnected.
+1529767717: New connection from 172.17.0.5 on port 1883.
+1529767717: New client connected from 172.17.0.5 as FLUENTD.HoneypotPublisher (c1, k15, u'fluentd').
+1529767810: New connection from 172.17.0.4 on port 1883.
+1529767810: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767810: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767810: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767811: New connection from 172.17.0.4 on port 1883.
+1529767811: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767811: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767811: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767811: New connection from 172.17.0.4 on port 1883.
+1529767811: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767811: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767811: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767811: New connection from 172.17.0.4 on port 1883.
+1529767811: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767811: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767811: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767811: New connection from 172.17.0.4 on port 1883.
+1529767811: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767811: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767811: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767811: New connection from 172.17.0.4 on port 1883.
+1529767811: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767811: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767811: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767811: New connection from 172.17.0.4 on port 1883.
+1529767811: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767811: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767811: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767811: New connection from 172.17.0.4 on port 1883.
+1529767811: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767811: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767811: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767811: New connection from 172.17.0.4 on port 1883.
+1529767811: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767811: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767811: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767811: New connection from 172.17.0.4 on port 1883.
+1529767811: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767811: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767811: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767811: New connection from 172.17.0.4 on port 1883.
+1529767811: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767811: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767811: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767811: New connection from 172.17.0.4 on port 1883.
+1529767811: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767811: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767811: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767811: New connection from 172.17.0.4 on port 1883.
+1529767811: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767811: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767811: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767811: New connection from 172.17.0.4 on port 1883.
+1529767811: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767811: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767811: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767811: New connection from 172.17.0.4 on port 1883.
+1529767811: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767811: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767811: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767811: New connection from 172.17.0.4 on port 1883.
+1529767811: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767811: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767811: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767812: New connection from 172.17.0.4 on port 1883.
+1529767812: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767812: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767812: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767812: New connection from 172.17.0.4 on port 1883.
+1529767812: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767812: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767812: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767812: New connection from 172.17.0.4 on port 1883.
+1529767812: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767812: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767812: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767812: New connection from 172.17.0.4 on port 1883.
+1529767812: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767812: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767812: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767812: New connection from 172.17.0.4 on port 1883.
+1529767812: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767812: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767812: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767812: New connection from 172.17.0.4 on port 1883.
+1529767812: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767812: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767812: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767812: New connection from 172.17.0.4 on port 1883.
+1529767812: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767812: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767812: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767812: New connection from 172.17.0.4 on port 1883.
+1529767812: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767812: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767812: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767812: New connection from 172.17.0.4 on port 1883.
+1529767812: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767812: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767812: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767812: New connection from 172.17.0.4 on port 1883.
+1529767812: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767812: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767812: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767812: New connection from 172.17.0.4 on port 1883.
+1529767812: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767812: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767812: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767812: New connection from 172.17.0.4 on port 1883.
+1529767812: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767812: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767812: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767812: New connection from 172.17.0.4 on port 1883.
+1529767812: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767812: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767812: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767813: New connection from 172.17.0.4 on port 1883.
+1529767813: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767813: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767813: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767813: New connection from 172.17.0.4 on port 1883.
+1529767813: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767813: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767813: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767813: New connection from 172.17.0.4 on port 1883.
+1529767813: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767813: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767813: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767813: New connection from 172.17.0.4 on port 1883.
+1529767813: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767813: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767813: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767813: New connection from 172.17.0.4 on port 1883.
+1529767813: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767813: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767813: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767813: New connection from 172.17.0.4 on port 1883.
+1529767813: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767813: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767813: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767813: New connection from 172.17.0.4 on port 1883.
+1529767813: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767813: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767813: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767813: New connection from 172.17.0.4 on port 1883.
+1529767813: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767813: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767813: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767813: New connection from 172.17.0.4 on port 1883.
+1529767813: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767813: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767813: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767813: New connection from 172.17.0.4 on port 1883.
+1529767813: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767813: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767813: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767813: New connection from 172.17.0.4 on port 1883.
+1529767813: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767813: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767813: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767813: New connection from 172.17.0.4 on port 1883.
+1529767813: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767813: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767813: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767813: New connection from 172.17.0.4 on port 1883.
+1529767813: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767813: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767813: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767813: New connection from 172.17.0.4 on port 1883.
+1529767813: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767813: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767813: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767813: New connection from 172.17.0.4 on port 1883.
+1529767813: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767813: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767813: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767813: New connection from 172.17.0.4 on port 1883.
+1529767813: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767813: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767813: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767813: New connection from 172.17.0.4 on port 1883.
+1529767813: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767813: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767813: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767813: New connection from 172.17.0.4 on port 1883.
+1529767813: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767813: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767813: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767813: New connection from 172.17.0.4 on port 1883.
+1529767813: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767813: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767813: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767813: New connection from 172.17.0.4 on port 1883.
+1529767813: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767813: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767813: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767813: New connection from 172.17.0.4 on port 1883.
+1529767813: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767813: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767813: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767814: New connection from 172.17.0.4 on port 1883.
+1529767814: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767814: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767814: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767814: New connection from 172.17.0.4 on port 1883.
+1529767814: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767814: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767814: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767814: New connection from 172.17.0.4 on port 1883.
+1529767814: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767814: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767814: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767814: New connection from 172.17.0.4 on port 1883.
+1529767814: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767814: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767814: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767814: New connection from 172.17.0.4 on port 1883.
+1529767814: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767814: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767814: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767814: New connection from 172.17.0.4 on port 1883.
+1529767814: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767814: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767814: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767814: New connection from 172.17.0.4 on port 1883.
+1529767814: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767814: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767814: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767814: New connection from 172.17.0.4 on port 1883.
+1529767814: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767814: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767814: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767814: New connection from 172.17.0.4 on port 1883.
+1529767814: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767814: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767814: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767814: New connection from 172.17.0.4 on port 1883.
+1529767814: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767814: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767814: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767814: New connection from 172.17.0.4 on port 1883.
+1529767814: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767814: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767814: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767814: New connection from 172.17.0.4 on port 1883.
+1529767814: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767814: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767814: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767814: New connection from 172.17.0.4 on port 1883.
+1529767814: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767814: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767814: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767814: New connection from 172.17.0.4 on port 1883.
+1529767814: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767814: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767814: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767814: New connection from 172.17.0.4 on port 1883.
+1529767814: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767814: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767814: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767814: New connection from 172.17.0.4 on port 1883.
+1529767814: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767814: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767814: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767814: New connection from 172.17.0.4 on port 1883.
+1529767814: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767814: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767814: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767814: New connection from 172.17.0.4 on port 1883.
+1529767814: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767814: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767814: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767814: New connection from 172.17.0.4 on port 1883.
+1529767814: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767814: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767814: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767815: New connection from 172.17.0.4 on port 1883.
+1529767815: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767815: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767815: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767815: New connection from 172.17.0.4 on port 1883.
+1529767815: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767815: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767815: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767815: New connection from 172.17.0.4 on port 1883.
+1529767815: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767815: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767815: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767815: New connection from 172.17.0.4 on port 1883.
+1529767815: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767815: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767815: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767815: New connection from 172.17.0.4 on port 1883.
+1529767815: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767815: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767815: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767815: Client FLUENTD.HoneypotPublisher disconnected.
+1529767815: New connection from 172.17.0.4 on port 1883.
+1529767815: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529767815: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529767815: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529767971: New connection from 172.17.0.5 on port 1883.
+1529767971: New client connected from 172.17.0.5 as FLUENTD.HoneypotPublisher (c1, k15, u'fluentd').
+1529768180: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1529768226: New connection from 172.17.0.4 on port 1883.
+1529768226: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768226: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768249: Client FLUENTD.HoneypotPublisher disconnected.
+1529768253: New connection from 172.17.0.4 on port 1883.
+1529768343: mosquitto version 1.4.12 (build date 2017-06-01 13:03:46+0000) starting
+1529768343: Config loaded from /mosquitto/config/mosquitto.conf.
+1529768343: Opening websockets listen socket on port 9001.
+1529768343: Opening ipv4 listen socket on port 1883.
+1529768343: Opening ipv6 listen socket on port 1883.
+1529768415: New connection from 172.17.0.4 on port 1883.
+1529768415: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768415: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768447: New connection from 172.17.0.5 on port 1883.
+1529768447: New client connected from 172.17.0.5 as FLUENTD.HoneypotPublisher (c1, k15, u'fluentd').
+1529768459: Client FLUENTD.HoneypotPublisher disconnected.
+1529768465: New connection from 172.17.0.4 on port 1883.
+1529768465: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768465: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768465: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768534: New connection from 172.17.0.5 on port 1883.
+1529768534: New client connected from 172.17.0.5 as FLUENTD.HoneypotPublisher (c1, k15, u'fluentd').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768549: New connection from 172.17.0.4 on port 1883.
+1529768549: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768549: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768549: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768550: New connection from 172.17.0.4 on port 1883.
+1529768550: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768550: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768550: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768550: New connection from 172.17.0.4 on port 1883.
+1529768550: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768550: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768550: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768550: New connection from 172.17.0.4 on port 1883.
+1529768550: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768550: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768550: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768550: New connection from 172.17.0.4 on port 1883.
+1529768550: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529768550: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529768550: New client connected from 172.17.0.4 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529768742: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1529768760: Client FLUENTD.HoneypotPublisher disconnected.
+1529768880: mosquitto version 1.4.12 (build date 2017-06-01 13:03:46+0000) starting
+1529768916: mosquitto version 1.4.12 (build date 2017-06-01 13:03:46+0000) starting
+1529768916: Config loaded from /mosquitto/config/mosquitto.conf.
+1529768916: Opening websockets listen socket on port 9001.
+1529768916: Opening ipv4 listen socket on port 1883.
+1529768916: Opening ipv6 listen socket on port 1883.
+1529768922: New connection from 172.17.0.4 on port 1883.
+1529768922: New client connected from 172.17.0.4 as FLUENTD.HoneypotPublisher (c1, k15, u'fluentd').
+1529768938: Client FLUENTD.HoneypotPublisher disconnected.
+1529768975: New connection from 172.17.0.4 on port 1883.
+1529768975: New client connected from 172.17.0.4 as FLUENTD.HoneypotPublisher (c1, k15, u'fluentd').
+1529769049: Client FLUENTD.HoneypotPublisher disconnected.
+1529769087: New connection from 172.17.0.4 on port 1883.
+1529769087: New client connected from 172.17.0.4 as FLUENTD.HoneypotPublisher (c1, k15, u'fluentd').
+1529769095: Client FLUENTD.HoneypotPublisher disconnected.
+1529769169: New connection from 172.17.0.4 on port 1883.
+1529769169: New client connected from 172.17.0.4 as FLUENTD.HoneypotPublisher (c1, k15, u'fluentd').
+1529769193: New connection from 172.17.0.5 on port 1883.
+1529769193: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529769193: New client connected from 172.17.0.5 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529769218: New connection from 172.17.0.5 on port 1883.
+1529769218: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529769218: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529769218: New client connected from 172.17.0.5 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529769348: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1529769356: New connection from 172.17.0.5 on port 1883.
+1529769356: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529769356: New client connected from 172.17.0.5 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529769400: New connection from 172.17.0.5 on port 1883.
+1529769400: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529769400: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529769400: New client connected from 172.17.0.5 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529769461: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1529769552: New connection from 192.168.1.6 on port 1883.
+1529769552: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529769552: New client connected from 192.168.1.6 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529769565: New connection from 192.168.1.6 on port 1883.
+1529769565: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529769565: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529769565: New client connected from 192.168.1.6 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529769977: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1529769980: New connection from 192.168.1.6 on port 1883.
+1529769980: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529769980: New client connected from 192.168.1.6 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529769994: New connection from 192.168.1.6 on port 1883.
+1529769994: Client COLLECTOR.HoneypotSubscriber already connected, closing old connection.
+1529769994: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529769994: New client connected from 192.168.1.6 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529770062: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1529770063: New connection from 192.168.1.6 on port 1883.
+1529770063: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529770063: New client connected from 192.168.1.6 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529770099: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1529770101: New connection from 192.168.1.6 on port 1883.
+1529770101: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529770101: New client connected from 192.168.1.6 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529770716: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1529770944: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1529770966: New connection from 172.17.0.1 on port 1883.
+1529770966: Client COLLECTOR.HoneypotSubscriber disconnected.
+1529770966: New client connected from 172.17.0.1 as COLLECTOR.HoneypotSubscriber (c0, k60, u'mycollector').
+1529772517: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1529774318: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1529776119: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1529777920: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1529779721: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1529781256: Socket error on client COLLECTOR.HoneypotSubscriber, disconnecting.
+1529781522: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1529783323: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1529785124: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1529786925: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1529788468: Error in poll: Interrupted system call.
+1529788468: mosquitto version 1.4.12 terminating
+1529819325: mosquitto version 1.4.12 (build date 2017-06-01 13:03:46+0000) starting
+1529819325: Config loaded from /mosquitto/config/mosquitto.conf.
+1529819325: Opening websockets listen socket on port 9001.
+1529819325: Opening ipv4 listen socket on port 1883.
+1529819325: Opening ipv6 listen socket on port 1883.
+1529819513: Error in poll: Interrupted system call.
+1529819513: mosquitto version 1.4.12 terminating

@@ -4,14 +4,14 @@
 from pymongo import MongoClient
 import time
 from datetime import datetime, timedelta
-mongoconn = MongoClient('mongodb://192.168.72.128:27017/')
+mongoconn = MongoClient('mongodb://192.168.1.100:27017/')
 db = mongoconn.fipro
 start_ts = time.time()
 
 aggregate = db.logs.aggregate([
     {
         "$match": {
-            "identifier": "uid-19216872129",
+            "identifier": "fb0963921f12",
             "geoip.country": {"$ne": None},
             "dst_port": {"$ne": None}
         }
@@ -35,13 +35,7 @@ aggregate = db.logs.aggregate([
             },
             "attacked_port": {
                 "$push": {
-                    "$arrayToObject":{
-                        "$concatArrays": [
-                            [
-                                {"k": {"$substr":["$_id.dst_port", 0, -1 ]}, "v":"$count"}
-                            ]
-                        ]
-                    }
+                    "dst_port": "$_id.dst_port", "counts": "$count" 
                 }
             },
             "counts": {"$sum": "$count"}
@@ -52,17 +46,17 @@ aggregate = db.logs.aggregate([
         "$sort": {"counts": -1, "attacked_port": -1}
     },
     {
+        "$limit": 10
+    },
+    {
         "$project": {
             "_id": 0,
             "country": "$_id.country",
             "country_code": "$_id.country_code",
-            "attacked_port": {"$mergeObjects": "$attacked_port"},
+            "attacked_port": 1,
             "counts":1
         }
-    },
-    { 
-        "$limit": 10},
-    
+    },    
     {
         "$out": "honeypot_top10_countries_and_port_metric"
     }

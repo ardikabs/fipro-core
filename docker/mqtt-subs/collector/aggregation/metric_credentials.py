@@ -3,7 +3,7 @@
 from pymongo import MongoClient
 import time
 from datetime import datetime, timedelta
-mongoconn = MongoClient('mongodb://206.189.149.230:27017/')
+mongoconn = MongoClient('mongodb://192.168.1.100:27017/')
 db = mongoconn.fipro
 start_ts = time.time()
 
@@ -12,7 +12,7 @@ db.logs.aggregate([
     {
         "$match":
         {
-            "identifier": "5c3669d44b6a",
+            "identifier": "fb0963921f12",
             "$and": [ {"username": {"$ne": None} }, {"username": {"$ne": ""}} ]
         }
     },
@@ -27,9 +27,6 @@ db.logs.aggregate([
         "$sort":{"counts": -1}
     },
     {
-        "$limit": 10
-    },
-    {
         "$out": "honeypot_top10_username_credential_metric"
     }
 ])
@@ -39,7 +36,7 @@ db.logs.aggregate([
     {
         "$match":
         {
-            "identifier": "5c3669d44b6a",
+            "identifier": "fb0963921f12",
             "$and": [ {"password": {"$ne": None} }, {"password": {"$ne": ""}} ]
         }
     },
@@ -52,9 +49,6 @@ db.logs.aggregate([
     },
     {
         "$sort":{"counts": -1}
-    },
-    {
-        "$limit": 10
     },
     {
         "$out": "honeypot_top10_password_credential_metric"

@@ -1,6 +1,12 @@
 
 from pymongo import MongoClient
-from models import AttackDailyStats, AttackedPortStats, CredentialCount, SensorEventsCount, GeoIP
+from models import (
+    AttackDailyStats, 
+    AttackedPortStats, 
+    CredentialCount, 
+    SensorEventsCount, 
+    GeoIP
+)
 import paho.mqtt.client as mqtt
 import os
 import sys
@@ -43,12 +49,7 @@ def cowrie_resolver(data):
         port_counter(data)
         event_counter(data)
     
-    if "username" in data:        
-        credential_counter(data)
-              
 def dionaea_resolver(data):
-    if "username" in data:        
-        credential_counter(data)
     
     daily_counter(data)
     port_counter(data)
@@ -78,29 +79,13 @@ def daily_counter(data):
     
     else:
         # Digunakan untuk cek pada dokumen dan mengetahui telah terdapat tanggal sesuai dengan data baru atau tidak
-        mongodata = coll_daily.find(
-            {
-                "type": type,
-                "date": date, 
-                "identifier": identifier 
-            }, 
-            {
-                "hourly."+ hour: {'$exists':True}
-            }).count()  
+        mongodata = coll_daily.find({"type": type,"date": date, "identifier": identifier }, {"hourly."+ hour: {'$exists':True}}).count()  
 
         existdata = AttackDailyStats(data)
         if mongodata == 0:
-            coll_daily.update(
-                {
-                    "type": type, 
-                    "date": date
-                }, existdata.to_set(), True, False)
+            coll_daily.update({"type": type, "date": date}, existdata.to_set(), True, False)
         else:
-            coll_daily.update(
-                {
-                    "type": type, 
-                    "date": date
-                }, existdata.to_inc())  
+            coll_daily.update({"type": type, "date": date}, existdata.to_inc())  
 
 def port_counter(data):
     if "dst_port" not in data:
@@ -117,29 +102,13 @@ def port_counter(data):
         coll_port.insert(newdata.to_mongo())
 
     else:
-        mongodata = coll_port.find(
-            {
-                "type": type, "date": date, "identifier": identifier 
-            },
-            {
-                "ports."+ str(data["dst_port"]):{"$exists":True}
-            }).count()
+        mongodata = coll_port.find({"type": type, "date": date, "identifier": identifier },{"ports."+ str(data["dst_port"]):{"$exists":True}}).count()
                                     
         existdata = AttackedPortStats(data)
         if mongodata == 0:
-            coll_port.update(
-                {
-                    "type": type, 
-                    "date": date,
-                    "identifier": identifier 
-                }, existdata.to_set(), True, False)
+            coll_port.update({"type": type, "date": date,"identifier": identifier}, existdata.to_set(), True, False)
         else:
-            coll_port.update(
-                {
-                    "type": type, 
-                    "date": date, 
-                    "identifier": identifier 
-                }, existdata.to_inc())
+            coll_port.update({"type": type, "date": date,"identifier": identifier }, existdata.to_inc())
 
 def event_counter(data):
     type= "{0}.events.count".format(data["honeypot"])
@@ -154,13 +123,9 @@ def event_counter(data):
 
     else:
         existdata = SensorEventsCount(data)
-        coll_hpot.update(
-            {
-                "type": type, 
-                "date": date,
-                "identifier": identifier 
-            }, existdata.to_update())
+        coll_hpot.update({"type": type, "date": date,"identifier": identifier }, existdata.to_update())
 
+# [NOTUSED] CREDENTIAL
 def credential_counter(data):
     type = "credential.count"
     date = utils.get_year(data['timestamp'])
@@ -173,23 +138,14 @@ def credential_counter(data):
         coll_cred.insert(newdata.to_mongo())
 
     else:
-        mongodata = coll_metrics.find_one(
-            {
-                "type": type, 
-                "date": date, 
-                "identifier": identifier 
-            })
+        mongodata = coll_metrics.find_one({"type": type, "date": date, "identifier": identifier})
 
         existdata = CredentialCount(mongodata,data)
         if existdata.checkNone():
             pass
         else:
-            coll_cred.update(
-                {
-                    "type":type, 
-                    "date": date, 
-                    "identifier": identifier 
-                }, existdata.to_update(), True, False)     
+            coll_cred.update({"type":type, "date": date, "identifier": identifier}, existdata.to_update(), True, False)     
+# [NOTUSED] CREDENTIAL
 
 
        
@@ -243,7 +199,8 @@ def main():
     client.on_message = on_message
 
     # client.tls_set('/etc/ssl/certs/DST_Root_CA_X3.pem', tls_version=ssl.PROTOCOL_TLSv1_2)
-    client.connect(host="mqtt-broker", port=1883)
+    # client.connect(host="mqtt-broker", port=1883)
+    client.connect(host="192.168.1.100", port=1883)
     client.loop_forever()
 
 # [END] MQTT Component
