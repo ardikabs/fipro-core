@@ -67,37 +67,37 @@
                             <div class="col-md-6">
                                 <h2 class="card-inside-title">Sensor Events by Destination Port</h2>
                                 <!-- Sensor Destination Port Histogram -->
-                                <canvas id="sensor_countries_bar" height="120"></canvas>
+                                <canvas id="sensor_ports_events_bar" height="120"></canvas>
                             </div>        
                         </div>
 
                         <h2 class="card-inside-title">Sensor Event by Country and Port</h2>
                         <div class="row clearfix">
                             <div class="col-md-6">
-                                <canvas id="coba_1" height="150"></canvas>
+                                <canvas id="country-ports-1" height="150"></canvas>
 
                             </div>
                             <div class="col-md-6">
-                                <canvas id="coba_2" height="150"></canvas>
+                                <canvas id="country-ports-2" height="150"></canvas>
     
                             </div>
                         </div>
                         <div class="row clearfix">
                             <div class="col-md-6">
-                                <canvas id="coba_3" height="150"></canvas>
+                                <canvas id="country-ports-3" height="150"></canvas>
     
                             </div>
                             <div class="col-md-6">
-                                <canvas id="coba_4" height="150"></canvas>
+                                <canvas id="country-ports-4" height="150"></canvas>
     
                             </div>
                         </div>
                         <div class="row clearfix">
                             <div class="col-md-6">
-                                <canvas id="coba_5" height="150"></canvas>    
+                                <canvas id="country-ports-5" height="150"></canvas>    
                             </div>
                             <div class="col-md-6">
-                                <canvas id="coba_6" height="150"></canvas>
+                                <canvas id="country-ports-6" height="150"></canvas>
 
                             </div>            
         
@@ -115,646 +115,313 @@
 <script src="{{ url_for('static', filename='vendors/momentjs/moment.js') }}"></script>
 
 <script>
-    window.colors = [
-        {
-            backgroundColor: 'rgb(213,0,0)',
-            borderColor: 'rgb(255,138,128)'
-        },
-        {
-            backgroundColor: 'rgb(0,145,234)',
-            borderColor: 'rgb(128,216,255)'
-        },
-        {
-            backgroundColor: 'rgb(255,179,0)',
-            borderColor: 'rgb(255,213,79)'
-        }
-    ]
-
-    window.colorsWithAlpha = [
-        {
-            backgroundColor: 'rgba(244,67,54, 0.3)',
-            borderColor: 'rgba(244,67,54, 0.75)',
-            pointBorderColor: 'rgba(244,67,54, 0)',
-            pointBackgroundColor: 'rgba(244,67,54, 0.9)'
-        },
-        
-        {
-            backgroundColor: 'rgba(74,20,140, 0.3)',
-            borderColor: 'rgba(74,20,140, 0.75)',
-            pointBorderColor: 'rgba(74,20,140, 0)',
-            pointBackgroundColor: 'rgba(74,20,140, 0.9)'
-        },
-        {
-            backgroundColor: 'rgba(255,214,0, 0.3)',
-            borderColor: 'rgba(255,214,0, 0.75)',
-            pointBorderColor: 'rgba(255,214,0, 0)',
-            pointBackgroundColor: 'rgba(255,214,0, 0.9)'
-        },
-        {
-            backgroundColor: 'rgba(104,159,56, 0.3)',
-            borderColor: 'rgba(104,159,56, 0.75)',
-            pointBorderColor: 'rgba(104,159,56, 0)',
-            pointBackgroundColor: 'rgba(104,159,56, 0.9)'
-        },
-        {
-            backgroundColor: 'rgba(0,121,107, 0.3)',
-            borderColor: 'rgba(0,121,107, 0.75)',
-            pointBorderColor: 'rgba(0,121,107, 0)',
-            pointBackgroundColor: 'rgba(0,121,107, 0.9)'
-        },
-        {
-            backgroundColor: 'rgba(84,110,122, 0.3)',
-            borderColor: 'rgba(84,110,122, 0.75)',
-            pointBorderColor: 'rgba(84,110,122, 0)',
-            pointBackgroundColor: 'rgba(84,110,122, 0.9)'
-        },
-        {
-            backgroundColor: 'rgba(94,53,177, 0.3)',
-            borderColor: 'rgba(94,53,177, 0.75)',
-            pointBorderColor: 'rgba(94,53,177, 0)',
-            pointBackgroundColor: 'rgba(94,53,177, 0.9)'
-        },
-
-        {
-            backgroundColor: 'rgba(67,160,71, 0.3)',
-            borderColor: 'rgba(67,160,71, 0.75)',
-            pointBorderColor: 'rgba(67,160,71, 0)',
-            pointBackgroundColor: 'rgba(67,160,71, 0.9)'
-        },
-        {
-            backgroundColor: 'rgba(255,235,59, 0.3)',
-            borderColor: 'rgba(255,235,59, 0.75)',
-            pointBorderColor: 'rgba(255,235,59, 0)',
-            pointBackgroundColor: 'rgba(255,235,59, 0.9)'
-        },
-        {
-            backgroundColor: 'rgba(251,140,0, 0.3)',
-            borderColor: 'rgba(251,140,0, 0.75)',
-            pointBorderColor: 'rgba(251,140,0, 0)',
-            pointBackgroundColor: 'rgba(251,140,0,0, 0.9)'
-        },
-    ]
-    window.honeypot = [
-        'Dionaea',
-        'Cowrie',
-        'Glastopf'
-    ]
-    window.country = [
-        'Russia',
-        'United States',
-        'Indonesia',
-        'Malaysia',
-        'China',
-        'Japan',
-        'Korea',
-        'Thailand',
-        'Russia',
-        'Italy'
-    ]
-
-    window.destPort = [
-        '445',
-        '443',
-        '22',
-        '23',
-        '3606',
-        '53',
-        '27017',
-        '5060',
-        '21',
-        '80'
-    ]
-
-    var labels = [];
-    var datasets1 = [];
-    var datasets2 = [];
-    var datasets3 = [];
-
-    {% for i in range(30) %}
-    labels.push(moment().add({{ i }}, 'day'));
-    {% endfor %}
-
-    {% for i in range(3) %}
-    datasets1.push(
-        {
-            label: window.honeypot[{{ i }}],
-            data: [
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }}
-            ],
-            backgroundColor: window.colors[{{ i }}].backgroundColor,
-            borderColor: window.colors[{{ i }}].borderColor,
-            type: 'bar',
-            borderWidth: 1
-        }
-    )
-    {% endfor %}
-
-
-    {% for i in range(0,10) %}
-    datasets2.push(
-        {
-            label: window.country[{{ i }}],
-            data: [
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }}
-            ],
-            backgroundColor:  window.colorsWithAlpha[{{ i }}].backgroundColor,
-            borderColor: window.colorsWithAlpha[{{ i }}].borderColor,
-            pointBorderColor: window.colorsWithAlpha[{{ i }}].pointBorderColor,
-            pointBackgroundColor: window.colorsWithAlpha[{{ i }}].pointBackgroundColor,
-            pointBorderWidth: 1,
-
-            type: 'line',
-            pointRadius: 1,
-            fill: true,
-            lineTension: 0.2,
-            borderWidth: 2  
-        }
-    )
-    {% endfor %}
-
-    {% for i in range(0,10) %}
-    datasets3.push(
-        {
-            label: window.destPort[{{ i }}],
-            data: [
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }},
-                {{ range(0,100000) | random }}
-            ],
-            backgroundColor:  window.colorsWithAlpha[{{ i }}].backgroundColor,
-            borderColor: window.colorsWithAlpha[{{ i }}].borderColor,
-            pointBorderColor: window.colorsWithAlpha[{{ i }}].pointBorderColor,
-            pointBackgroundColor: window.colorsWithAlpha[{{ i }}].pointBackgroundColor,
-            pointBorderWidth: 1,
-
-            type: 'line',
-            pointRadius: 1,
-            fill: true,
-            lineTension: 0.2,
-            borderWidth: 2  
-        }
-    )
-    {% endfor %}
-
-
-    // Histogram
-    window.sensorEventHist   = new Chart(document.getElementById("sensor_histogram").getContext("2d"),customHisto());
-    window.sensorCountryHist = new Chart(document.getElementById("sensor_country_histogram").getContext("2d"),customCountry());
-    window.sensorDestHist    = new Chart(document.getElementById("sensor_destination_histogram").getContext("2d"),customDestination());
-
-    
-    // For Bar Sensor Countries and Events
-    new Chart(document.getElementById("sensor_countries_bar").getContext("2d"),getDoughnutBar());
-    new Chart(document.getElementById("sensor_events_bar").getContext("2d"),getSensorEventsBar());
-
-
-    // For Bar Country and Port
-    new Chart(document.getElementById("coba_1").getContext("2d"),getCoba());
-    new Chart(document.getElementById("coba_2").getContext("2d"),getCoba());
-    new Chart(document.getElementById("coba_3").getContext("2d"),getCoba());
-    new Chart(document.getElementById("coba_4").getContext("2d"),getCoba());
-    new Chart(document.getElementById("coba_5").getContext("2d"),getCoba());
-    new Chart(document.getElementById("coba_6").getContext("2d"),getCoba());
-
-    function getOptions(){
-        var options = 
-        {
-            tooltips: {
-                mode: 'index',
-                intersect: false
-            },
-            responsive: true,
-            scales: {
-                xAxes: [{
-                    stacked: true,
-                }],
-                yAxes: [{
-                    stacked: true
-                }]
-            }
-        };
-        return options;
+    String.prototype.capitalize = function() {
+        return this.charAt(0).toUpperCase() + this.slice(1);
     }
 
-    function getConfigHisto(type, labels, datasets, options){
-        var config = {
-            type: type,
-            data: {
-                labels: labels,
-                datasets: datasets
-            },
-            options: options
-        };
+    Array.prototype.last = function() {
+        return this[this.length-1];
+    }
+    
+    function jsonUpdate(obj, newObj){
+        for (var key in newObj){
+            obj[key] = newObj[key];
+        }
+        return obj
+    }
 
+    function datasetTemplate (){
+        var template = {
+            label: "No data available",
+            data: new Array()
+        }
+        return template
+    }
+
+    function rgbMaker(){
+        var rgb = [];
+        rgb.push(Math.floor(Math.random() * 255));
+        rgb.push(Math.floor(Math.random() * 255));
+        rgb.push(Math.floor(Math.random() * 255));
+        return rgb
+    }
+
+    function colorConfig(typeColor){
+        var rgb = rgbMaker();
+        var colorSet = {};
+        if (typeColor == 0){
+            colorSet = {
+                'backgroundColor': 'rgba('+ rgb.join() +',0.3)',
+                'borderColor': 'rgba('+ rgb.join() +',0.75)',
+            };
+        }
+        else if (typeColor == 1){
+            colorSet = {
+                'backgroundColor': 'rgba('+ rgb.join() +',0.3)',
+                'borderColor': 'rgba('+ rgb.join() +',0.75)',
+                'pointBackgroundColor': 'rgba('+ rgb.join() +',0.9)',
+                'pointBorderColor': 'rgba('+ rgb.join() +',0)',
+                'pointBorderWidth': 1
+            };
+        }
+        else if (typeColor == 2){
+            colorSet = {
+                'backgroundColor': 'rgba('+ rgb.join() +',0.2)',
+                'borderColor': 'rgba('+ rgb.join() +',0.8)',
+            };
+        }
+        return colorSet
+    }
+
+    function initDatasetHistogram(typeColor=0, typeChart='bar'){
+
+        var obj = datasetTemplate();
+        var colorSet = colorConfig(typeColor);
+        for (key in colorSet){
+            obj[key] = colorSet[key];
+        }
+        obj['type'] = typeChart;
+        obj['pointRadius'] = 1;
+        obj['fill'] = 1;
+        obj['lineTension'] = 0.3;
+        obj['borderWidth'] = 2;
+
+
+        return obj
+    }
+
+    function setDataHistogram(dataSource, typeColorSet=null, typeChartSet='bar'){
+        var labels = new Array();
+        var datasets = new Array();
+        var dateAsLabel;
+        // Set global labels
+        for (var i=0; i<dataSource.length; i++){
+            dateAsLabel = moment(dataSource[i].infos.date.$date).format('DD MM YYYY');
+            if (labels.includes(dateAsLabel) == false){
+                labels.push(dateAsLabel); //07 Maret
+            }
+        }
+
+        for (var i=0; i<dataSource.length; i++){
+            dateAsLabel = moment(dataSource[i].infos.date.$date).format('DD MM YYYY');
+            if (datasets.length == 0){
+                datasets.push(initDatasetHistogram(typeColor=typeColorSet));
+                var last = datasets.length - 1;
+                datasets[0].label = String(dataSource[i].label).capitalize();
+                datasets[0].data.push(dataSource[i].infos.count);
+                continue;
+            }
+            for (x in labels){ 
+                if (labels[x] == dateAsLabel){
+                    var newdata=true;
+                    for (ds in datasets){
+                        if (datasets[ds].label == String(dataSource[i].label).capitalize()){
+                            datasets[ds].data.push(dataSource[i].infos.count);
+                            newdata=false;
+                        }
+                    }
+                    if (newdata === true){
+                        datasets.push(initDatasetHistogram(typeColor=typeColorSet));
+                        var last = datasets.length - 1;
+                        datasets[last].label = String(dataSource[i].label).capitalize();
+                        for (var z=0; z<x; z++){
+                            datasets[last].data.push(0);
+                        }
+                        datasets[last].data.push(dataSource[i].infos.count);
+                    }
+                }        
+            }
+        }
+
+        return [labels, datasets]
+        
+
+    }
+
+    function getConfigHistogram(typeChartSet='bar'){
+        var config = null;
+        config = {
+            type: typeChartSet,
+            data: {
+                labels: [],
+                datasets: [],
+            },
+            options: {
+                tooltips: {
+                    mode: 'index',
+                    intersect: false
+                },
+                responsive: true,
+                legend: {
+                    display: true,
+                    position: 'top',
+                    labels: {
+                        usePointStyle: true,
+                        fontSize: 14
+                    }
+                },
+                scales: {
+                    xAxes: [{
+                        stacked:true,
+                        scaleLabel: {
+                            display:true,
+                            labelString: "Timestamp"
+                        }
+                    }],
+                    yAxes: [{
+                        stacked:true,
+                        ticks: {
+                            beginAtZero: true
+                        },
+                        scaleLabel: {
+                            display:true,
+                            labelString: "Events (Count)"
+                        }                        
+                    }]
+                }
+            }
+        };
         return config
     }
 
-    function getCoba(){
-        var config = null;
-        config = {
-            type: 'doughnut',
-            data: {
-                labels:['445','22','23', '27017', '443','445','22','23', '27017', '443'],
-                datasets:[{
-                    label: 'Sensor Event by Countries',
-                    data: [50,30,40,10,30,50,30,40,10,30],
-                    backgroundColor: [
-                        "rgb(233, 30, 99)",
-                        "rgb(255, 193, 7)",
-                        "rgb(0, 188, 212)",
-                        "rgb(139, 195, 74)",
-                        "rgb(139, 195, 58)",
-                        "rgb(233, 30, 99)",
-                        "rgb(255, 193, 7)",
-                        "rgb(0, 188, 212)",
-                        "rgb(139, 195, 74)",
-                        "rgb(139, 195, 58)"
-
-                    ]
-                }]
-            },
-            options: {
-                responsive: true,
-                legend: {
-                    display: true,
-                    position: 'top',
-                    labels: {
-                        usePointStyle: true,
-                        fontSize: 11
-                    }
-                },
-                title: {
-                    display: true,
-                    text: 'France'
-                },
-                animation: {
-                    animateScale: true,
-                    animateRotate: true
+    function customOptions(){
+        var options;
+        options = {
+            responsive: true,
+            legend: {
+                position: 'right',
+                labels: {
+                    usePointStyle: true,
+                    fontSize: 12
                 }
+            },
+            title: {
+                display: true,
+                text: 'France'
+            },
+            animation: {
+                animateScale: true,
+                animateRotate: true
             }
-        };
-
-        return config;
+        }
+        return options
     }
 
-    function customHisto(){
-        var config = null;
-        config = {
-            type: 'bar',
-            data: {
-                labels: labels,
-                datasets: datasets1
-            },
-            options: {
-                tooltips: {
-                    mode: 'index',
-                    intersect: false
-                },
-                responsive: true,
-                legend: {
-                    display: true,
-                    position: 'right',
-                    labels: {
-                        usePointStyle: true,
-                        fontSize: 11
-                    }
-                },
-                scales: {
-                    xAxes: [{
-                        type: "time",
-                        distribution: 'series',
-                        scaleLabel: {
-                            display:true,
-                            labelString: "Timestamp"
-                        }
-                    }],
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        };
+    function setDataDoughnut(dataSource, typeData=0){
+        var labels = new Array();
+        var datasets = new Array();
+        
+        // initialize dataset template
+        var obj = datasetTemplate();
+        obj['backgroundColor'] = new Array();
+        datasets.push(obj);
 
-        return config;
+        for (var i=0;i<dataSource.length;i++){
+            var label = String(dataSource[i].label).capitalize();
+            var counts = dataSource[i].counts;
+            var rgb = rgbMaker();
+            var rgbSet = 'rgba('+ rgb.join() +',0.8)';
+            
+            labels.push(label);
+            datasets[0].label = label;
+            datasets[0].data.push(counts);
+            datasets[0].backgroundColor.push(rgbSet);
+        }
+
+        return [labels, datasets]
     }
 
-    function customCountry(){
-        var config = null;
-        config = {
-            type: 'line',
-            data: {
-                labels: labels,
-                datasets: datasets2
-            },
-            options: {
-                tooltips: {
-                    mode: 'index',
-                    intersect: false
-                },
-                responsive: true,
-                legend: {
-                    display: true,
-                    position: 'top',
-                    labels: {
-                        usePointStyle: true,
-                        fontSize: 11
-                    }
-                },
-                scales: {
-                    xAxes: [{
-                        type: "time",
-                        distribution: 'series',
-                        scaleLabel: {
-                            display:true,
-                            labelString: "Timestamp"
-                        }
-                    }],
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        };
+    function customSetDataDoughnut(dataSource){
+        var labels = new Array();
+        var datasets = new Array();
+        var options = customOptions();
+        
+        var titles = {display:true, text: dataSource.label};
+        options['title'] = titles
 
-        return config;
+        // initialize dataset template
+        var obj = datasetTemplate();
+        obj['backgroundColor'] = new Array();
+        datasets.push(obj);
+
+        var subDataSource = dataSource.attacked_port;
+        for (var i=0;i<subDataSource.length;i++){
+            var label = String(subDataSource[i].dst_port).capitalize();
+            var counts = subDataSource[i].count;
+            var rgb = rgbMaker();
+            var rgbSet = 'rgba('+ rgb.join() +',0.8)';
+            
+            labels.push(label);
+            datasets[0].label = dataSource.label;
+            datasets[0].data.push(counts);
+            datasets[0].backgroundColor.push(rgbSet);
+        }
+
+        return [labels, datasets, options]
     }
+    
 
-    function customDestination(){
-        var config = null;
-        config = {
-            type: 'line',
-            data: {
-                labels: labels,
-                datasets: datasets3
-            },
-            options: {
-                tooltips: {
-                    mode: 'index',
-                    intersect: false
-                },
-                responsive: true,
-                legend: {
-                    display: true,
-                    position: 'top',
-                    labels: {
-                        usePointStyle: true,
-                        fontSize: 11
-                    }
-                },
-                scales: {
-                    xAxes: [{
-                        type: "time",
-                        distribution: 'series',
-                        scaleLabel: {
-                            display:true,
-                            labelString: "Timestamp"
-                        }
-                    }],
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        };
+    // Histogram
+    window.sensorEventHist   = new Chart(document.getElementById("sensor_histogram").getContext("2d"),getConfigHistogram());
+    window.sensorCountryHist = new Chart(document.getElementById("sensor_country_histogram").getContext("2d"),getConfigHistogram());
+    window.sensorDestHist    = new Chart(document.getElementById("sensor_destination_histogram").getContext("2d"),getConfigHistogram());
 
-        return config;
-    }
+    var eventHistogram = setDataHistogram({{ sensor_event_histogram | safe }}, typeColorSet=0);
+    var countryHistogram = setDataHistogram({{ countries_event_histogram | safe}}, typeColorSet=1, typeChartSet='line');
+    var destHistogram = setDataHistogram({{ ports_event_histogram | safe}}, typeColorSet=0);
+
+    window.sensorEventHist.data.labels = eventHistogram[0];
+    window.sensorEventHist.data.datasets = eventHistogram[1];
+
+    window.sensorCountryHist.data.labels = countryHistogram[0];
+    window.sensorCountryHist.data.datasets = countryHistogram[1];
+    
+    window.sensorDestHist.data.labels = destHistogram[0];
+    window.sensorDestHist.data.datasets = destHistogram[1];
+    
+    window.sensorEventHist.update();
+    window.sensorCountryHist.update();
+    window.sensorDestHist.update();
+    
+    // For Bar Sensor Countries and Events
+    window.sensorEventDoughnut = new Chart(document.getElementById("sensor_events_bar").getContext("2d"),getConfigHistogram(typeChartSet='doughnut'));
+    window.portsEventDoughnut = new Chart(document.getElementById("sensor_ports_events_bar").getContext("2d"),getConfigHistogram(typeChartSet='doughnut'));
 
 
-    function getDoughnutBar(){
-        var config = null;
-        config = {
-            type: 'doughnut',
-            data: {
-                labels:['Asu','Nyambek','Naga', 'Naga Bonar', 'Naga Asli'],
-                datasets:[{
-                    label: 'Sensor Event by Countries',
-                    data: [50,30,40,10,30],
-                    backgroundColor: [
-                        "rgb(233, 30, 99)",
-                        "rgb(255, 193, 7)",
-                        "rgb(0, 188, 212)",
-                        "rgb(139, 195, 74)",
-                        "rgb(139, 195, 58)"
+    var sensorDataDoughnut = setDataDoughnut({{ sensor_events | safe}});
+    var portsDataDoughnut = setDataDoughnut({{ ports_events | safe}});
 
-                    ]
-                }]
-            },
-            options: {
-                responsive: true,
-                legend: {
-                    position: 'right',
-                    labels: {
-                        usePointStyle: true,
-                        fontSize: 11
-                    }
-                },
-                animation: {
-                    animateScale: true,
-                    animateRotate: true
-                }
-            }
-        };
+    window.sensorEventDoughnut.data.labels = sensorDataDoughnut[0];
+    window.sensorEventDoughnut.data.datasets = sensorDataDoughnut[1];
+    window.sensorEventDoughnut.options = customOptions();
 
-        return config;
-    }
+    window.portsEventDoughnut.data.labels = portsDataDoughnut[0];
+    window.portsEventDoughnut.data.datasets = portsDataDoughnut[1];
+    window.portsEventDoughnut.options = customOptions();
 
-    function getSensorEventsBar(){
-        var config = null;
-        config = {
-            type: 'doughnut',
-            data: {
-                labels:['Dionaea','Cowrie','Glastopf'],
-                datasets:[{
-                    label: 'Sensor Events',
-                    data: [800,300,100],
-                    backgroundColor: [
-                        "rgb(233, 30, 99)",
-                        "rgb(255, 193, 7)",
-                        "rgb(0, 188, 212)",
+    window.sensorEventDoughnut.update();
+    window.portsEventDoughnut.update();
 
-                    ]
-                }]
-            },
-            options: {
-                responsive: true,
-                legend: {
-                    display: true,
-                    position: 'right',
-                    labels: {
-                        usePointStyle: true,
-                        fontSize: 11
-                    }
-                },
-                animation: {
-                    animateScale: true,
-                    animateRotate: true
-                }
-            }
-        };
+    // For Bar Country and Port
+    window.countriesPorts = [
+        new Chart(document.getElementById("country-ports-1").getContext("2d"),getConfigHistogram(typeChartSet='doughnut')),
+        new Chart(document.getElementById("country-ports-2").getContext("2d"),getConfigHistogram(typeChartSet='doughnut')),
+        new Chart(document.getElementById("country-ports-3").getContext("2d"),getConfigHistogram(typeChartSet='doughnut')),
+        new Chart(document.getElementById("country-ports-4").getContext("2d"),getConfigHistogram(typeChartSet='doughnut')),
+        new Chart(document.getElementById("country-ports-5").getContext("2d"),getConfigHistogram(typeChartSet='doughnut')),
+        new Chart(document.getElementById("country-ports-6").getContext("2d"),getConfigHistogram(typeChartSet='doughnut'))       
+    ]
 
-        return config;
-    }
+    
+    {% for country_port in countries_ports_events %}
+        var data = customSetDataDoughnut({{ country_port | safe }});
+        window.countriesPorts[{{ loop.index - 1 }}].data.labels = data[0];
+        window.countriesPorts[{{ loop.index - 1 }}].data.datasets = data[1];
+        window.countriesPorts[{{ loop.index - 1 }}].options = data[2]; 
+        window.countriesPorts[{{ loop.index - 1 }}].update();
+    {% endfor %}
 
 
-// TODO
-// Create 10 Colour Ready
-// Function for options
-// Function for config
-// Function for creating
 
-// window.colorsWithAlpha = {
-    //     red: {
-    //         backgroundColor: 'rgba(244,67,54, 0.3)',
-    //         borderColor: 'rgba(244,67,54, 0.75)',
-    //         pointBorderColor: 'rgba(244,67,54, 0)',
-    //         pointBackgroundColor: 'rgba(244,67,54, 0.9)'
-    //     },
-    //     blue: {
-    //         backgroundColor: 'rgba(33,150,243, 0.3)',
-    //         borderColor: 'rgba(33,150,243, 0.75)',
-    //         pointBorderColor: 'rgba(33,150,243, 0)',
-    //         pointBackgroundColor: 'rgba(33,150,243, 0.9)'
-    //     },
-    //     green: {
-    //         backgroundColor: 'rgba(67,160,71, 0.3)',
-    //         borderColor: 'rgba(67,160,71, 0.75)',
-    //         pointBorderColor: 'rgba(67,160,71, 0)',
-    //         pointBackgroundColor: 'rgba(67,160,71, 0.9)'
-    //     },
-    //     yellow: {
-    //         backgroundColor: 'rgba(255,235,59, 0.3)',
-    //         borderColor: 'rgba(255,235,59, 0.75)',
-    //         pointBorderColor: 'rgba(255,235,59, 0)',
-    //         pointBackgroundColor: 'rgba(255,235,59, 0.9)'
-    //     },
-    //     orange: {
-    //         backgroundColor: 'rgba(251,140,0, 0.3)',
-    //         borderColor: 'rgba(251,140,0, 0.75)',
-    //         pointBorderColor: 'rgba(251,140,0, 0)',
-    //         pointBackgroundColor: 'rgba(251,140,0,0, 0.9)'
-    //     },
-    //     blueGrey: {
-    //         backgroundColor: 'rgba(84,110,122, 0.3)',
-    //         borderColor: 'rgba(84,110,122, 0.75)',
-    //         pointBorderColor: 'rgba(84,110,122, 0)',
-    //         pointBackgroundColor: 'rgba(84,110,122, 0.9)'
-    //     },
-    //     deepPurple: {
-    //         backgroundColor: 'rgba(94,53,177, 0.3)',
-    //         borderColor: 'rgba(94,53,177, 0.75)',
-    //         pointBorderColor: 'rgba(94,53,177, 0)',
-    //         pointBackgroundColor: 'rgba(94,53,177, 0.9)'
-    //     },
-    //     purple: {
-    //         backgroundColor: 'rgba(74,20,140, 0.3)',
-    //         borderColor: 'rgba(74,20,140, 0.75)',
-    //         pointBorderColor: 'rgba(74,20,140, 0)',
-    //         pointBackgroundColor: 'rgba(74,20,140, 0.9)'
-    //     },
-    //     lightGreen: {
-    //         backgroundColor: 'rgba(104,159,56, 0.3)',
-    //         borderColor: 'rgba(104,159,56, 0.75)',
-    //         pointBorderColor: 'rgba(104,159,56, 0)',
-    //         pointBackgroundColor: 'rgba(104,159,56, 0.9)'
-    //     },
-    //     blackwood: {
-    //         backgroundColor: 'rgba(0,121,107, 0.3)',
-    //         borderColor: 'rgba(0,121,107, 0.75)',
-    //         pointBorderColor: 'rgba(0,121,107, 0)',
-    //         pointBackgroundColor: 'rgba(0,121,107, 0.9)'
-    //     }
-    // }
 </script>
 {% endblock %}

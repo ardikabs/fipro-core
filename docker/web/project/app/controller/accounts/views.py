@@ -36,7 +36,7 @@ def login():
             return redirect(request.args.get('next') or url_for('main.index'))
         else:
             flash('Invalid email or password', 'alert-danger')
-        render_template('accounts/login.html', form=form)
+        return render_template('accounts/login.html', form=form)
     if current_user.is_authenticated:
         return redirect(url_for('main.index'))
     return render_template('accounts/login.html', form=form)

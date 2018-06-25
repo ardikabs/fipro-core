@@ -2421,7 +2421,8 @@ section.content {
 .dashboard-stat-list {
   list-style: none;
   padding-left: 0;
-  margin-top: 40px; }
+  margin-top: 40px; 
+}
   .dashboard-stat-list li {
     padding: 16px 0 0 0; }
     .dashboard-stat-list li small {

@@ -9,7 +9,7 @@
 {% block content %}
 {% set data = 
     { 
-        "attack_daily"      : attack_daily,
+        "today_attack"      : today_attack,
         "cowrie_events"     : cowrie_events,
         "dionaea_events"    : dionaea_events,
         "glastopf_events"   : glastopf_events,
@@ -39,7 +39,7 @@
                     </div>
                     <div class="content">
                         <div class="text"><h5>TODAY ATTAK COUNT</h5></div>
-                        <div class="number count-to" data-from="0" data-to="{{ data['attack_daily'] }}" data-speed="1000" data-fresh-interval="20"></div>
+                        <div class="number count-to" data-from="0" data-to="{{ data['today_attack'] }}" data-speed="1000" data-fresh-interval="20"></div>
                     </div>
                 </div>
             </div>
@@ -76,7 +76,7 @@
                     </div>
                     <div class="content">
                         <div class="text"><h5>DIONAEA EVENTS</h5></div>
-                        <div class="number count-to" data-from="0" data-to="243" data-speed="1000" data-fresh-interval="20"></div>
+                        <div class="number count-to" data-from="0" data-to="{{ data['dionaea_events'] }}" data-speed="1000" data-fresh-interval="20"></div>
                     </div>
                 </div>
             </div>
@@ -87,7 +87,7 @@
                     </div>
                     <div class="content">
                         <div class="text"><h5>COWRIE EVENTS</h5></div>
-                        <div class="number count-to" data-from="0" data-to="257" data-speed="1000" data-fresh-interval="20"></div>
+                        <div class="number count-to" data-from="0" data-to="{{ data['cowrie_events'] }}" data-speed="1000" data-fresh-interval="20"></div>
                     </div>
                 </div>
             </div>
@@ -99,7 +99,7 @@
                     </div>
                     <div class="content">
                         <div class="text"><h5>GLASTOPF EVENTS</h5></div>
-                        <div class="number count-to" data-from="0" data-to="1225" data-speed="1000" data-fresh-interval="20"></div>
+                        <div class="number count-to" data-from="0" data-to="{{ data['glastopf_events'] }}" data-speed="1000" data-fresh-interval="20"></div>
                     </div>
                 </div>
             </div>
@@ -111,7 +111,19 @@
                     <div class="body">
                         <div class="font-bold">ATTACK DAILY STATS</div>
                         <br>
+                        {% if attack_daily_stats %}
                         <canvas id="line_chart" height="150"></canvas>
+
+                        {% else %}
+                        <div class="row clearfix dashboard-stat-list">
+                            <div class="col-md-12">
+                                <br>
+                                <div class="align-center">
+                                    No data available
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -119,44 +131,33 @@
                 <div class="card">
                     <div class="body bg-teal">
                         <div class="font-bold m-b--35">RECENT COUNTRY ATTACK</div>
+                        {% if recent_attacks %}
                         <ul class="dashboard-stat-list">
+                            {% for attack in recent_attacks %}
                             <li>
-                                <i class="fr flag"></i> France
-                                <span class="pull-right">192.168.1.1 <small>(10)</small></span>
+                                {% if attack['geoip']['country'] %}
+                                <i class="{{ attack['geoip']['country_code'].lower() }} flag"></i> 
+                                {{ attack['geoip']['country'] }}
+                                
+                                {% else %}
+                                <i class="flag"></i> 
+                                {{ "Unknown" }}
+                                {% endif %}
+                                
+                                <span class="pull-right">{{ attack['src_ip'] }} <small>({{ attack['counts'] }})</small></span>
                             </li>
-                            <li>
-                                <i class="id flag"></i> Indonesia
-                                <span class="pull-right">192.168.1.1 <small>(10)</small></span>
-                            </li>
-                            <li>
-                                <i class="ar flag"></i> Argentina
-                                <span class="pull-right">192.168.1.1 <small>(10)</small></span>
-                            </li>
-                            <li>
-                                <i class="at flag"></i> Austria
-                                <span class="pull-right">192.168.1.1 <small>(10)</small></span>
-                            </li>
-                            <li>
-                                <i class="us flag"></i> United States
-                                <span class="pull-right">192.168.1.1 <small>(10)</small></span>
-                            </li>     
-                            <li>
-                                <i class="my flag"></i> Malaysia
-                                <span class="pull-right">192.168.1.1 <small>(10)</small></span>
-                            </li>                     
-                            <li>
-                                <i class="cn flag"></i> China
-                                <span class="pull-right">192.168.1.1 <small>(10)</small></span>
-                            </li>  
-                            <li>
-                                <i class="tw flag"></i> Taiwan
-                                <span class="pull-right">192.168.1.1 <small>(10)</small></span>
-                            </li>  
-                            <li>
-                                <i class="jp flag"></i> Japan
-                                <span class="pull-right">192.168.1.1 <small>(10)</small></span>
-                            </li>  
+                            {% endfor %}
                         </ul>
+                        {% else %}
+                        <div class="row clearfix dashboard-stat-list">
+                            <div class="col-md-12">
+                                <br>
+                                <div class="align-center">
+                                   No data available
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -169,6 +170,7 @@
 {% endblock %}
 
 {% block custom_btmscripts %}
+<script src="{{ url_for('static', filename='vendors/momentjs/moment.js') }}"></script>
 <script src="{{ url_for('static', filename='vendors/jquery-countto/jquery.countTo.js') }}"></script>
 <script src="{{ url_for('static', filename='vendors/raphael/raphael.min.js') }}"></script>
 <script src="{{ url_for('static', filename='vendors/morrisjs/morris.js') }}"></script>
@@ -176,19 +178,32 @@
 
 
 <script>
+
+
     $(function(){
 
         $('.count-to').countTo();
+        
+        var labels = []
+        var data = []
 
+        {% for attack in attack_daily_stats %}
+            labels.push(moment( "{{ attack.date }}").format("DD MMM"));
+            data.push({{ attack.counts }})
+        {% endfor %}
 
-        new Chart(document.getElementById("line_chart").getContext("2d"), {
+        new Chart(document.getElementById("line_chart").getContext("2d"), getConfig(labels, data) );
+    });
+
+    function getConfig(labels, data){
+        var config = {
             type: 'line',
                 data: {
-                    labels: ["22 Juni", "23 Juni", "24 Juni", "25 Juni", "26 Juni", "27 Juni", "28 Juni"],
+                    labels: labels,
                     datasets: [
                     {
-                        label: "Attack Daily Stats (weekly)",
-                        data: [2810, 9000, 5200, 4100, 6000, 1700, 3000],
+                        label: "Attack Daily Stats",
+                        data: data,
                         borderColor: 'rgba(233, 30, 99, 0.75)',
                         backgroundColor: 'rgba(233, 30, 99, 0.3)',
                         pointBorderColor: 'rgba(233, 30, 99, 0)',
@@ -200,17 +215,9 @@
                     responsive: true,
                     legend: false
                 }
-        });
-    });
-
-    function getChartJs(){
-        var config = null;
-        if (type === 'line') {
-            config = {
-                
-            }
         }
-        return config;
+        return config
     }
+
 </script>
 {% endblock %}

@@ -7,6 +7,8 @@
 {% endblock %}
 
 {% block content %}
+
+
 <section class="content">
     <div class="container-fluid">
         <div class="row clearfix">
@@ -58,6 +60,7 @@
                         <br>
                         <br>
 
+                        {% if deploy_key_lists %}
                         <div class="table-responsive">
                             <table class="table table-hover dashboard-task-infos">
                                 <thead>
@@ -66,80 +69,69 @@
                                         <th>Name</th>
                                         <th>Key</th>
                                         <th>Status</th>
+                                        <th>Created At</th>
                                         <th>Expired At</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {% for deploy_key in deploy_key_lists %}
                                     <tr>
-                                        <td>1</td>
-                                        <td>Digital Ocean #1</td>
-                                        <td>AgSX445</td>
-                                        <td><span class="label label-primary">Active</span></td>
-                                        <td>24 Jun 2018</td>
+                                        <td>{{ loop.index }}</td>
+                                        <td>{{ deploy_key.name }}</td>
+                                        <td>{{ deploy_key.deploy_key }}</td>
                                         <td>
-                                            <button type="button" class="btn btn-primary waves-effect" data-toggle="modal" data-target="#AgSX445">
+                                            {% if deploy_key.status == 0 %}
+                                            <span class="label label-danger">Expired</span>
+                                            {% elif deploy_key.status == 1 %}
+                                            <span class="label label-primary">Active</span>
+                                            {% else %}
+                                            <span class="label label-default">Used</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ deploy_key.show_date(deploy_key.created_at) }}</td>
+                                        <td>{{ deploy_key.show_date(deploy_key.expired_at) }}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary waves-effect" data-toggle="modal" data-target="#{{ deploy_key.deploy_key }}" {% if deploy_key.status !=1 %}disabled{% endif %}>
                                                 <i class="material-icons">create</i>
                                                 EDIT
                                             </button>
-                                            <button type="button" class="btn bg-teal waves-effect" onclick="copyToClipboard('AgSX445')">
-                                                <input type="text" id="AgSX445-script" class="hidden" value="AgSX445">
+                                            <button type="button" class="btn bg-teal waves-effect" onclick="copyToClipboard('{{ deploy_key.deploy_key }}')" {% if deploy_key.status !=1 %}disabled{% endif %}>
+                                                <input type="text" id="{{ deploy_key.deploy_key }}-script" class="hidden" value="{{ deploy_key.generate_script(host_url,api_key) }}">
                                                 <i class="material-icons">file_copy</i>
                                                 COPY
                                             </button>
-                                            <button type="button" class="btn btn-danger waves-effect delete-key" data-deploy-key="AgSX445">
+                                            <button type="button" class="btn btn-danger waves-effect delete-key" data-key="{{ deploy_key.deploy_key }}" data-name="{{ deploy_key.name }}">
                                                 <i class="material-icons">delete</i>
                                                 DELETE
                                             </button>
+                                            <form id="form-delete-{{ deploy_key.deploy_key }}", method="POST">
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                <input type="hidden" name="id" value="{{ deploy_key.id }}">
+                                                {{ form.hidden_tag() }}
+                                            </form>
                                         </td>
+
                                     </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Digital Ocean #2</td>
-                                        <td>oKixlaSd</td>
-                                        <td><span class="label label-danger">Expired</span></td>
-                                        <td>24 Jun 2018</td>
-                                        <td>
-                                            <button type="button" class="btn btn-primary waves-effect" data-toggle="modal" data-target="#AgSX445">
-                                                <i class="material-icons">create</i>
-                                                EDIT
-                                            </button>
-                                            <button type="button" class="btn bg-teal waves-effect" onclick="copyToClipboard('AgSX445')">
-                                                <input type="text" id="AgSX445-script" class="hidden" value="AgSX445">
-                                                <i class="material-icons">file_copy</i>
-                                                COPY
-                                            </button>
-                                            <button type="button" class="btn btn-danger waves-effect delete-key" data-deploy-key="AgSX445">
-                                                <i class="material-icons">delete</i>
-                                                DELETE
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Digital Ocean #3</td>
-                                        <td>xaXzxw2</td>
-                                        <td><span class="label label-default">Used</span></td>
-                                        <td>24 Jun 2018</td>
-                                        <td>
-                                            <button type="button" class="btn btn-primary waves-effect" data-toggle="modal" data-target="#AgSX445">
-                                                <i class="material-icons">create</i>
-                                                EDIT
-                                            </button>
-                                            <button type="button" class="btn bg-teal waves-effect" onclick="copyToClipboard('AgSX445')">
-                                                <input type="text" id="AgSX445-script" class="hidden" value="AgSX445">
-                                                <i class="material-icons">file_copy</i>
-                                                COPY
-                                            </button>
-                                            <button type="button" class="btn btn-danger waves-effect delete-key" data-deploy-key="AgSX445">
-                                                <i class="material-icons">delete</i>
-                                                DELETE
-                                            </button>
-                                        </td>
-                                    </tr>
+                                    {% endfor %}
+
                                 </tbody>
                             </table>
                         </div>
+                        {% else %}
+                        <div class="well">
+                            <p align="center">
+                                    <big>There is no deploy key available. Try to create one!</big>                                        
+                            </p>
+                            <p align="center">
+                                <button align="center" type="button" class="btn btn-sm btn-success waves-effect" data-toggle="modal" data-target="#addKey">
+                                    <i class="material-icons">add</i>
+                                    <span>ADD DEPLOY KEY</span>
+                                </button>
+        
+                            </p>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -152,16 +144,18 @@
     <div class="modal fade" id="addKey" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
+                <form id="add-deploy-key" method="POST">
                 <div class="modal-header">
                     <h4 class="modal-title" id="addKeyLabel">Add Deploy Key</h4>
                 </div>
                 <div class="modal-body">
+                    
                     <div class="row clearfix">
                         <div class="col-sm-12">
                             <b>Name</b>
                             <div class="input-group">
                                 <div class="form-line">
-                                    <input type="text" class="form-control" placeholder="Ex: Sensor #1">
+                                    {{ form.name(class="form-control", placeholder="Ex: Sensor #1", required="") }}
                                 </div>
                             </div>
                         </div>
@@ -169,54 +163,63 @@
                             <b>Expired Date (optional)</b>
                             <div class="input-group">
                                 <div class="form-line">
-                                    <input type="text" class="datepicker form-control" placeholder="Ex: 01/01/2018">
+                                    {{ form.expired_date(class="hidden") }}
+                                    <input id="datepicker-expired-date" type="text" class="form-control" placeholder="Ex: 01/01/2018">
+
                                 </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
                 <div class="modal-footer">
 
-                    <button type="button" class="btn btn-link waves-effect create-key-btn" data-dismiss="modal"
-                        data-placement-from="top" data-placement-align="center"
-                        data-animate-enter="animated fadeInDown" data-animate-exit="animated fadeOutUp"
-                        data-color-name="bg-black">ADD</button>
-                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCEL</button>
+                    {{ form.submit_add_key(class="btn btn-link waves-effect create-key-btn", data_dismiss="modal") }}
+
+                    <button type="button" class="btn btn-link waves-effect"  data-dismiss="modal">CANCEL</button>
                 </div>
+                {{ form.hidden_tag() }}
+            </form>
             </div>
         </div>
     </div>
 
     <!-- Deploy Key Item Modal -->
-    <div class="modal fade" id="AgSX445" tabindex="-1" role="dialog">
+    {% if deploy_key_lists %}
+    {% for deploy_key in deploy_key_lists %}
+    <div class="modal fade" id="{{ deploy_key.deploy_key }}" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="AgSX445-label">Edit Deploy Key</h4>
+                    <h4 class="modal-title" id="{{ deploy_key.deploy_key }}-label">Edit Deploy Key</h4>
                 </div>
+                <form id="form-edit-{{ deploy_key.deploy_key }}" method="POST">
+                <input type="hidden" name="_method" value="PUT">
+                <input type="hidden" name="id" value="{{ deploy_key.id }}">
                 <div class="modal-body">
                     <div class="row clearfix">
                         <div class="col-sm-12">
                             <b>Name</b>
                             <div class="input-group">
                                 <div class="form-line">
-                                    <input type="text" class="form-control" placeholder="Ex: Sensor #1">
+                                    <input type="text" name="name" class="form-control" value="{{ deploy_key.name }}">
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-12">
                             <b>Deploy Key</b>
                             <div class="input-group">
-                                <div class="form-line">
-                                    <input type="text" class="form-control" placeholder="Ex: AsXKL2">
+                                <div class="form-line disabled">
+                                    <input type="text" name="deploy_key" class="form-control" value="{{ deploy_key.deploy_key }}" disabled>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-12">
                             <b>Status</b>
                             <div class="input-group">
-                                <div class="form-line">
-                                    <input type="text" class="form-control" placeholder="Ex: Running">
+                                <div class="form-line disabled">
+                                    <input type="hidden" name="status" value="{{ deploy_key.status }}">
+                                    <input type="text"  class="form-control"  value="{{ deploy_key.to_dict().msg }}" disabled>
                                 </div>
                             </div>
                         </div>
@@ -224,7 +227,8 @@
                             <b>Expired Date</b>
                             <div class="input-group">
                                 <div class="form-line">
-                                    <input type="text" class="datepicker form-control" placeholder="Ex: 01/01/2018">
+                                    <input id="datepicker-item-{{ deploy_key.deploy_key }}" name="expired_date" type="hidden" value="{{ deploy_key.to_iso_date(deploy_key.expired_at) }}">
+                                    <input id="datepicker-item-selector-{{ deploy_key.deploy_key }}" type="text" class="form-control" value="{{ deploy_key.show_date(deploy_key.expired_at) }}")>
                                 </div>
                             </div>
                         </div>
@@ -232,12 +236,16 @@
                 </div>
                 <div class="modal-footer">
 
-                    <button type="button" class="btn btn-link waves-effect edit-key-btn" data-dismiss="modal">EDIT</button>
+                    <button type="button" class="btn btn-link waves-effect edit-key-btn" data-dismiss="modal" data-key="{{ deploy_key.deploy_key }}">EDIT</button>
                     <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCEL</button>
                 </div>
+                {{ form.hidden_tag() }}
+                </form>
             </div>
         </div>
     </div>
+    {% endfor %}
+    {% endif %}
 
     <input type="text" value="" id="just-for-copy" style="position:absolute;left:-9999px">
 </section>
@@ -252,47 +260,76 @@
 <script src="{{ url_for('static', filename='vendors/sweetalert/sweetalert.min.js') }}"></script>
 
 <script>
+
     $(function() {
         autosize($('textarea.auto-growth'));
 
+        var aWeek = moment().add(7,'days');
+        document.getElementById('expired_date').value = aWeek.toISOString();   
+        document.getElementById('datepicker-expired-date').value = aWeek.format('DD/MM/YYYY');   
 
-        $('.datepicker').bootstrapMaterialDatePicker({
-            format: 'dddd DD MMMM YYYY',
+        $('#datepicker-expired-date').bootstrapMaterialDatePicker({
+            format: 'DD/MM/YYYY',
             clearButton: true,
             weekStart: 1,
-            time: false
+            time: false,
+            minDate : moment()
+        }).on('change', function(e,date){
+            document.getElementById('expired_date').value = date.toISOString(); 
         });
 
+        
+        {% for deploy_key in deploy_key_lists %}
+        document.getElementById('datepicker-item-{{ deploy_key.deploy_key }}').value = moment('{{ deploy_key.to_iso_date(deploy_key.expired_at) }}').toISOString();
+        document.getElementById('datepicker-item-selector-{{ deploy_key.deploy_key }}').value = moment("{{ deploy_key.expired_at }}").format('DD/MM/YYYY');
+        $('#datepicker-item-selector-{{ deploy_key.deploy_key }}').bootstrapMaterialDatePicker({
+            format: 'DD/MM/YYYY',
+            weekStart: 1,
+            time: false,
+            minDate : moment("{{ deploy_key.expired_at }}")
+        }).on('change', function(e,date){
+            document.getElementById('datepicker-item-{{ deploy_key.deploy_key }}').value = date.toISOString(); 
+        });
 
+        {% endfor %}
 
     })
 
     $('.delete-key').on('click', function() {
-        var key = $(this).data('deploy-key');
-        showConfirmMessage(key);
+        var name = $(this).data('name');
+        var key = $(this).data('key');
+
+        showConfirmMessage(name,key);
     });
 
     $('.create-key-btn').on('click', function() {
         swal("Success!", "Deploy Key Sucessfully Added!", "success");
+        document.getElementById('add-deploy-key').submit();
     })
 
     $('.edit-key-btn').on('click', function() {
+        var key = $(this).data('key');
         swal("Success!", "Deploy Key Information Successfully Edited!", "success");
+        document.getElementById('form-edit-'+key).submit();
     })
 
 
-    function showConfirmMessage(key) {
+    function showDate(date){
+        return moment().format('DD/MM/YYYY');
+    }
+
+    function showConfirmMessage(name,key) {
         swal({
             title: "Are you sure?",
-            text: "You will delete "+ key +" key information\nPlease make sure the key already expired or not used!",
+            text: "You will delete "+ name +" ("+ key +") key information\nPlease make sure the key already expired or not used!",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
             confirmButtonText: "Yes, delete it!",
             closeOnConfirm: false
         }, function () {
-            swal("Deleted!", key + " Key has been deleted!", "success");
-
+            swal("Deleted!", name + " ("+ key +") key has been deleted!", "success");
+            document.getElementById("form-delete-"+key).submit();
             
         });
     }

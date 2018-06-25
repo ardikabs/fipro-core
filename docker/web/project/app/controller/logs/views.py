@@ -1,6 +1,13 @@
 
 
-from flask import jsonify, render_template
+from flask import jsonify, render_template, request, make_response
+from flask_login import(
+    current_user,
+    login_required,
+    login_user,
+    logout_user
+)
+from app.commons.MongoInterface import MongoInterface as MoI
 from . import logs
 
 @logs.route('/')
@@ -13,213 +20,12 @@ def dionaea_index():
     
 @logs.route('/cowrie/')
 def cowrie_index():
-    data = [
-        {
-            "eventid" : "cowrie.session.connect" ,
-            "src_ip" : "127.0.0.1" ,
-            "dst_ip" : "192.168.1.0" ,
-            "dst_port" : "22" ,
-            "session" : "c16acd56" ,
-            "message" : "New connection: 127.0.0.1:43963 (127.0.0.1:2299) [session: c16acd56]" ,
-            "location" : "(55.1544, 61.4297)" ,
-            "country" : "Russia" ,
-            "country_code" : "RU" ,
-            "state" : "Chelyabinsk" ,
-            "city" : "Chelyabinsk" ,
-            "postal_code" : "454008" ,
-            "asn" : "8369" ,
-            "aso" : "Intersvyaz-2 JSC" ,
-            "timestamp" : "2017-04-03 21:07:07.319Z"
-        },
-        {
-            "eventid" : "cowrie.session.connect" ,
-            "src_ip" : "127.0.0.1" ,
-            "dst_ip" : "192.168.1.0" ,
-            "dst_port" : "22" ,
-            "session" : "c16acd56" ,
-            "message" : "New connection: 127.0.0.1:43963 (127.0.0.1:2299) [session: c16acd56]" ,
-            "location" : "(55.1544, 61.4297)" ,
-            "country" : "Russia" ,
-            "country_code" : "RU" ,
-            "state" : "Chelyabinsk" ,
-            "city" : "Chelyabinsk" ,
-            "postal_code" : "454008" ,
-            "asn" : "8369" ,
-            "aso" : "Intersvyaz-2 JSC" ,
-            "timestamp" : "2017-04-03 21:07:07.319Z"
-        },
-        {
-            "eventid" : "cowrie.session.connect" ,
-            "src_ip" : "127.0.0.1" ,
-            "dst_ip" : "192.168.1.0" ,
-            "dst_port" : "22" ,
-            "session" : "c16acd57" ,
-            "message" : "New connection: 127.0.0.1:43963 (127.0.0.1:2299) [session: c16acd56]" ,
-            "location" : "(55.1544, 61.4297)" ,
-            "country" : "Russia" ,
-            "country_code" : "RU" ,
-            "state" : "Chelyabinsk" ,
-            "city" : "Chelyabinsk" ,
-            "postal_code" : "454008" ,
-            "asn" : "8369" ,
-            "aso" : "Intersvyaz-2 JSC" ,
-            "timestamp" : "2017-04-03 21:07:07.319Z"
-        },
-        {
-            "eventid" : "cowrie.session.connect" ,
-            "src_ip" : "127.0.0.1" ,
-            "dst_ip" : "192.168.1.0" ,
-            "dst_port" : "22" ,
-            "session" : "c16acd57" ,
-            "message" : "New connection: 127.0.0.1:43963 (127.0.0.1:2299) [session: c16acd56]" ,
-            "location" : "(55.1544, 61.4297)" ,
-            "country" : "Russia" ,
-            "country_code" : "RU" ,
-            "state" : "Chelyabinsk" ,
-            "city" : "Chelyabinsk" ,
-            "postal_code" : "454008" ,
-            "asn" : "8369" ,
-            "aso" : "Intersvyaz-2 JSC" ,
-            "timestamp" : "2017-04-03 21:07:07.319Z"
-        },
-        {
-            "eventid" : "cowrie.session.connect" ,
-            "src_ip" : "127.0.0.1" ,
-            "dst_ip" : "192.168.1.0" ,
-            "dst_port" : "22" ,
-            "session" : "c16acd58" ,
-            "message" : "New connection: 127.0.0.1:43963 (127.0.0.1:2299) [session: c16acd56]" ,
-            "location" : "(55.1544, 61.4297)" ,
-            "country" : "Russia" ,
-            "country_code" : "RU" ,
-            "state" : "Chelyabinsk" ,
-            "city" : "Chelyabinsk" ,
-            "postal_code" : "454008" ,
-            "asn" : "8369" ,
-            "aso" : "Intersvyaz-2 JSC" ,
-            "timestamp" : "2017-04-03 21:07:07.319Z"
-        },
-        {
-            "eventid" : "cowrie.session.connect" ,
-            "src_ip" : "127.0.0.1" ,
-            "dst_ip" : "192.168.1.0" ,
-            "dst_port" : "22" ,
-            "session" : "c16acd58" ,
-            "message" : "New connection: 127.0.0.1:43963 (127.0.0.1:2299) [session: c16acd56]" ,
-            "location" : "(55.1544, 61.4297)" ,
-            "country" : "Russia" ,
-            "country_code" : "RU" ,
-            "state" : "Chelyabinsk" ,
-            "city" : "Chelyabinsk" ,
-            "postal_code" : "454008" ,
-            "asn" : "8369" ,
-            "aso" : "Intersvyaz-2 JSC" ,
-            "timestamp" : "2017-04-03 21:07:07.319Z"
-        },
-            {
-            "eventid" : "cowrie.session.connect" ,
-            "src_ip" : "127.0.0.1" ,
-            "dst_ip" : "192.168.1.0" ,
-            "dst_port" : "22" ,
-            "session" : "c26acd58" ,
-            "message" : "New connection: 127.0.0.1:43963 (127.0.0.1:2299) [session: c16acd56]" ,
-            "location" : "(55.1544, 61.4297)" ,
-            "country" : "Russia" ,
-            "country_code" : "RU" ,
-            "state" : "Chelyabinsk" ,
-            "city" : "Chelyabinsk" ,
-            "postal_code" : "454008" ,
-            "asn" : "8369" ,
-            "aso" : "Intersvyaz-2 JSC" ,
-            "timestamp" : "2017-04-03 21:07:07.319Z"
-        },
-        {
-            "eventid" : "cowrie.session.connect" ,
-            "src_ip" : "127.0.0.1" ,
-            "dst_ip" : "192.168.1.0" ,
-            "dst_port" : "22" ,
-            "session" : "c26acd58" ,
-            "message" : "New connection: 127.0.0.1:43963 (127.0.0.1:2299) [session: c16acd56]" ,
-            "location" : "(55.1544, 61.4297)" ,
-            "country" : "Russia" ,
-            "country_code" : "RU" ,
-            "state" : "Chelyabinsk" ,
-            "city" : "Chelyabinsk" ,
-            "postal_code" : "454008" ,
-            "asn" : "8369" ,
-            "aso" : "Intersvyaz-2 JSC" ,
-            "timestamp" : "2017-04-03 21:07:07.319Z"
-        },
-        {
-            "eventid" : "cowrie.session.connect" ,
-            "src_ip" : "127.0.0.1" ,
-            "dst_ip" : "192.168.1.0" ,
-            "dst_port" : "22" ,
-            "session" : "c18cd58" ,
-            "message" : "New connection: 127.0.0.1:43963 (127.0.0.1:2299) [session: c16acd56]" ,
-            "location" : "(55.1544, 61.4297)" ,
-            "country" : "Russia" ,
-            "country_code" : "RU" ,
-            "state" : "Chelyabinsk" ,
-            "city" : "Chelyabinsk" ,
-            "postal_code" : "454008" ,
-            "asn" : "8369" ,
-            "aso" : "Intersvyaz-2 JSC" ,
-            "timestamp" : "2017-04-03 21:07:07.319Z"
-        },
-        {
-            "eventid" : "cowrie.session.connect" ,
-            "src_ip" : "127.0.0.1" ,
-            "dst_ip" : "192.168.1.0" ,
-            "dst_port" : "22" ,
-            "session" : "c18acd58" ,
-            "message" : "New connection: 127.0.0.1:43963 (127.0.0.1:2299) [session: c16acd56]" ,
-            "location" : "(55.1544, 61.4297)" ,
-            "country" : "Russia" ,
-            "country_code" : "RU" ,
-            "state" : "Chelyabinsk" ,
-            "city" : "Chelyabinsk" ,
-            "postal_code" : "454008" ,
-            "asn" : "8369" ,
-            "aso" : "Intersvyaz-2 JSC" ,
-            "timestamp" : "2017-04-03 21:07:07.319Z"
-        },
-        {
-            "eventid" : "cowrie.session.connect" ,
-            "src_ip" : "127.0.0.1" ,
-            "dst_ip" : "192.168.1.0" ,
-            "dst_port" : "22" ,
-            "session" : "c16ace58" ,
-            "message" : "New connection: 127.0.0.1:43963 (127.0.0.1:2299) [session: c16acd56]" ,
-            "location" : "(55.1544, 61.4297)" ,
-            "country" : "Russia" ,
-            "country_code" : "RU" ,
-            "state" : "Chelyabinsk" ,
-            "city" : "Chelyabinsk" ,
-            "postal_code" : "454008" ,
-            "asn" : "8369" ,
-            "aso" : "Intersvyaz-2 JSC" ,
-            "timestamp" : "2017-04-03 21:07:07.319Z"
-        },
-        {
-            "eventid" : "cowrie.session.connect" ,
-            "src_ip" : "127.0.0.1" ,
-            "dst_ip" : "192.168.1.0" ,
-            "dst_port" : "22" ,
-            "session" : "c16ace58" ,
-            "message" : "New connection: 127.0.0.1:43963 (127.0.0.1:2299) [session: c16acd56]" ,
-            "location" : "(55.1544, 61.4297)" ,
-            "country" : "Russia" ,
-            "country_code" : "RU" ,
-            "state" : "Chelyabinsk" ,
-            "city" : "Chelyabinsk" ,
-            "postal_code" : "454008" ,
-            "asn" : "8369" ,
-            "aso" : "Intersvyaz-2 JSC" ,
-            "timestamp" : "2017-04-03 21:07:07.319Z"
-        }
-    ]
-    return render_template('logs/cowrie_index.html',data=data)
+
+    moi = MoI("mongodb://192.168.1.100:27017/")
+
+    cowrie_logs = moi.logs.get(options={'limit': 1000, 'order_by': 'session'},identifier= current_user.identifier, honeypot= "cowrie")
+
+    return render_template('logs/cowrie_index.html',data=cowrie_logs)
 
 @logs.route('/glastopf/')
 def glastopf_index():
@@ -229,3 +35,53 @@ def glastopf_index():
 @logs.route('/cowrie/<string:session>/')
 def cowrie_item(session):
     return render_template('logs/cowrie_item.html')
+
+
+
+
+@logs.route('/cowrie/data-source/')
+def source_cowrie():
+    options = {'order_by': 'session'}
+    if request.args.get('limit'):
+        try:
+            options['limit'] = int(request.args.get('limit'))
+        except (ValueError, TypeError): 
+            options['limit'] = 1000
+
+    moi = MoI("mongodb://192.168.1.100:27017/")
+    cowrie_logs = moi.logs.get(options=options,identifier= current_user.identifier, honeypot= "cowrie")
+    source = [cowrie.to_dict() for cowrie in cowrie_logs]
+
+    return make_response(jsonify(dict(data= source)), 200)
+
+@logs.route('/dionaea/data-source/')
+def source_dionaea():
+    options = {'order_by': 'session'}
+    if request.args.get('limit'):
+        try:
+            options['limit'] = int(request.args.get('limit'))
+        except (ValueError, TypeError): 
+            options['limit'] = 1000
+
+    moi = MoI("mongodb://192.168.1.100:27017/")
+    dionaea_logs = moi.logs.get(options=options,identifier= current_user.identifier, honeypot= "dionaea")
+    source = [dionaea.to_dict() for dionaea in dionaea_logs]
+
+    return make_response(jsonify(dict(data= source)), 200)
+
+@logs.route('/glastopf/data-source/')
+def source_glastopf():
+    options = {'order_by': 'session'}
+    if request.args.get('limit'):
+        try:
+            options['limit'] = int(request.args.get('limit'))
+        except (ValueError, TypeError): 
+            options['limit'] = 1000
+    
+    moi = MoI("mongodb://192.168.1.100:27017/")
+    glastopf_logs = moi.logs.get(options=options,identifier= current_user.identifier, honeypot= "glastopf")
+    source = [glastopf.to_dict() for glastopf in glastopf_logs]
+
+    return make_response(jsonify(dict(data= source)), 200)
+
+

@@ -18,7 +18,7 @@
                     </div>
                     <div class="body">                       
                         <div class="table-responsive">
-                            <table id="dt-top10-asn" class="table table-bordered table-striped table-hover dataTable" style="width:100%">
+                            <table id="dt-top-asn" class="table table-bordered table-striped table-hover dataTable" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>ASN</th>
@@ -26,15 +26,6 @@
                                         <th>Counts</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    {% for data in data['top10_asn'] %}
-                                    <tr>
-                                        <td>{{ data['asn'] }}</td>
-                                        <td>{{ data['aso'] }}</td>
-                                        <td>{{ data['counts'] }}</td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
                             </table>   
                         </div>
                     </div>
@@ -50,7 +41,7 @@
                     </div>
                     <div class="body">                       
                         <div class="table-responsive">
-                            <table id="dt-top10-countries" class="table table-bordered table-striped table-hover dataTable" style="width:100%">
+                            <table id="dt-top-countries" class="table table-bordered table-striped table-hover dataTable" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>Code</th>
@@ -58,18 +49,6 @@
                                         <th>Counts</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    {% for data in data['top10_countries'] %}
-                                    <tr>
-                                        <td>{{ data['country_code'] }}</td>
-                                        <td>
-                                            <i class="{{ data['country_code'].lower() }} flag"></i>
-                                            {{ data['country'] }}
-                                        </td>
-                                        <td>{{ data['counts'] }}</td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
                             </table>   
                         </div>            
                     </div>
@@ -90,7 +69,7 @@
                     </div>
                     <div class="body">                       
                         <div class="table-responsive">
-                            <table id="dt-top10-sourceip" class="table table-bordered table-striped table-hover dataTable" style="width:100%">
+                            <table id="dt-top-sourceip" class="table table-bordered table-striped table-hover dataTable" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>Source IP</th>
@@ -98,19 +77,6 @@
                                         <th>Counts</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    {% for data in data['top10_sourceip'] %}
-                                    <tr>
-                                        <td>{{ data['src_ip'] }}</td>
-                                        <td>
-                                            <i class="{{ data['country_code'].lower() }} flag"></i>
-                                            {{ data['country'] }}
-                                        </td>
-                                        
-                                        <td>{{ data['counts'] }}</td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
                             </table>   
                         </div>                    
                     </div>
@@ -126,21 +92,13 @@
                     </div>
                     <div class="body">                       
                         <div class="table-responsive">
-                            <table id="dt-top10-unkown-sourceip" class="table table-bordered table-striped table-hover dataTable" style="width:100%">
+                            <table id="dt-top-unknown-sourceip" class="table table-bordered table-striped table-hover dataTable" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>Source IP</th>
                                         <th>Counts</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    {% for data in data['top10_unknown_sourceip'] %}
-                                    <tr>
-                                        <td>{{ data['src_ip'] }}</td>
-                                        <td>{{ data['counts'] }}</td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
                             </table>   
                         </div>                       
                     </div>
@@ -177,21 +135,6 @@
                                     <th>Counts</th>
                                 </tr>
                             </tfoot>
-                            <tbody>
-                                {% for data in data['top_attacks'] %}
-                                <tr>
-                                    <td>{{ data['src_ip'] }}</td>
-                                    <td>{{ data['dst_port'] }}</td>
-                                    <td>
-                                        <i class="{{ data['country_code'].lower() }} flag"></i>
-                                        {{ data['country'] }}
-                                    </td>
-                                    <td>
-                                        {{ data['counts'] }}
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
                         </table>   
                     </div>         
                 </div>
@@ -209,7 +152,10 @@
 <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
 
 <script>
+    var firstTable;
     $(function(){
+        $.fn.dataTable.ext.errMode = 'throw';
+
         $('#dt-top-attacks').DataTable({
             dom: 'Bfrtip',
             buttons: [
@@ -217,40 +163,128 @@
                     extend: 'colvis',
                     collectionLayout: 'fixed two-column'
                 }
-            ]
+            ],
+            ajax: {
+                url: 'ajax/',
+                dataSrc: '',
+                data: {'type':'top_srcip_port'}
+            },
+
+            columns: [
+                {
+                    data: 'label',
+                    defaultContent: "N/A"    
+                },
+                {
+                    data: 'attacked_port.dst_port',
+                    defaultContent: "N/A"
+
+                },
+                {
+                    data: 'label_1',
+                    defaultContent: "N/A",
+                    render: function(data, type, full, meta){
+                        return '<i class="'+ full.country_code.toLowerCase() +' flag"></i>' + ' ' + data
+                    }
+                },
+                {
+                    data: 'attacked_port.count',
+                    defaultContent: "N/A"
+
+                }
+            ],
+            order: [[3,'desc']]
+
         });
 
         
-
-        $('#dt-top10-asn').DataTable({
+        $('#dt-top-asn').DataTable({
             bPaginate: false,
             bLengthChange: false,
             bFilter: false,
             bInfo: false,
-            bAutoWidth: false
+            bAutoWidth: false,
+            ajax: {
+                url: 'ajax/',
+                dataSrc: '',
+                data: {'type':'top_asn'}
+            },
+
+            columns: [
+                {data: 'autonomous_system_number'},
+                {data: 'autonomous_system_organization'},
+                {data: 'counts'}
+            ],
+            order: [[2,'desc']]
         });
 
-        $('#dt-top10-countries').DataTable({
+        $('#dt-top-countries').DataTable({
             bPaginate: false,
             bLengthChange: false,
             bFilter: false,
             bInfo: false,
-            bAutoWidth: false
+            bAutoWidth: false,
+            ajax: {
+                url: 'ajax/',
+                dataSrc: '',
+                data: {'type':'top_countries'}
+            },
+
+            columns: [
+                {data: 'country_code'},
+                {
+                    data: 'label',
+                    render: function(data, type, full, meta){
+                        return '<i class="'+ full.country_code.toLowerCase() +' flag"></i>' + ' ' + data
+                    }
+                },
+                {data: 'counts'}
+            ],
+            order: [[2,'desc']]
         });
 
-        $('#dt-top10-sourceip').DataTable({
+        $('#dt-top-sourceip').DataTable({
             bPaginate: false,
             bLengthChange: false,
             bFilter: false,
             bInfo: false,
-            bAutoWidth: false
+            bAutoWidth: false,
+            ajax: {
+                url: 'ajax/',
+                dataSrc: '',
+                data: {'type':'top_src_ip'}
+            },
+
+            columns: [
+                {data: 'label'},
+                {
+                    data: 'country',
+                    render: function(data, type, full, meta){
+                        return '<i class="'+ full.country_code.toLowerCase() +' flag"></i>' + ' ' + data
+                    }
+                },
+                {data: 'counts'}
+            ],
+            order: [[2,'desc']]
         });    
-        $('#dt-top10-unknown-sourceip').DataTable({
+        $('#dt-top-unknown-sourceip').DataTable({
             bPaginate: false,
             bLengthChange: false,
             bFilter: false,
             bInfo: false,
-            bAutoWidth: false
+            bAutoWidth: false,
+            ajax: {
+                url: 'ajax/',
+                dataSrc: '',
+                data: {'type':'top_unknown'}
+            },
+
+            columns: [
+                {data: 'label'},
+                {data: 'counts'}
+            ],
+            order: [[1,'desc']]
+
         });    
     });
 

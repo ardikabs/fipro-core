@@ -4,14 +4,11 @@ from flask_login import UserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from itsdangerous import BadSignature, SignatureExpired
 from werkzeug.security import check_password_hash, generate_password_hash
+from sqlalchemy.sql import func
 from app import db, login_manager
+from app.utils import get_datetime, current_datetime
 import datetime
-import string
-from random import choice
 
-
-el = string.ascii_letters + string.digits
-rand_str = lambda n: ''.join(choice(el) for _ in range(n))
 
 class Permission:
     GENERAL = 0x01
@@ -60,12 +57,16 @@ class User(UserMixin, db.Model):
     lastname        = db.Column(db.String(64), index=True)
     email           = db.Column(db.String(100), unique=True, index=True)
     password_hash   = db.Column(db.String(128))
-    registered_at   = db.Column(db.DateTime)
+    registered_at   = db.Column(db.DateTime(timezone=True), default= current_datetime() )
+    updated_at      = db.Column(db.DateTime(timezone=True), default= current_datetime(), onupdate= current_datetime() )
     identifier      = db.Column(db.String(32))
     role_id         = db.Column(db.Integer, db.ForeignKey('roles.id'))
-    agents          = db.relationship('Agents', backref='user', lazy='dynamic')
-    api_key         = db.relationship('ApiKey', backref='user', lazy='dynamic')
-    deploykey       = db.relationship('DeployKey', backref='user', lazy='dynamic')
+
+
+    agents          = db.relationship('Sensor', backref='user', lazy='dynamic', cascade="all, delete, delete-orphan")
+    agents          = db.relationship('Agents', backref='user', lazy='dynamic', cascade="all, delete, delete-orphan")
+    api_key         = db.relationship('ApiKey', backref='user', lazy='dynamic', cascade="all, delete, delete-orphan")
+    deploykey       = db.relationship('DeployKey', backref='user', lazy='dynamic', cascade="all, delete, delete-orphan")
 
 
     def __init__(self, **kwargs):
@@ -122,7 +123,7 @@ class ApiKey(db.Model):
     id          = db.Column(db.Integer, primary_key=True)
     api_key     = db.Column(db.String(64), unique=True)
     user_id     = db.Column(db.Integer, db.ForeignKey("users.id"))
-    created_at  = db.Column(db.DateTime, default=datetime.datetime.now())
+    created_at  = db.Column(db.DateTime(timezone=True), default= current_datetime()  )
 
     def __str__(self):
         return "ApiKey: {}".format(self.api_key)
@@ -133,11 +134,12 @@ class ApiKey(db.Model):
 class DeployKey(db.Model):
     __tablename__ = 'deploy_key'
     id          = db.Column(db.Integer, primary_key=True)
-    name        = db.Column(db.String(32), default="Agent {}".format(rand_str(3)))
-    deploy_key  = db.Column(db.String(10), unique=True, default=rand_str(8))
-    created_at  = db.Column(db.DateTime, default=datetime.datetime.today())
-    expired_at  = db.Column(db.DateTime, default=(datetime.datetime.today() + datetime.timedelta(days=7)) )
-    status      = db.Column(db.Boolean, default=True)
+    name        = db.Column(db.String(32), nullable=False)
+    deploy_key  = db.Column(db.String(10), unique=True, nullable=False)
+    created_at  = db.Column(db.DateTime(timezone=True), default= current_datetime()  )
+    updated_at  = db.Column(db.DateTime(timezone=True), onupdate= current_datetime()  )
+    expired_at  = db.Column(db.DateTime(timezone=True), onupdate= (current_datetime() + datetime.timedelta(days=7)) )
+    status      = db.Column(db.Integer, default=1)
     user_id     = db.Column(db.Integer, db.ForeignKey("users.id"))
 
     def __str__(self):
@@ -146,15 +148,38 @@ class DeployKey(db.Model):
     def __repr__(self):
         return "<DeployKey of {}>".format(self.user.email)
 
+    def check_expired(self):
+        return current_datetime > self.expired_at
+
+    def show_date(self, date):
+        return date.strftime('%d/%m/%Y')
+
+    def to_iso_date(self, date):
+        return date.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+    
+    def generate_script(self, host_url, api_key):
+        script = "wget " + host_url + "/api/v1/deploy/script/?api_key=" + api_key + " -O deploy.sh && sudo bash deploy.sh "\
+                    + host_url + " " + api_key + " " + self.deploy_key + ";sudo rm -rf deploy.sh"
+        return script
+
+
+    def _statusToString(self):
+        if self.status == 0:
+            return 'Deploy key are expired'
+        elif self.status == 1:
+            return 'Deploy key is active'
+        else:
+            return 'Deploy key already used'
+
     def to_dict(self):
         return dict(
             name=self.name,
             deploy_key=self.deploy_key,
             expired_at=self.expired_at,
             identifier=self.user.identifier,
-            status= "valid" if self.status is True else "expired"
+            status= self.status,
+            msg= self._statusToString()
         )
-
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))

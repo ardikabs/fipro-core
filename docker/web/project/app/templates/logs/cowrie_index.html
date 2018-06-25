@@ -5,6 +5,10 @@
 
 {% endblock %}
 
+{% block custom_topscripts %}
+    
+{% endblock %}
+
 {% block content %}
 <section class="content">
     <div class="container-fluid">
@@ -30,91 +34,45 @@
                     </div>
                     <div class="body">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                            <table id="table-log" class="table table-bordered table-striped table-hover dataTable js-exportable" style="white-space:nowrap; display:table; width:100%;">
                                 <thead>
                                     <tr>
-                                        <th>Event_ID</th>
-                                        <th>Source_IP</th>
-                                        <th>Destination_IP</th>
-                                        <th>Destination_Port</th>
+                                        <th>Event ID</th>
+                                        <th>Source IP</th>
+                                        <th>Destination IP</th>
+                                        <th>Destination Port</th>
                                         <th>Session</th>
                                         <th>Message</th>
-                                        <th>GeoIP.location</th>
-                                        <th>GeoIP.country</th>
-                                        <th>GeoIP.country_code</th>
-                                        <th>GeoIP.state</th>
-                                        <th>GeoIP.city</th>
-                                        <th>GeoIP.postal_code</th>                                                                                                   
-                                        <th>GeoIP.asn</th>
-                                        <th>GeoIP.aso</th>
+                                        <th>Location</th>
+                                        <th>Country</th>
+                                        <th>Country Code</th>
+                                        <th>State</th>
+                                        <th>City</th>
+                                        <th>Postal Code</th>                                                                                                   
+                                        <th>ASN</th>
+                                        <th>AS Organization</th>
                                         <th>Timestamp</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th>Event_ID</th>
-                                        <th>Source_IP</th>
-                                        <th>Destination_IP</th>
-                                        <th>Destination_Port</th>
+                                        <th>Event ID</th>
+                                        <th>Source IP</th>
+                                        <th>Destination IP</th>
+                                        <th>Destination Port</th>
                                         <th>Session</th>
                                         <th>Message</th>
-                                        <th>GeoIP.location</th>
-                                        <th>GeoIP.country</th>
-                                        <th>GeoIP.country_code</th>
-                                        <th>GeoIP.state</th>
-                                        <th>GeoIP.city</th>
-                                        <th>GeoIP.postal_code</th>                                                                                                   
-                                        <th>GeoIP.asn</th>
-                                        <th>GeoIP.aso</th>
+                                        <th>Location</th>
+                                        <th>Country</th>
+                                        <th>Country Code</th>
+                                        <th>State</th>
+                                        <th>City</th>
+                                        <th>Postal Code</th>                                                                                                   
+                                        <th>ASN</th>
+                                        <th>AS Organization</th>
                                         <th>Timestamp</th>
                                     </tr>
                                 </tfoot>
-                                <tbody>
-                                    {% set label_arr = ["label label-default", "label label-primary", "label label-success", "label label-info", "label label-warning", "label label-danger"] %}
-                                    {% set update_session = [] %}
-                                    {% set label_session = {} %}
-                                    {% set iterator = {'i': 0} %}
-
-                                    {% for dt in data %}
-                                    
-                                    {% if dt['session'] not in update_session %}
-                                        {% do label_session.update({dt['session']: label_arr[iterator.i] }) %}
-                                        {% do update_session.append(dt['session']) %}
-                                        
-                                        {% if iterator.i == 5 %}
-                                            {% do iterator.update({'i': 0}) %}
-                                        {% else %} 
-                                            {% do iterator.update({'i': (iterator.i + 1) }) %}
-                                        {% endif %}
-                                        
-                                    {% endif %}
-
-                                    <tr>
-                                        <td>{{ dt['eventid'] }}</td>
-                                        <td>{{ dt['src_ip'] }}</td>
-                                        <td>{{ dt['dst_ip'] }}</td>
-                                        <td>{{ dt['dst_port'] }}</td>
-                                        <td>
-                                            <a href="{{ url_for('logs.cowrie_item', session=dt['session']) }}"> 
-                                            <span class="{{ label_session[dt['session']] }}">
-                                                {{ dt['session'] }}
-                                            </span
-                                            ></a>
-                                        </td>
-                                        <td>{{ dt['message'] }}</td>
-                                        <td>{{ dt['location'] }}</td>
-                                        <td>{{ dt['country'] }}</td>
-                                        <td>{{ dt['country_code'] }}</td>
-                                        <td>{{ dt['state'] }}</td>
-                                        <td>{{ dt['city'] }}</td>
-                                        <td>{{ dt['postal_code'] }}</td>
-                                        <td>{{ dt['asn'] }}</td>
-                                        <td>{{ dt['aso'] }}</td>
-                                        <td>{{ dt['timestamp'] }}</td>
-                                    </tr>
-
-                                    {% endfor %}
-                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -137,19 +95,87 @@
 <script src="{{ url_for('static', filename='vendors/jquery-datatable/extensions/export/buttons.html5.min.js') }}"></script>
 <script src="{{ url_for('static', filename='vendors/jquery-datatable/extensions/export/buttons.print.min.js') }}"></script>
 
-<input type="hidden" value="{{ data }}" id="data-source">
+<!-- <input type="hidden" value="{{ data }}" id="data-source"> -->
 <script>
-    var dataSource = document.getElementById("data-source").value;
+    // var dataSource = document.getElementById("data-source").value;
 
     $(function () {
-
-        //Exportable table
         $('.js-exportable').DataTable({
             dom: 'Bfrtip',
             responsive: true,
             buttons: [
                 'copy', 'csv', 'excel', 'pdf', 'print'
-            ]
+            ],
+            ajax: {
+                url: "data-source/",
+                dataSrc: 'data'
+            },
+            columnDefs:[
+
+            ],
+            columns: [
+                {'data': 'eventid'},
+                {'data': 'src_ip'},
+                {
+                    'data': 'dst_ip',
+                    'defaultContent': 'N/A'
+                },
+                {
+                    'data': 'dst_port',
+                    'defaultContent': "N/A"
+                },
+                {
+                    'data': 'session',
+                    'render': function(data, type, full, meta){
+                        return '<a href="/logs/cowrie/'+ data + '">'+ data +'</a>'
+                    }    
+                },
+                {
+                    'data': 'message',
+                    'width': '20%'
+                },
+                {
+                    'data': 'geoip.location',
+                    'defaultContent': "N/A",
+                    'render': function(data, type, full, meta){
+                        if (data != undefined){
+                            return "("+data.latitude+", " + data.longitude +")"
+                        }
+                        return "N/A"
+                    }
+
+                },
+                {
+                    'data': 'geoip.country',
+                    'defaultContent': "N/A"
+                },
+                {
+                    'data': 'geoip.country_code',
+                    'defaultContent': "N/A"
+                },
+                {
+                    'data': 'geoip.state',
+                    'defaultContent': "N/A"
+                },
+                {
+                    'data': 'geoip.city',
+                    'defaultContent': "N/A"
+                },
+                {
+                    'data': 'geoip.postal_code',
+                    'defaultContent': "N/A"
+                },
+                {
+                    'data': 'geoip.autonomous_system_number',
+                    'defaultContent': "N/A"
+                },
+                {
+                    'data': 'geoip.autonomous_system_organization',
+                    'defaultContent': "N/A"
+                },
+                {'data': 'timestamp'}
+            ],
+            order: [[14,'desc']]
         });
     });
 </script>

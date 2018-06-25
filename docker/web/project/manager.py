@@ -1,12 +1,21 @@
 
 import os
 from flask_script import Manager, Shell
+from flask_migrate import Migrate, MigrateCommand
 from app import create_app, db
-from app.models import Role, User, Agents, Sensor, ApiKey, DeployKey
+from app.models import Role, User, Agents, Sensor, ApiKey, DeployKey, Condition
 import datetime
 
 app = create_app(os.getenv('APP_SETTINGS') or 'default')
 manager = Manager(app)
+migrate = Migrate(app, db)
+
+def make_shell_context():
+    return dict(app=app, db=db, User=User, Role=Role)
+
+manager.add_command('shell', Shell(make_context=make_shell_context))
+manager.add_command('db', MigrateCommand)
+
 
 @manager.command
 def runserver():
@@ -27,6 +36,7 @@ def setup_general():
     """Runs the set-up needed for both local development and production.
        Also sets up first admin user."""
     Role.insert_roles()
+    Condition.insert_data()
     admin_query = Role.query.filter_by(name='Administrator')
     if admin_query.first() is not None:
         if User.query.filter_by(email= "admin@fipro.com").first() is None:

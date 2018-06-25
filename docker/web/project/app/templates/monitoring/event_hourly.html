@@ -129,6 +129,10 @@
 
 
 <script>
+    String.prototype.capitalize = function() {
+        return this.charAt(0).toUpperCase() + this.slice(1);
+    }
+    
     var configDatePicker = {
         format: 'dddd, DD MMMM YYYY',
         clearButton: false,
@@ -137,82 +141,314 @@
         currentDate: moment()
     };
 
-    var config = {
-        type: 'line',
-        data: {
-            labels: ["January", "February", "March", "April", "May", "June", "July"],
-            datasets: [{
-                label: "Dionaea",
-                data: [65, 59, 80, 81, 56, 55, 50000],
-                borderColor: 'rgba(0, 188, 212, 0.75)',
-                backgroundColor: 'rgba(0, 188, 212, 0.3)',
-                pointBorderColor: 'rgba(0, 188, 212, 0)',
-                pointBackgroundColor: 'rgba(0, 188, 212, 0.9)',
-                pointBorderWidth: 1
-            }, 
-            {
-                label: "Cowrie",
-                data: [28, 48, 40, 19, 86, 27, 90],
-                borderColor: 'rgba(233, 30, 99, 0.75)',
-                backgroundColor: 'rgba(233, 30, 99, 0.3)',
-                pointBorderColor: 'rgba(233, 30, 99, 0)',
-                pointBackgroundColor: 'rgba(233, 30, 99, 0.9)',
-                pointBorderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            legend: {
-                position: 'top'
-            },
-            title: {
-                display: true,
-                text: moment().format('dddd, DD MMMM YYYY')
+    function datasetTemplate (){
+        var template = {
+            label: "label",
+            data: []
+        }
+        return template
+    }
+
+    function colorConfig (){
+        var rgb = rgbMaker();
+        var colors = {
+            'backgroundColor': 'rgba('+ rgb.join() +',0.3)',
+            'borderColor': 'rgba('+ rgb.join() +',0.75)',
+            'pointBackgroundColor': 'rgba('+ rgb.join() +',0.9)',
+            'pointBorderColor': 'rgba('+ rgb.join() +',0)',
+            'pointBorderWidth': 1
+        };
+        return colors
+    }
+
+    function rgbMaker(){
+        var rgb = [];
+        rgb.push(Math.floor(Math.random() * 255));
+        rgb.push(Math.floor(Math.random() * 255));
+        rgb.push(Math.floor(Math.random() * 255));
+        return rgb
+    }
+    
+    function global_labels(){
+        var labels = [];
+        for(var i=0; i<24; i++){
+            labels.push(i.toString());
+        }
+        return labels
+    }
+    
+    var sensor_event = new Array();
+    {% for event in sensor_event %}
+        var obj = new Object();
+        obj.label = '{{ event.label | safe }}';
+        obj.data = {{ event['hourly']|safe }};
+        sensor_event.push(obj);
+    {% endfor %}
+    
+    var agent_event = new Array();
+    {% for event in agent_event %}
+        var obj = new Object();
+        obj.label = '{{ event.label | safe }}';
+        obj.data = {{ event['hourly']|safe }};
+        agent_event.push(obj);
+    {% endfor %}
+
+    var ports_event = new Array();
+    {% for event in ports_event %}
+        var obj = new Object();
+        obj.label = '{{ event.label | safe }}';
+        obj.data = {{ event['hourly']|safe }};
+        ports_event.push(obj);
+    {% endfor %}
+
+    var countries_event = new Array();
+    {% for event in countries_event %}
+        var obj = new Object();
+        obj.label = '{{ event.label | safe }}';
+        obj.data = {{ event['hourly']|safe }};
+        countries_event.push(obj);
+    {% endfor %}
+
+
+    function getSensorEvent(data){
+        var event = new Array();
+        
+        for (var i=0;i<data.length;i++){
+            var obj = new Object();
+            obj.label = data[i].label.capitalize();
+            obj.data = data[i].hourly;
+            event.push(obj);
+        }
+        return event
+    }
+
+    function getPortsEvent(data){
+        var event = new Array();
+        
+        for (var i=0;i<data.length;i++){
+            var obj = new Object();
+            obj.label = data[i].label;
+            obj.data = data[i].hourly;
+            event.push(obj);
+        }
+        return event
+    }
+
+    function getCountriesEvent(data){
+        var event = new Array();
+        
+        for (var i=0;i<data.length;i++){
+            var obj = new Object();
+            obj.label = data[i].label;
+            obj.data = data[i].hourly;
+            event.push(obj);
+        }
+        return event
+    }
+
+    function getAgentsEvent(data){
+        var event = new Array();
+        
+        for (var i=0;i<data.length;i++){
+            var obj = new Object();
+            obj.label = data[i].label;
+            obj.data = data[i].hourly;
+            event.push(obj);
+        }
+        return event
+    }
+
+
+
+
+    function setDatasets(dataSrc){
+        var dataset = new Array();
+        if (dataSrc.length === 0){
+            var obj = datasetTemplate();
+            obj.label = "No data found";
+            obj.data = new Array();
+            for (var i=0; i<24; i++){
+                obj.data.push(0);
+            }
+            dataset.push(obj);
+        }
+        else {
+            for (var i=0;i<dataSrc.length; i++){
+                var obj = datasetTemplate();
+                obj.data = new Array();
+                obj.label = dataSrc[i].label;
+                
+                for (var j=0; j<24; j++){
+                    if (dataSrc[i].data.hasOwnProperty(j)){
+                        obj.data.push(dataSrc[i].data[j]);
+                    }
+                    else{
+                        obj.data.push(0);
+                    }
+                }
+                var color = colorConfig();
+                for (var key in color){
+                    obj[key] = color[key];
+                }
+
+                dataset.push(obj);
             }
         }
+        return dataset
+    }
+    
+    function getConfig(){
+        var config = null;
+        config = {
+            type: 'line',
+            data: {
+                labels: global_labels(),
+                datasets: [],
+            },
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'top'
+                },
+                title: {
+                    display: true,
+                    text: moment().format('dddd, DD MMMM YYYY')
+                },
+                scales: {
+                    xAxes: [{
+                        scaleLabel: {
+                            display:true,
+                            labelString: "Timestamp (Hours)"
+                        }
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        },
+                        scaleLabel: {
+                            display:true,
+                            labelString: "Events (Count)"
+                        }                        
+                    }]
+                }
+            }
         };
+        return config
+
+    }
+
 
     window.onload = function(){
-        window.sensorEventStat = new Chart(document.getElementById("sensor_event_statistics").getContext("2d"),config);
-        window.agentEventStat = new Chart(document.getElementById("agent_event_statistics").getContext("2d"),config);
-        window.countriesEventStat = new Chart(document.getElementById("countries_event_statistics").getContext("2d"),config);
-        window.destEventStat = new Chart(document.getElementById("destination_port_statistics").getContext("2d"),config);
+        window.sensorEventStat = new Chart(document.getElementById("sensor_event_statistics").getContext("2d"),getConfig());
+        window.agentEventStat = new Chart(document.getElementById("agent_event_statistics").getContext("2d"),getConfig());
+        window.countriesEventStat = new Chart(document.getElementById("countries_event_statistics").getContext("2d"),getConfig());
+        window.destEventStat = new Chart(document.getElementById("destination_port_statistics").getContext("2d"),getConfig());
+        
+        window.sensorEventStat.data.datasets = setDatasets(sensor_event);
+        window.agentEventStat.data.datasets = setDatasets(agent_event) ;
+        window.countriesEventStat.data.datasets = setDatasets(countries_event);
+        window.destEventStat.data.datasets = setDatasets(ports_event);
 
+        window.sensorEventStat.update();
+        window.agentEventStat.update();
+        window.countriesEventStat.update();
+        window.destEventStat.update();
 
+        
         $(function(){
             $('#datepicker-se').bootstrapMaterialDatePicker(configDatePicker)
                 .on('change',function(e, date){
-                    console.log(date.toDate());
-                    window.sensorEventStat.options.title.text = date.format('dddd, DD MMMM YYYY');
-                    console.log(config);
-                    window.sensorEventStat.update();
+                    var type = 'sensor-event'
+                    var stringDate = date.format('YYYY-MM-DD');
+                    var url  = 'ajax/?type='+ type + '&date=' + stringDate;
+                    var ajax = $.ajax({
+                        type: "GET",
+                        url: url,
+                        dataType:"json",
+                        async: true,
+                        success:function(data) {
+                            //update chart here
+                            console.log(data);
+                            updateChartData(type, window.sensorEventStat, date, data);
+                        }}).responseText;
+
+
                 }
             );
 
             $('#datepicker-dpe').bootstrapMaterialDatePicker(configDatePicker)
                 .on('change',function(e, date){
-                    console.log(date.toDate());
-                    window.destEventStat.options.title.text = date.format('dddd, DD MMMM YYYY');
-                    window.destEventStat.update();
+                    var type = 'ports-event'
+                    var stringDate = date.format('YYYY-MM-DD');
+                    var url  = 'ajax/?type='+ type + '&date=' + stringDate;
+                    var ajax = $.ajax({
+                        type: "GET",
+                        url: url,
+                        dataType:"json",
+                        async: true,
+                        success:function(data) {
+                            //update chart here
+                            updateChartData(type, window.destEventStat, date, data);
+                        }}).responseText;
                 }
             );
             $('#datepicker-ce').bootstrapMaterialDatePicker(configDatePicker)
                 .on('change',function(e, date){
-                    console.log(date.toDate());
-                    window.countriesEventStat.options.title.text = date.format('dddd, DD MMMM YYYY');
-                    window.countriesEventStat.update();
+                    var type = 'countries-event'
+                    var stringDate = date.format('YYYY-MM-DD');
+                    var url  = 'ajax/?type='+ type + '&date=' + stringDate;
+                    var ajax = $.ajax({
+                        type: "GET",
+                        url: url,
+                        dataType:"json",
+                        async: true,
+                        success:function(data) {
+                            //update chart here
+                            updateChartData(type, window.countriesEventStat, date, data);
+                        }}).responseText;
                 }
             );
 
             $('#datepicker-ae').bootstrapMaterialDatePicker(configDatePicker)
                 .on('change',function(e, date){
-                    console.log(date.toDate());
-                    window.agentEventStat.options.title.text = date.format('dddd, DD MMMM YYYY');
-                    window.agentEventStat.update();
+                    var type = 'agents-event'
+                    var stringDate = date.format('YYYY-MM-DD');
+                    var url  = 'ajax/?type='+ type + '&date=' + stringDate;
+                    var ajax = $.ajax({
+                        type: "GET",
+                        url: url,
+                        dataType:"json",
+                        async: true,
+                        success:function(data) {
+                            //update chart here
+                            updateChartData(type, window.agentEventStat, date, data);
+                        }}).responseText;
                 }
             );
 
         });
+    }
+
+
+
+
+    function updateChartData(type, chart, date, data){
+        
+        chart.options.title.text = date.format('dddd, DD MMMM YYYY');
+        if (type == 'sensor-event'){
+            chart.data.datasets = setDatasets(getSensorEvent(data));
+        }
+        else if(type == 'ports-event'){
+            chart.data.datasets = setDatasets(getPortsEvent(data));
+        }
+        else if(type == 'countries-event'){
+            chart.data.datasets = setDatasets(getCountriesEvent(data));
+        }
+        else if(type == 'agents-event'){
+            chart.data.datasets = setDatasets(getAgentsEvent(data));
+        }
+
+        chart.update();
     }
 </script>
 {% endblock %}
