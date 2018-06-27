@@ -9,8 +9,7 @@ if os.path.exists('.env'):
     for line in open('.env'):
         var = line.strip().split('=')
         if len(var) == 2:
-            os.environ[var[0]] = var[1]
-           
+            os.environ[var[0]] = var[1]           
 
 class Config:
     APP_NAME = os.environ.get('APP_NAME') or 'Server-Side Web App'

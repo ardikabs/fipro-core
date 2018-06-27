@@ -68,14 +68,13 @@ class Sensor(db.Model):
         if self.condition_id != 1:
             try:
                 url = "http://{0}:5000/api/v1/sensor/{1}".format(self.agent.ipaddr, self.string_id)
-                req = requests.get(url, timeout=10)
+                req = requests.get(url, timeout=5)
 
                 resp = req.json()
                 
                 if req.status_code == 404:
                     self.condition_id = 1
                     self.status = "dead"
-                    db.session.commit()
                     setattr(self, 'attack_count', 0)
                     setattr(self, 'not_found', True)
 
@@ -89,17 +88,16 @@ class Sensor(db.Model):
                     self._set_condition(**resp.get('sensor').get('state'))
 
                     self.status = resp.get('sensor').get('status')
-                    db.session.commit()
 
                     moi = MoI("mongodb://192.168.1.100:27017")
-                    count = moi.logs.count(identifier= current_user.identifier, agent_ip= self.agent.ipaddr, honeypot= self.type)
+                    count = moi.logs.count(identifier= self.user.identifier, agent_ip= self.agent.ipaddr, honeypot= self.type)
                     setattr(self, 'attack_count', count)
                     self.attack_count = "{:,}".format(self.attack_count).replace(",",".")
         
-            except ConnectionError:
+            except Exception as e:
+                print ("Error Found: {}".format(e))
                 self.condition_id = 5
                 self.status = "exited"
-                db.session.commit()
                 setattr(self, 'attack_count', 0)
                 setattr(self, 'error', True)
 
@@ -110,7 +108,7 @@ class Sensor(db.Model):
             try:
                 url = "http://{0}:5000/api/v1/sensor/{1}/destroy".format(self.agent.ipaddr, self.string_id)
                 req = requests.get(url, timeout=10)
-            except ConnectionError:
+            except requests.exceptions.ConnectionError:
                 return self
         else:
             print ('Sensor {} already destroyed or dead!'.format(self.name))

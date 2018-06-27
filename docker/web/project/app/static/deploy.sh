@@ -27,7 +27,7 @@ curl -s -X POST -H "Content-Type: application/json" -d "{
 STATUS=$(cat /tmp/agent.json | python3 -c 'import sys,json;obj=json.load(sys.stdin);print (obj["status"])')
 
 if [[ "$STATUS" != True ]]; then
-	MSG=$(cat /tmp/agent.json | python3 -c 'import sys,json;obj=json.load(sys.stdin);print (obj["msg"])')
+	MSG=$(cat /tmp/agent.json | python3 -c 'import sys,json;obj=json.load(sys.stdin);print (obj["message"])')
     clear
     echo -e "\n\n>>> Deploy Key Error"
 	echo -e ">>> $MSG"

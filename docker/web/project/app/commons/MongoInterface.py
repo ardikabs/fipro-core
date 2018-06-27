@@ -8,12 +8,20 @@ from app.utils import get_datetime, get_date, current_datetime
 
 
 class MongoInterface():
-    __db = None
 
     def __init__(self, mongodburl=None):
-        self.client = pymongo.MongoClient()
-        if mongodburl is not None:
-            self.client = pymongo.MongoClient(mongodburl)
+
+        mongodburl = mongodburl or 'mongodb://localhost:27017'
+        # self.client = pymongo.MongoClient(mongodburl,serverSelectionTimeoutMS=10, tz_aware=True)
+        self.client = pymongo.MongoClient(host="mongodb", port=27017, serverSelectionTimeoutMS=10, tz_aware=True)
+        try:
+            self.client.server_info()
+            self.conn = True
+        except pymongo.errors.ServerSelectionTimeoutError as err:
+            self.conn = False
+
+    def check_conn(self):
+        return self.conn
 
     @property
     def daily(self):
@@ -34,12 +42,6 @@ class MongoInterface():
     def __repr__(self):
         return "<%s instance at %s>" % (self.__class__.__name__, id(self))
     
-    @classmethod
-    def instance(cls, mongodburl=None):
-        if cls.__db is None:
-            cls.__db = MongoInterface(mongodburl=mongodburl)
-        return cls.__db
-
 class ResourceMixin():
     
     db_name = "fipro"
@@ -246,14 +248,14 @@ class SensorEventCount(ResourceMixin):
 class Logs(ResourceMixin):
 
     collection_name = 'logs'
-    expected_filters = ('_id', 'identifier', 'honeypot', 'agent_ip', 'timestamp', 'src_ip', 'dst_port')
+    expected_filters = ('_id', 'identifier', 'sensor', 'agent_ip', 'timestamp', 'src_ip', 'dst_port')
  
     def top_asn(self, options={}, **kwargs):
        
         match_query = {
             "$match": 
             {
-                "honeypot": {"$ne": "cowrie"},
+                "sensor": {"$ne": "cowrie"},
                 "identifier": kwargs.get('identifier', None),
                 "geoip.autonomous_system_number" : {"$ne": None}
             }
@@ -262,7 +264,7 @@ class Logs(ResourceMixin):
         match2_query = {
             "$match":
             {
-                "honeypot": {"$eq": "cowrie"},
+                "sensor": {"$eq": "cowrie"},
                 "identifier": kwargs.get('identifier'),
                 "geoip.autonomous_system_number" : {"$ne": None}
             }
@@ -443,7 +445,6 @@ class Logs(ResourceMixin):
         limit = {'$limit': options.get('limit', 10)}
 
         query_set = [match_query, group_query, project_query, sort, limit]
-        print (query_set)
         res = self.collection.aggregate(query_set)
         return list(res)
     
@@ -546,7 +547,7 @@ class Logs(ResourceMixin):
             "$group": {
                 "_id": {
                     "identifier": "$identifier",
-                    "honeypot": "$honeypot",
+                    "sensor": "$sensor",
                     "date": {
                         "$dateFromParts": {
                             "year": {"$year": {"date": "$timestamp", "timezone": "Asia/Jakarta"}},
@@ -565,7 +566,7 @@ class Logs(ResourceMixin):
             "$group": {
                 "_id": {
                     "identifier":"$_id.identifier",
-                    "honeypot": "$_id.honeypot",
+                    "sensor": "$_id.sensor",
                     "date": "$_id.date"
                 },
                 "hourly":{
@@ -573,7 +574,7 @@ class Logs(ResourceMixin):
                         "hour": "$_id.hour",
                         "count": {
                             "$cond": {
-                                "if": {"$eq": ["$_id.honeypot", "cowrie"] },
+                                "if": {"$eq": ["$_id.sensor", "cowrie"] },
                                 "then": {"$size": "$uniqueValues"},
                                 "else": "$count",
                             }
@@ -644,7 +645,7 @@ class Logs(ResourceMixin):
         group_query = {
             "$group": {
                 "_id": {
-                    "honeypot": "$honeypot",
+                    "sensor": "$sensor",
                     "date": {
                         "$dateFromParts": {
                             "year": {"$year": {"date": "$timestamp", "timezone": "Asia/Jakarta"}},
@@ -662,7 +663,7 @@ class Logs(ResourceMixin):
         group1_query = {
             "$group": {
                 "_id": {
-                    "honeypot": "$_id.honeypot",
+                    "sensor": "$_id.sensor",
                     "date": "$_id.date"
                 },
                 "hourly":{
@@ -673,7 +674,7 @@ class Logs(ResourceMixin):
                                     {"k": {"$substr":["$_id.hour",0,-1]}, 
                                         "v": {
                                             "$cond": {
-                                                "if": {"$eq": ["$_id.honeypot", "cowrie"] },
+                                                "if": {"$eq": ["$_id.sensor", "cowrie"] },
                                                 "then": {"$size": "$uniqueValues"},
                                                 "else": "$count",
                                             }
@@ -686,7 +687,7 @@ class Logs(ResourceMixin):
                 },
                 "counts": {"$sum": {
                     "$cond": {
-                        "if": {"$eq": ["$_id.honeypot", "cowrie"] },
+                        "if": {"$eq": ["$_id.sensor", "cowrie"] },
                         "then": {"$size": "$uniqueValues"},
                         "else": "$count",
                     }
@@ -698,7 +699,7 @@ class Logs(ResourceMixin):
             "$project":{
                 "_id": 0,
                 "date": "$_id.date",
-                "label": "$_id.honeypot",
+                "label": "$_id.sensor",
                 "hourly": {"$mergeObjects": "$hourly"},
                 "counts": 1
             }
@@ -721,7 +722,7 @@ class Logs(ResourceMixin):
         group_query = {
             "$group": {
                 "_id": {
-                    "honeypot": "$honeypot",
+                    "sensor": "$sensor",
                     "agent_ip": "$agent_ip",
                     "date": {
                         "$dateFromParts": {
@@ -740,7 +741,7 @@ class Logs(ResourceMixin):
         group1_query = {
             "$group": {
                 "_id": {
-                    "honeypot": "$_id.honeypot",
+                    "sensor": "$_id.sensor",
                     "agent_ip": "$_id.agent_ip",
                     "date": "$_id.date"
 
@@ -750,7 +751,7 @@ class Logs(ResourceMixin):
                         "hour": "$_id.hour",
                         "count": {
                             "$cond": {
-                                "if": {"$eq": ["$_id.honeypot", "cowrie"] },
+                                "if": {"$eq": ["$_id.sensor", "cowrie"] },
                                 "then": {"$size": "$uniqueValues"},
                                 "else": "$count",
                             }
@@ -959,7 +960,7 @@ class Logs(ResourceMixin):
         group_query = {
             "$group": {
                 "_id": {
-                    "honeypot": "$honeypot"
+                    "sensor": "$sensor"
                 },
                 "uniqueValues":{"$addToSet": "$session"},
                 "counts": {"$sum": 1}
@@ -969,11 +970,11 @@ class Logs(ResourceMixin):
         project_query = {
             "$project":{   
                 "_id":0,
-                "label": "$_id.honeypot",
+                "label": "$_id.sensor",
                 "identifier":"$_id.identifier",
                 "counts": { 
                     "$cond": { 
-                        "if": {"$eq": ["$_id.honeypot", "cowrie"] }, 
+                        "if": {"$eq": ["$_id.sensor", "cowrie"] }, 
                         "then": {"$size": "$uniqueValues"},
                         "else": "$counts" 
                     }
@@ -1208,7 +1209,7 @@ class Logs(ResourceMixin):
         group_query = {
             "$group": {
                 "_id": {
-                    "honeypot": "$honeypot",
+                    "sensor": "$sensor",
                     "date": {
                         "$dateFromParts": {
                             "year": {"$year": {"date": "$timestamp", "timezone": "Asia/Jakarta"}},
@@ -1225,14 +1226,14 @@ class Logs(ResourceMixin):
         group1_query = {
             "$group": {
                 "_id": {
-                    "honeypot": "$_id.honeypot",
+                    "sensor": "$_id.sensor",
                 },
                 "infos":{
                     "$push": {
                         "date": "$_id.date",
                         "count": {
                             "$cond": {
-                                "if": {"$eq": ["$_id.honeypot", "cowrie"] },
+                                "if": {"$eq": ["$_id.sensor", "cowrie"] },
                                 "then": {"$size": "$uniqueValues"},
                                 "else": "$count",
                             }
@@ -1241,7 +1242,7 @@ class Logs(ResourceMixin):
                 },
                 "counts": {"$sum": {
                     "$cond": {
-                        "if": {"$eq": ["$_id.honeypot", "cowrie"] },
+                        "if": {"$eq": ["$_id.sensor", "cowrie"] },
                         "then": {"$size": "$uniqueValues"},
                         "else": "$count",
                     }
@@ -1252,7 +1253,7 @@ class Logs(ResourceMixin):
         project_query = {
             "$project":{
                 "_id": 0,
-                "label": "$_id.honeypot",
+                "label": "$_id.sensor",
                 "infos": 1,
                 "counts": 1
             }

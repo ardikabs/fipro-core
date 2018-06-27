@@ -2,12 +2,15 @@
 
 {% block custom_css %}
 <link href="{{ url_for('static',filename='vendors/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css') }}" rel="stylesheet">
-
 {% endblock %}
 
 {% block content %}
 <section class="content">
     <div class="container-fluid">
+        
+        {% if db_info %}
+        
+        <!-- GLASTOPF LOGS -->
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="card">
@@ -33,36 +36,24 @@
                             <table id="table-log" class="table table-bordered table-striped table-hover dataTable js-exportable" style="white-space:nowrap; display:table; width:100%;">
                                     <thead>
                                     <tr>
+                                        <th></th>
                                         <th>Source IP</th>
                                         <th>Destination Port</th>
                                         <th>Methods</th>
                                         <th>Path</th>
-                                        <th>Location</th>
                                         <th>Country</th>
-                                        <th>Country Code</th>
-                                        <th>State</th>
-                                        <th>City</th>
-                                        <th>Postal Code</th>                                                                                                   
-                                        <th>ASN</th>
-                                        <th>AS Organization</th>
                                         <th>Timestamp</th>
 
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
+                                        <th></th>
                                         <th>Source IP</th>
                                         <th>Destination Port</th>
                                         <th>Methods</th>
                                         <th>Path</th>
-                                        <th>Location</th>
                                         <th>Country</th>
-                                        <th>Country Code</th>
-                                        <th>State</th>
-                                        <th>City</th>
-                                        <th>Postal Code</th>                                                                                                   
-                                        <th>ASN</th>
-                                        <th>AS Organization</th>
                                         <th>Timestamp</th>
 
                                     </tr>
@@ -73,6 +64,26 @@
                 </div>
             </div>
         </div>
+
+        {% else %}
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="body">
+                        <div class="well">
+                            <h2 align="center">
+                                <span class="label label-danger"><big>DATABASE ERROR</big></span>
+                            </h2>
+                            <br>
+                            <p align="center">
+                                <big>No data available</big>          
+                            </p>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
     </div>
 </section>
 {% endblock %}
@@ -89,30 +100,117 @@
 <script src="{{ url_for('static', filename='vendors/jquery-datatable/extensions/export/buttons.html5.min.js') }}"></script>
 <script src="{{ url_for('static', filename='vendors/jquery-datatable/extensions/export/buttons.print.min.js') }}"></script>
 
-<script>
-    $(function () {
 
-        var methods_label = {
-            'GET': 'label label-default',
-            'POST': 'label label-success',
-            'PUT': 'label label-info',
-            'DELETE': 'label label-danger',
-            'OPTIONS': 'label label-warning',
-            'HEAD': 'label label-primary'
+<style>
+    td.details-control {
+        color:forestgreen;
+        cursor: pointer;
+    }
+    tr.shown td.details-control i {
+        color:red;
+        cursor: pointer;
+    }
+</style>
+
+<script>
+
+    var methods_label = {
+        'GET': 'label label-default',
+        'POST': 'label label-success',
+        'PUT': 'label label-info',
+        'DELETE': 'label label-danger',
+        'OPTIONS': 'label label-warning',
+        'HEAD': 'label label-primary'
+    }
+    function format(d){
+        // `d` is the original data object for the row
+        var lat = "N/A", long="N/A";
+        var city="N/A";
+        var code = "N/A", country="N/A";
+        var asn="N/A", aso="N/A";
+        if (d.geoip !== null){
+            console.log('NULL');
+            lat = d.geoip.location.latitude || 'N/A';
+            long = d.geoip.location.longitude || 'N/A';
+            city = d.geoip.city || 'N/A';
+            code = d.geoip.country_code || 'N/A';
+            country = d.geoip.country || 'N/A';
+            asn = d.geoip.autonomous_system_number || 'N/A';
+            aso = d.geoip.autonomous_system_organization || 'N/A';
+        }
+        var countryShow = '<i class="'+ code.toLowerCase() +' flag"></i> '+ country;
+        if (country == "N/A"){
+            countryShow = country;
         }
 
+        return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+            '<tr>'+
+                '<td>Source IP</td>'+
+                '<td>'+d.src_ip+'</td>'+
+            '</tr>'+
+            '<tr>'+
+                '<td>Destination Port</td>'+
+                '<td>'+d.dst_port+'</td>'+
+            '</tr>'+
+            '<tr>'+
+                '<td>Methods</td>'+
+                '<td><span class="'+ methods_label[d.methods] +'">'+ d.methods +'</span></td>'+
+            '</tr>'+
+            '<tr>'+
+                '<td>Path</td>'+
+                '<td>'+d.path+'</td>'+
+            '</tr>'+
+            '<tr>'+
+                '<td>Country</td>'+
+                '<td>'+ countryShow +'</td>'+
+            '</tr>'+
+            '<tr>'+
+                '<td>Latitude</td>'+
+                '<td>'+ lat +'</td>'+
+            '</tr>'+
+            '<tr>'+
+                '<td>Longitude</td>'+
+                '<td>'+ long +'</td>'+
+            '</tr>'+
+            '<tr>'+
+                '<td>City</td>'+
+                '<td>'+ city +'</td>'+
+            '</tr>'+
+            '<tr>'+
+                '<td>ASN</td>'+
+                '<td>'+ asn +'</td>'+
+            '</tr>'+
+            '<tr>'+
+                '<td>Autonomous System Organization</td>'+
+                '<td>'+ aso +'</td>'+
+            '</tr>'+
+            '<tr>'+
+                '<td>Timestamp</td>'+
+                '<td>'+d.timestamp+'</td>'+
+            '</tr>'+
+        '</table>';
+    }
+    $(function () {
+        $.fn.dataTable.ext.errMode = 'throw';
+
         //Exportable table
-        $('.js-exportable').DataTable({
+        var table = $('#table-log').DataTable({
             dom: 'Bfrtip',
             responsive: true,
             buttons: [
                 'copy', 'csv', 'excel', 'pdf', 'print'
             ],
             ajax: {
-                url: 'data-source/',
+                url: 'data/ajax',
                 dataSrc: 'data'
             },
             columns:[
+                {
+                    "className":      'details-control',
+                    "orderable":      false,
+                    "data":           null,
+                    "defaultContent": "<i class='material-icons'>expand_more</i>"
+                },
                 { 'data': 'src_ip'},
                 { 'data': 'dst_port'},
                 { 
@@ -125,48 +223,36 @@
                 },
                 { 'data': 'path'},
                 {
-                    'data': 'geoip.location',
-                    'defaultContent': "N/A",
-                    'render': function(data, type, full, meta){
-                        if (data != undefined){
-                            return "("+data.latitude+", " + data.longitude +")"
-                        }
-                        return "N/A"
-                    }
-
-                },
-                {
                     'data': 'geoip.country',
-                    'defaultContent': "N/A"
-                },
-                {
-                    'data': 'geoip.country_code',
-                    'defaultContent': "N/A"
-                },
-                {
-                    'data': 'geoip.state',
-                    'defaultContent': "N/A"
-                },
-                {
-                    'data': 'geoip.city',
-                    'defaultContent': "N/A"
-                },
-                {
-                    'data': 'geoip.postal_code',
-                    'defaultContent': "N/A"
-                },
-                {
-                    'data': 'geoip.autonomous_system_number',
-                    'defaultContent': "N/A"
-                },
-                {
-                    'data': 'geoip.autonomous_system_organization',
-                    'defaultContent': "N/A"
+                    'render': function(data, type, full, meta){
+                        if (full.geoip === null || full.geoip.country === null){
+                            return '<i class=" flag"></i>unknown'
+                        }
+                        return '<i class="'+ full.geoip.country_code.toLowerCase() +' flag"></i>' + ' ' + data
+                    }
                 },
                 {'data': 'timestamp'}
             ],
-            order: [[12,'desc']]
+            order: [[6,'desc']]
 
+        });
+
+
+        $('#table-log tbody').on('click', 'td.details-control', function(){
+            var tr = $(this).closest('tr');
+            var row = table.row( tr );
+            var tdi = tr.find('i.material-icons');
+
+            if ( row.child.isShown() ) {
+                // This row is already open - close it
+                row.child.hide();
+                tr.removeClass('shown');
+            }
+            else {
+                // Open this row
+                row.child( format(row.data()) ).show();
+                tr.addClass('shown');
+            }
         });
     });
 </script>

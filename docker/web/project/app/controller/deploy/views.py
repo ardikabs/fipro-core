@@ -23,9 +23,9 @@ from .forms import AddDeployKeyForm
 
 
 @deploy.route('/', methods=['GET', 'POST'])
+@login_required
 def index():
     form = AddDeployKeyForm()
-
 
     if request.form.get('_method') == "PUT" :
         deploy_key = DeployKey.query.filter_by(id=request.form.get('id')).first()
@@ -42,7 +42,7 @@ def index():
         db.session.delete(deploy_key)
         db.session.commit()
 
-        msg = "Successfully deleted deploy key {0} ({1})".format(deploy_key.name,deploy_key.deploy_key)
+        msg = ("Success!","Deleted deploy key {0} ({1})".format(deploy_key.name,deploy_key.deploy_key))
         flash(msg,"alert-danger")
         return redirect(url_for('deploy.index'))
 
@@ -58,7 +58,7 @@ def index():
         db.session.add(deploy_key)
         db.session.commit()
         
-        msg = "Successfully added deploy key {0} ({1})".format(deploy_key.name,deploy_key.deploy_key)
+        msg = ("Success!","Added deploy key {0} ({1})".format(deploy_key.name,deploy_key.deploy_key))
         flash(msg,"alert-success")
         return redirect(url_for('deploy.index'))
 

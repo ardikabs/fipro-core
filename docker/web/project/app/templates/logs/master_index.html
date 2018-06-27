@@ -11,13 +11,13 @@
         
         {% if db_info %}
 
-        <!-- DIONAEA LOGS -->
+        <!-- DATA MASTER -->
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="card">
                     <div class="header">
                         <h2>
-                            DIONAEA LOGS
+                            DATA MASTER
                         </h2>
                         <ul class="header-dropdown m-r--5">
                             <li class="dropdown">
@@ -41,8 +41,7 @@
                                         <th>Source IP</th>
                                         <th>Destination IP</th>
                                         <th>Destination Port</th>
-                                        <th>Protocol</th>
-                                        <th>Transport</th>
+                                        <th>Sensor</th>
                                         <th>Country</th>
                                         <th>Timestamp</th>
 
@@ -54,11 +53,9 @@
                                         <th>Source IP</th>
                                         <th>Destination IP</th>
                                         <th>Destination Port</th>
-                                        <th>Protocol</th>
-                                        <th>Transport</th>
+                                        <th>Sensor</th>
                                         <th>Country</th>
                                         <th>Timestamp</th>
-
                                     </tr>
                                 </tfoot>
                             </table>
@@ -104,8 +101,115 @@
 <script src="{{ url_for('static', filename='vendors/jquery-datatable/extensions/export/buttons.print.min.js') }}"></script>
 
 <script>
-    function format(d){
-        var firstTemplate = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+    var methods_label = {
+        'GET': 'label label-default',
+        'POST': 'label label-success',
+        'PUT': 'label label-info',
+        'DELETE': 'label label-danger',
+        'OPTIONS': 'label label-warning',
+        'HEAD': 'label label-primary'
+    }
+
+    function cowrieFormatter(d){
+        var template = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+            '<tr>'+
+                '<td>Sensor IP:</td>'+
+                '<td>'+d.agent_ip+'</td>'+
+            '</tr>'+
+            '<tr>'+
+                '<td>Event ID:</td>'+
+                '<td>'+d.eventid+'</td>'+
+            '</tr>'+
+            '<tr>'+
+                '<td>Session:</td>'+
+                '<td>'+ d.session +'</td>'+
+            '</tr>';
+
+        if (d.hasOwnProperty('src_ip')){
+            template = template + 
+                '<tr>'+
+                    '<td>Source IP: </td>'+
+                    '<td>'+ d.src_ip +'</td>'+
+                '</tr>'
+        }
+
+        if (d.hasOwnProperty('username')){
+            template = template + 
+                '<tr>'+
+                    '<td>Username: </td>'+
+                    '<td>'+ d.username +'</td>'+
+                '</tr>'
+        }
+
+        if (d.hasOwnProperty('password')){
+            template = template + 
+                '<tr>'+
+                    '<td>Password: </td>'+
+                    '<td>'+ d.password +'</td>'+
+                '</tr>'
+        }
+
+        if (d.hasOwnProperty('input')){
+            template = template + 
+                '<tr>'+
+                    '<td>Command: </td>'+
+                    '<td>'+ d.input +'</td>'+
+                '</tr>'
+        }
+
+        if (d.hasOwnProperty('input')){
+            template = template + 
+                '<tr>'+
+                    '<td>Command: </td>'+
+                    '<td>'+ d.input +'</td>'+
+                '</tr>'
+        }
+
+        if (d.hasOwnProperty('shasum')){
+            template = template + 
+                '<tr>'+
+                    '<td>SHA Sum: </td>'+
+                    '<td>'+ d.shasum +'</td>'+
+                '</tr>'
+        }
+
+        if (d.hasOwnProperty('url')){
+            template = template + 
+                '<tr>'+
+                    '<td>SHA Sum: </td>'+
+                    '<td>'+ d.shasum +'</td>'+
+                '</tr>'
+        }
+
+        if (d.hasOwnProperty('duration')){
+            template = template + 
+                '<tr>'+
+                    '<td>Duration: </td>'+
+                    '<td>'+ d.duration +'</td>'+
+                '</tr>'
+        }
+
+        if (d.hasOwnProperty('data')){
+            template = template + 
+                '<tr>'+
+                    '<td>Data: </td>'+
+                    '<td>'+ d.data +'</td>'+
+                '</tr>'
+        }
+
+        template = template +
+            '<tr>'+
+                '<td>Message:</td>'+
+                '<td>'+d.message+'</td>'+
+            '</tr>';
+
+
+        return template;
+
+    }
+
+    function dionaeaFormatter(d){
+        var template = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
             '<tr>'+
                 '<td>Sensor IP:</td>'+
                 '<td>'+d.agent_ip+'</td>'+
@@ -129,7 +233,7 @@
 
         
         if (d.hasOwnProperty('username')){
-            firstTemplate = firstTemplate + 
+            template = template + 
                 '<tr>'+
                     '<td>Username: </td>'+
                     '<td>'+ d.username +'</td>'+
@@ -137,33 +241,70 @@
         }
 
         if (d.hasOwnProperty('password')){
-            firstTemplate = firstTemplate + 
+            template = template + 
                 '<tr>'+
                     '<td>Password: </td>'+
                     '<td>'+ d.password || "N/A" +'</td>'+
                 '</tr>'
         }
+        
+        return template
+    }
+    
+    function glastopFormatter(d){
+        // `d` is the original data object for the row
+        return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+                '<tr>'+
+                    '<td>Source IP</td>'+
+                    '<td>'+d.src_ip+'</td>'+
+                '</tr>'+
+                '<tr>'+
+                    '<td>Destination Port</td>'+
+                    '<td>'+d.dst_port+'</td>'+
+                '</tr>'+
+                '<tr>'+
+                    '<td>Methods</td>'+
+                    '<td><span class="'+ methods_label[d.methods] +'">'+ d.methods +'</span></td>'+
+                '</tr>'+
+                '<tr>'+
+                    '<td>Path</td>'+
+                    '<td>'+d.path+'</td>'+
+                '</tr>';
+    }
 
-        if (d.hasOwnProperty('geoip')){
-            var lat = "N/A", long="N/A";
-            var city="N/A";
-            var code = "N/A", country="N/A";
-            var asn="N/A", aso="N/A";
-            if (d.geoip !== null){
-                console.log('NULL');
-                lat = d.geoip.location.latitude || 'N/A';
-                long = d.geoip.location.longitude || 'N/A';
-                city = d.geoip.city || 'N/A';
-                code = d.geoip.country_code || 'N/A';
-                country = d.geoip.country || 'N/A';
-                asn = d.geoip.autonomous_system_number || 'N/A';
-                aso = d.geoip.autonomous_system_organization || 'N/A';
-            }
-            var countryShow = '<i class="'+ code.toLowerCase() +' flag"></i> '+ country;
-            if (country == "N/A"){
-                countryShow = country;
-            }
-            firstTemplate = firstTemplate +
+    function format ( d ) {
+        // `d` is the original data object for the row
+        var template;
+        if (d.sensor == "dionaea"){
+            template = dionaeaFormatter(d);
+        }
+        else if(d.sensor == "cowrie"){
+            template = cowrieFormatter(d);
+        }
+        
+        else if (d.sensor == "glastopf"){
+            template = glastopFormatter(d);
+        }
+
+        var lat = "N/A", long="N/A";
+        var city="N/A";
+        var code = "N/A", country="N/A";
+        var asn="N/A", aso="N/A";
+        if (d.geoip !== null){
+            console.log('NULL');
+            lat = d.geoip.location.latitude || 'N/A';
+            long = d.geoip.location.longitude || 'N/A';
+            city = d.geoip.city || 'N/A';
+            code = d.geoip.country_code || 'N/A';
+            country = d.geoip.country || 'N/A';
+            asn = d.geoip.autonomous_system_number || 'N/A';
+            aso = d.geoip.autonomous_system_organization || 'N/A';
+        }
+        var countryShow = '<i class="'+ code.toLowerCase() +' flag"></i> '+ country;
+        if (country == "N/A"){
+            countryShow = country;
+        }
+        template = template +
                 '<tr>'+
                     '<td>Country</td>'+
                     '<td>'+ countryShow +'</td>'+
@@ -187,17 +328,13 @@
                 '<tr>'+
                     '<td>Autonomous System Organization</td>'+
                     '<td>'+ aso +'</td>'+
-                '</tr>'
-            }
-
-        var templates = firstTemplate + '<tr>'+
-                '<td>Timestamp</td>'+
-                '<td>'+d.timestamp+'</td>'+
-            '</tr>'+
-        '</table>'
-
-
-        return templates;
+                '</tr>'+
+                '<tr>'+
+                    '<td>Timestamp</td>'+
+                    '<td>'+d.timestamp+'</td>'+
+                '</tr>'+
+            '</table>';
+        return template
     }
 
     $(function () {
@@ -221,11 +358,16 @@
                     "data":           null,
                     "defaultContent": "<i class='material-icons'>expand_more</i>"
                 },
-                { 'data': 'src_ip'},
-                { 'data': 'dst_ip'},
-                { 'data': 'dst_port'},
-                { 'data': 'connection.protocol'},
-                { 'data': 'connection.transport'},
+                { 'data': "src_ip"},
+                { 
+                    'data': "dst_ip",
+                    'defaultContent': "N/A"
+                },
+                { 
+                    'data': "dst_port",
+                    'defaultContent': "N/A"
+                },
+                { 'data': "sensor"},
                 {
                     'data': 'geoip.country',
                     'render': function(data, type, full, meta){
@@ -237,15 +379,13 @@
                 },
                 {'data': 'timestamp'}
             ],
-            order: [[7,'desc']]
-
+            order: [[6,'desc']]
         });
 
         $('#table-log tbody').on('click', 'td.details-control', function(){
             var tr = $(this).closest('tr');
             var row = table.row( tr );
-            var tdi = tr.find('i.material-icons');
-
+    
             if ( row.child.isShown() ) {
                 // This row is already open - close it
                 row.child.hide();

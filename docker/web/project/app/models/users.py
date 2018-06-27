@@ -63,8 +63,9 @@ class User(UserMixin, db.Model):
     role_id         = db.Column(db.Integer, db.ForeignKey('roles.id'))
 
 
-    agents          = db.relationship('Sensor', backref='user', lazy='dynamic', cascade="all, delete, delete-orphan")
     agents          = db.relationship('Agents', backref='user', lazy='dynamic', cascade="all, delete, delete-orphan")
+    old_agents      = db.relationship('OldAgents', backref='user', lazy='dynamic')
+    sensor          = db.relationship('Sensor', backref='user', lazy='dynamic', cascade="all, delete, delete-orphan")
     api_key         = db.relationship('ApiKey', backref='user', lazy='dynamic', cascade="all, delete, delete-orphan")
     deploykey       = db.relationship('DeployKey', backref='user', lazy='dynamic', cascade="all, delete, delete-orphan")
 
@@ -158,8 +159,8 @@ class DeployKey(db.Model):
         return date.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
     
     def generate_script(self, host_url, api_key):
-        script = "wget " + host_url + "/api/v1/deploy/script/?api_key=" + api_key + " -O deploy.sh && sudo bash deploy.sh "\
-                    + host_url + " " + api_key + " " + self.deploy_key + ";sudo rm -rf deploy.sh"
+        script = "wget {0}/api/v1/deploy/script/?api_key={1} -O deploy.sh && sudo bash deploy.sh "\
+                    "{0} {1} {2};sudo rm -rf deploy.sh".format(host_url, api_key, self.deploy_key )                    
         return script
 
 

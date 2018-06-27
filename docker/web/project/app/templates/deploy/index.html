@@ -11,6 +11,24 @@
 
 <section class="content">
     <div class="container-fluid">
+        {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+                {% for category, content in messages %}
+                    {% if category == "message" %}
+                    <div class="alert alert-warning">
+                    {% else %}
+                    <div class="alert {{ category }}">
+                    {% endif %}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {% set info, msg = content %}
+                    <strong>{{ info }}</strong> {{ msg }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
         <div class="row clearfix">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="card">

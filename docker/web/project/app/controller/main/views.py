@@ -25,20 +25,23 @@ from app.commons.MongoInterface import MongoInterface as MoI
 @main.route('/')
 @login_required
 def index():
-    moi = MoI(current_app.config['MONGODB_URL'])
-    dt = datetime.datetime.strptime('2017-11-01',"%Y-%m-%d")
-
     timezone        = pytz.timezone('Asia/Jakarta')
     today           = datetime.datetime.utcnow().replace(tzinfo=pytz.utc).astimezone(timezone)
     date_now        = today.strftime("%b %d")
+
+    moi = MoI(mongodburl=current_app.config['MONGODB_URL'])
+    if moi.check_conn() is False:
+        return render_template('main/index.html', date = date_now, db_info=False)
+
+    dt = datetime.datetime.strptime('2017-11-01',"%Y-%m-%d")
 
     cursor_today    = moi.daily.get_one(identifier= current_user.identifier, date= dt)
     cursor_dionaea  = moi.sensor_event.get_one(identifier= current_user.identifier, date= dt, sensor="dionaea")
     cursor_cowrie   = moi.sensor_event.get_one(identifier= current_user.identifier, date= dt, sensor="cowrie")
     cursor_glastopf = moi.sensor_event.get_one(identifier= current_user.identifier, date= dt, sensor="glastopf")
 
-    agents          = Agents.query.filter_by(user_id=current_user.id).count()
-    sensor          = Sensor.query.filter_by(user_id=current_user.id).count()
+    agents          = Agents.query.filter_by(user_id=current_user.id, condition_id=4).count()
+    sensor          = Sensor.query.filter_by(user_id=current_user.id, condition_id=4).count()
 
 
     today_attack    = cursor_today.counts if cursor_today else 0

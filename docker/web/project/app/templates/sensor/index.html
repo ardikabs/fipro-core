@@ -11,6 +11,23 @@
 {% block content %}
 <section class="content">
     <div class="container-fluid">
+        {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+                {% for category, content in messages %}
+                    {% if category == "message" %}
+                    <div class="alert alert-warning">
+                    {% else %}
+                    <div class="alert {{ category }}">
+                    {% endif %}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {% set info, msg = content %}
+                    <strong>{{ info }}</strong> {{ msg }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}        
         <div class="row clearfix">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="card">
@@ -77,20 +94,20 @@
                                             {{ form.hidden_tag() }}
                                             </form>
                                             {% if sensor.condition_id != 1 %}
-                                            <button type="button" class="btn btn-primary waves-effect action-btn" data-sensor-id="{{ sensor.id }}" data-sensor-name="{{ sensor.name }}" data-operation="restart">
+                                            <button type="button" class="btn btn-primary waves-effect action-btn" data-sensor-id="{{ sensor.id }}" data-sensor-name="{{ sensor.name }}" data-operation="RESTART">
                                                 <i class="material-icons">autorenew</i>
                                                 RESTART
                                             </button>
-                                            <button type="button" class="btn btn-warning waves-effect action-btn" data-sensor-id="{{ sensor.id }}" data-sensor-name="{{ sensor.name }}" data-operation="stop">
+                                            <button type="button" class="btn btn-warning waves-effect action-btn" data-sensor-id="{{ sensor.id }}" data-sensor-name="{{ sensor.name }}" data-operation="STOP">
                                                 <i class="material-icons">not_interested</i>
                                                 STOP
                                             </button>
-                                            <button type="button" class="btn btn-danger waves-effect action-btn" data-sensor-id="{{ sensor.id }}" data-sensor-name="{{ sensor.name }}" data-operation="destroy">
+                                            <button type="button" class="btn btn-danger waves-effect action-btn" data-sensor-id="{{ sensor.id }}" data-sensor-name="{{ sensor.name }}" data-operation="DESTROY">
                                                 <i class="material-icons">power_off</i>
                                                 DESTROY
                                             </button>
                                             {% else %}
-                                            <button type="button" class="btn bg-pink waves-effect action-btn" data-sensor-id="{{ sensor.id }}" data-sensor-name="{{ sensor.name }}" data-operation="delete">
+                                            <button type="button" class="btn bg-pink waves-effect action-btn" data-sensor-id="{{ sensor.id }}" data-sensor-name="{{ sensor.name }}" data-operation="DELETE">
                                                 <i class="material-icons">delete</i>
                                                 DELETE
                                             </button>
@@ -105,7 +122,7 @@
                         {% else %}
                         <div class="well">
                                 <p align="center">
-                                        <big>There is no sensor available. You need Agent first before launch Sensor!</big>                                        
+                                        <big>There is no sensor available. You need an active Agent before launch Sensor!</big>                                        
                                 </p>
                                 <p align="center">
                                     <a href= "{{ url_for('agents.index') }}"

@@ -8,6 +8,10 @@
 {% block content %}
 <section class="content">
     <div class="container-fluid">
+        
+        {% if db_info %}
+
+        <!-- SENSOR EVENT STATISTICS -->
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="card">
@@ -35,6 +39,7 @@
             </div>
         </div>
 
+        <!-- DESTINATION PORT EVENT STATISTICS -->
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="card">
@@ -61,8 +66,7 @@
             </div>
         </div>
     
-
-
+        <!-- COUNTRIES EVENT STATISTICS -->
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="card">
@@ -89,6 +93,8 @@
                 </div>
             </div>
         </div>
+       
+        <!-- AGENTS EVENT STATISTICS -->
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="card">
@@ -115,7 +121,26 @@
                 </div>
             </div>
         </div>
-    
+        
+        {% else %}
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="body">
+                        <div class="well">
+                            <h2 align="center">
+                                <span class="label label-danger"><big>DATABASE ERROR</big></span>
+                            </h2>
+                            <br>
+                            <p align="center">
+                                <big>No data available</big>          
+                            </p>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
 
 
     </div>
@@ -366,9 +391,12 @@
                         url: url,
                         dataType:"json",
                         async: true,
+                        error: function(data){
+                            console.log('No data found');
+                            updateChartData(type, window.sensorEventStat, date, data);
+                        },
                         success:function(data) {
                             //update chart here
-                            console.log(data);
                             updateChartData(type, window.sensorEventStat, date, data);
                         }}).responseText;
 
@@ -386,6 +414,10 @@
                         url: url,
                         dataType:"json",
                         async: true,
+                        error: function(data){
+                            console.log('No data found');
+                            updateChartData(type, window.destEventStat, date, data);
+                        },
                         success:function(data) {
                             //update chart here
                             updateChartData(type, window.destEventStat, date, data);
@@ -402,6 +434,10 @@
                         url: url,
                         dataType:"json",
                         async: true,
+                        error: function(data){
+                            console.log('No data found');
+                            updateChartData(type, window.countriesEventStat, date, data);
+                        },
                         success:function(data) {
                             //update chart here
                             updateChartData(type, window.countriesEventStat, date, data);
@@ -419,10 +455,16 @@
                         url: url,
                         dataType:"json",
                         async: true,
+                        error: function(data){
+                            console.log('No data found');
+                            updateChartData(type, window.agentEventStat, date, data);
+                        },
                         success:function(data) {
                             //update chart here
                             updateChartData(type, window.agentEventStat, date, data);
                         }}).responseText;
+
+
                 }
             );
 

@@ -1991,3 +1991,10 @@
 1529819513: Error in poll: Interrupted system call.
 1529819513: mosquitto version 1.4.12 terminating
 1529819675: mosquitto version 1.4.12 (build date 2017-06-01 13:03:46+0000) starting
+1529819675: Config loaded from /mosquitto/config/mosquitto.conf.
+1529819675: Opening websockets listen socket on port 9001.
+1529819675: Opening ipv4 listen socket on port 1883.
+1529819675: Opening ipv6 listen socket on port 1883.
+1529961976: Error in poll: Interrupted system call.
+1529961976: Saving in-memory database to /mosquitto/data/mosquitto.db.
+1529961976: mosquitto version 1.4.12 terminating

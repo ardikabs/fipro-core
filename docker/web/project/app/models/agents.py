@@ -71,18 +71,18 @@ class Agents(db.Model):
             try:
                 if self.string_id is None:
                     url = "http://{0}:5000/api/v1/sensor/".format(self.ipaddr)
-                    req = requests.get(url, {'name_container': 'fipro-agent'}, timeout=10)
+                    req = requests.get(url, {'name_container': 'fipro-agent'}, timeout=5)
                                 
                 else:
                     url = "http://{0}:5000/api/v1/sensor/{1}".format(self.ipaddr, self.string_id)
-                    req = requests.get(url, timeout=1)
+                    req = requests.get(url, timeout=5)
                 
                 resp = req.json()
+                print (resp)
                 
                 if req.status_code == 404:
                     self.condition_id = 5
                     self.status = "exited"
-                    db.session.commit()
                     setattr(self, 'attack_count', 0)
                     setattr(self, 'not_found', True)
 
@@ -94,28 +94,31 @@ class Agents(db.Model):
                     self.string_id = resp.get('sensor').get('short_id')
                     self.container_id = resp.get('sensor').get('id')
                     self.status = resp.get('sensor').get('status')
-                db.session.commit()
+
 
                 moi = MoI("mongodb://192.168.1.100:27017/")
-                count = moi.logs.count(identifier= current_user.identifier, agent_ip= self.ipaddr)
+                count = moi.logs.count(identifier= self.user.identifier, agent_ip= self.ipaddr)
                 setattr(self, 'attack_count', count)
                 self.attack_count = "{:,}".format(self.attack_count).replace(",",".")
 
-            except:
+            except Exception as e:
+                print ("Error Found: {}".format(e))
                 self.condition_id = 5
                 self.status = "exited"
-                db.session.commit()
                 setattr(self, 'attack_count', 0)
                 setattr(self, 'error', True)
-            
+        
+
         return self
 
     
     def destroy(self):
+        self.condition_id = 1
+        self.status = "dead"
         try:
-            url = "http://{0}:5000/api/v1/sensor/{1}/destroy".format(self.agent.ipaddr, self.string_id)
-            req = requests.get(url, timeout=10)
-        except ConnectionError:
+            url = "http://{0}:5000/api/v1/sensor/{1}/destroy".format(self.ipaddr, self.string_id)
+            requests.get(url, timeout=10)
+        except requests.exceptions.ConnectionError:
             return self
             
         return self
@@ -127,8 +130,22 @@ class Agents(db.Model):
             ipaddr  = self.ipaddr
         )
 
+    def to_archieved(self):
+        return dict(
+            name = self.name,
+            string_id = self.string_id,
+            container_id = self.container_id,
+            uptime = self.uptime,
+            ipaddr = self.ipaddr,
+            registered_at = self.registered_at,
+            updated_at = self.updated_at,
+            status = self.status,
+            user_id = self.user_id,
+            condition_id = self.container_id
+        )
 
     def _set_condition(self, **kwargs):
+        print (kwargs)
         if kwargs:
             expected_conditon = ('Dead', 'Paused', 'Restarting', 'Running')
             
@@ -149,3 +166,53 @@ class Agents(db.Model):
         dt_now = datetime.datetime.utcnow().replace(tzinfo=pytz.utc)
         uptime = dt_now - dt_start
         self.uptime = uptime.total_seconds()
+
+
+class OldAgents(db.Model):
+
+    __tablename__   = "old_agents"
+    id              = db.Column(db.Integer, primary_key=True)
+    string_id       = db.Column(db.String(20))
+    container_id    = db.Column(db.String(100))
+    name            = db.Column(db.String(64), nullable=False)
+    uptime          = db.Column(db.Integer, default=1)
+    ipaddr          = db.Column(db.String(64), nullable=False)
+    registered_at   = db.Column(db.DateTime(timezone=True))
+    deleted_at      = db.Column(db.DateTime(timezone=True), default= current_datetime())
+    updated_at      = db.Column(db.DateTime(timezone=True))
+    status          = db.Column(db.String(10), default="exited")
+    user_id         = db.Column(db.Integer, db.ForeignKey("users.id"))
+    condition_id    = db.Column(db.Integer, db.ForeignKey("conditions.id"), default=5)
+
+    def __repr__(self):
+        return '<Agent {}>'.format(self.ipaddr)
+
+    def show_info(self):
+        return '{0} ({1})'.format(self.name, self.ipaddr)
+
+    def display_uptime(self):
+        intervals = (
+            ('weeks', 604800),
+            ('days', 86400),
+            ('hours', 3600),
+            ('minutes', 60),
+            ('seconds', 1)
+        )
+        
+        seconds = self.uptime
+        for name, count in intervals:
+            value = seconds // count
+            if value:
+                seconds = seconds - value * count
+                if value == 1:
+                    name = name.rstrip('s')
+
+                return "{0} {1}".format(int(value), name)    
+    
+    def to_dict(self):
+        return dict(
+            id      = self.string_id,
+            name    = self.name,
+            ipaddr  = self.ipaddr,
+            userid  = self.user_id
+        )

@@ -3,7 +3,7 @@ import os
 from flask_script import Manager, Shell
 from flask_migrate import Migrate, MigrateCommand
 from app import create_app, db
-from app.models import Role, User, Agents, Sensor, ApiKey, DeployKey, Condition
+from app.models import *
 import datetime
 
 app = create_app(os.getenv('APP_SETTINGS') or 'default')
@@ -39,15 +39,15 @@ def setup_general():
     Condition.insert_data()
     admin_query = Role.query.filter_by(name='Administrator')
     if admin_query.first() is not None:
-        if User.query.filter_by(email= "admin@fipro.com").first() is None:
+        if User.query.filter_by(email= "ardikabs@gmail.com").first() is None:
             import uuid
             generated_key = str(uuid.uuid4().hex)
             user = User(
-                firstname='Admin',
-                lastname='Fipro',
-                password= "admin",
+                firstname='Ardika',
+                lastname='Bagus',
+                password= "rustygear125",
                 registered_at= datetime.datetime.today(),
-                email="admin@fipro.com",
+                email="ardikabs@gmail.com",
                 identifier=str(uuid.uuid4()).split("-")[-1])
             db.session.add(user)
             db.session.commit()

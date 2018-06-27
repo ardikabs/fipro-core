@@ -8,6 +8,24 @@
 {% block content %}
 <section class="content">
     <div class="container-fluid">
+        {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+                {% for category, content in messages %}
+                    {% if category == "message" %}
+                    <div class="alert alert-warning">
+                    {% else %}
+                    <div class="alert {{ category }}">
+                    {% endif %}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {% set info, msg = content %}
+                    <strong>{{ info }}</strong> {{ msg }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
         <div class="row clearfix">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="card">
@@ -35,7 +53,9 @@
                                     {% for agent in agents %}
                                     <tr>
                                         <td>{{ loop.index }}</td>
-                                        <td>{{ agent.name }}</td>
+                                        <td>
+                                            <a href="{{ url_for('agents.details',agent_id= agent.id) }}">{{ agent.name }}</a>
+                                        </td>
                                         <td>{{ agent.ipaddr }}</td>
                                         <td>
                                             {{ agent.display_uptime() }}
@@ -56,15 +76,27 @@
                                             {{ agent.attack_count or 0 }}
                                         </td>
                                         <td>
-                                            <a href="{{ url_for('agents.details',agent_id=1) }}">
-                                                <button type="button" class="btn btn-info waves-effect">DETAILS</button>
-                                            </a>
-                                            <button type="button" class="btn btn-danger waves-effect destroy-agent" data-agent-id="{{ agent.id }}" data-agent-name="{{ agent.name }}" >DESTROY</button>
-                                            <form id="form-delete-{{ agent.id }}" method="POST">
-                                                <input type="hidden" name="_method" value="DELETE">
+                                            <form id="{{ agent.id }}-agent-action" method="POST">
                                                 <input type="hidden" name="id" value="{{ agent.id }}">
+                                                <input type="hidden" name="_operation">
                                                 {% if csrf_token()|safe %}<input type="hidden" name="csrf_token" value="{{ csrf_token()|safe }}">{% endif %}
                                             </form>
+                                            {% if agent.condition_id != 1 %}
+                                            <button type="button" class="btn btn-primary waves-effect action-btn" data-agent-id="{{ agent.id }}" data-agent-name="{{ agent.name }}" data-operation="RESTART">
+                                                <i class="material-icons">autorenew</i>
+                                                RESTART
+                                            </button>
+                                            <button type="button" class="btn btn-danger waves-effect action-btn" data-agent-id="{{ agent.id }}" data-agent-name="{{ agent.name }}" data-operation="DESTROY">
+                                                <i class="material-icons">power_off</i>
+                                                DESTROY
+                                            </button>
+                                            {% else %}
+                                            <button type="button" class="btn bg-pink waves-effect action-btn" data-agent-id="{{ agent.id }}" data-agent-name="{{ agent.name }}" data-operation="DELETE">
+                                                <i class="material-icons">delete</i>
+                                                DELETE
+                                            </button>
+                                            {% endif %}
+                                            
                                         </td>
                                     </tr>
                                     {% endfor %}                                  
@@ -99,25 +131,58 @@
 <script src="{{ url_for('static', filename='vendors/sweetalert/sweetalert.min.js') }}"></script>
 
 <script>
-    $('.destroy-agent').on('click', function() {
+    String.prototype.capitalize = function() {
+        return this.charAt(0).toUpperCase() + this.slice(1);
+    }
+
+    $('.action-btn').on('click', function() {
         var agent_id = $(this).data('agent-id');
         var agent_name = $(this).data('agent-name');
-        showConfirmMessage(agent_id, agent_name);
+        var operation = $(this).data('operation');
+
+        showConfirmMessage(agent_id, agent_name, operation);
     });
 
-    function showConfirmMessage(id, name) {
-        swal({
-            title: "Are you sure?",
-            text: "You will destroy Agent "+ name +"\nAll sensor related to the agent will be stopped and destroyed!",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yes, destroy it!",
-            closeOnConfirm: false
-        }, function () {
-            swal("Destroyed!", "Agent " + name + " has been destroyed!", "success");
-            document.getElementById("form-delete-"+ id).submit();
-        });
+    function showConfirmMessage(id, name, operation) {
+        var text;
+        if(operation === 'DELETE'){
+            swal({
+                title: "Attention!",
+                text: "Are you sure to "+ operation + " Sensor " + name +"?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, "+ operation +" it!",
+                closeOnConfirm: false
+            }, function () {
+                swal(operation.capitalize()+" !", "Sensor " + name + " has been "+ operation +" !", "success");
+                var form = document.getElementById(id+"-agent-action");
+                form._operation.value = operation;
+                form.submit();
+            }); 
+        }
+        else{
+            text = "You will "+ operation +" Agent "+ name;
+            if(operation == 'DESTROY'){
+                text = "You will "+ operation +" Agent "+ name +"\nAll sensor related to the agent will be stopped and destroyed!";
+            }
+            swal({
+                title: "Are you sure?",
+                text: text,
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, "+ operation +" it!",
+                closeOnConfirm: false
+            }, function () {
+                swal(operation+"!", "Agent " + name + " has been "+ operation +"!", "success");
+                var form =document.getElementById(id+"-agent-action");
+                form._operation.value = operation;
+                form.submit();
+            });
+        }
+
+        
     }
 </script>
 {% endblock %}

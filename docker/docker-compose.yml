@@ -1,0 +1,70 @@
+version: '3'
+
+services:
+  broker:
+    container_name: mqtt-broker
+    restart: always
+    image: "eclipse-mosquitto"
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./mqtt-broker/config:/mosquitto/config/
+      - ./mqtt-broker/data:/mosquitto/data/
+      - ./mqtt-broker/log:/mosquitto/log/
+      - ./mqtt-broker/auth:/mosquitto/auth/
+
+  mongo:
+    container_name: mongodb
+    restart: always
+    image: "mongo"
+    ports:
+      - "27017:27017"
+    volumes:
+      - /data/db:/data/db
+
+  collector:
+    build: ./mqtt-subs
+    container_name: collector
+    restart: always
+    image: "ardikabs/collector"
+    depends_on:
+      - mongo
+      - broker
+    volumes:
+      - ./mqtt-subs/collector:/collector
+
+  reverseproxy:
+    build: ./nginx
+    container_name: reverse-proxy
+    restart: always
+    image: "ardikabs/reverseproxy"
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/log:/var/log/nginx/
+
+  web:
+    build: ./web
+    container_name: web
+    restart: always
+    image: "ardikabs/fipro-server"
+    depends_on:
+      - reverseproxy
+      - mongo
+    volumes:
+      - ./web/project:/project
+  
+
+  fluentd:
+    container_name: aggregator
+    restart: always
+    image: "ardikabs/fluentd"
+    depends_on:
+      - broker
+      - collector
+    ports:
+      - "24224:24224"
+    volumes:
+      - ./fluentd/conf:/fluentd/etc
+  

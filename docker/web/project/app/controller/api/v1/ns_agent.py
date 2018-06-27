@@ -43,9 +43,9 @@ class Agent(Resource):
                 db.session.commit()
                 return make_response(
                     jsonify(dict(
+                        status= False,
                         deploy_key=deploy_key.deploy_key,
                         message= deploy_key.to_dict().msg,
-                        status= False
                     )), 400)
 
             identifier = api_key.user.identifier
@@ -58,13 +58,15 @@ class Agent(Resource):
             
             db.session.commit()
 
+            message = "Successfully Deploy an Agent {}".format(agent.name)
             return make_response(
                 jsonify(dict(
+                    status=True,
                     agent = agent.to_dict(),
                     server_ip = current_app.config['SERVER_IP'],
                     agent_ip = request.remote_addr,
                     identifier= identifier,
-                    status=True
+                    message=message
                 )), 201)
                 
         

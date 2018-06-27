@@ -264,12 +264,14 @@
             ]%}
 
             {% set log_endpoint = [
+                'logs.master_index',
                 'logs.dionaea_index',
                 'logs.cowrie_index',
                 'logs.glastopf_index']
             %}
 
             {% set logs_endpoints = [
+                ('logs.master_index', 'Data Master'),
                 ('logs.dionaea_index', 'Dionaea'),
                 ('logs.cowrie_index', 'Cowrie'),
                 ('logs.glastopf_index', 'Glastopf')                
@@ -294,7 +296,7 @@
             <!-- Menu -->
             <div class="menu">
                 <ul class="list">
-                    <li class="header">FEATURE</li>
+                    <li class="header">CONTROLLER</li>
                     {% for endpoint, name, icon in feature_endpoints %}
                     
                     <li {% if request.endpoint == endpoint %} class="active" 

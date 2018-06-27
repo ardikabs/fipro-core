@@ -27,7 +27,7 @@ if os.path.exists('.env'):
 ########################################################################
 ##################### MONGODB CONFIGURATION ############################
 ########################################################################
-mongoconn = MongoClient(os.getenv('MONGODB_URL'))
+mongoconn = MongoClient(host="mongodb",port=27017)
 db = mongoconn.fipro
 coll_log     = db.logs
 coll_metrics = db.metrics
@@ -199,8 +199,7 @@ def main():
     client.on_message = on_message
 
     # client.tls_set('/etc/ssl/certs/DST_Root_CA_X3.pem', tls_version=ssl.PROTOCOL_TLSv1_2)
-    # client.connect(host="mqtt-broker", port=1883)
-    client.connect(host="192.168.1.100", port=1883)
+    client.connect(host="mqtt-broker", port=1883)
     client.loop_forever()
 
 # [END] MQTT Component
