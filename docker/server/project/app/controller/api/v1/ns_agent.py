@@ -51,7 +51,7 @@ class Agent(Resource):
             identifier = api_key.user.identifier
             agent = Agents(
                 name    = deploy_key.name, 
-                ipaddr  = request.remote_addr,
+                ipaddr  = data['ipaddr'],
                 user_id = api_key.user.id)
             db.session.add(agent)
             deploy_key.status = 2
@@ -64,7 +64,7 @@ class Agent(Resource):
                     status=True,
                     agent = agent.to_dict(),
                     server_ip = current_app.config['SERVER_IP'],
-                    agent_ip = request.remote_addr,
+                    agent_ip = data['ipaddr'],
                     identifier= identifier,
                     message=message
                 )), 201)

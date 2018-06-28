@@ -48,15 +48,21 @@ def index():
             flash(msg,"alert-success")
         
         else:
-            url = "http://{0}:5000/api/v1/sensor/{1}/{2}".format(agent.ipaddr, agent.string_id, operation.lower())
-            req = requests.get(url)
-            resp = req.json()
-            if resp.get('status'):
-                msg = ("Success!", "Agent {0} on {1}".format(agent.show_info(), operation.capitalize()))
-                flash(msg,"alert-success")
-            else:
+            try:
+                url = "http://{0}:5000/api/v1/sensor/{1}/{2}".format(agent.ipaddr, agent.string_id, operation.lower())
+                req = requests.get(url, timeout=10)
+                resp = req.json()
+
+                if resp.get('status'):
+                    msg = ("Success!", "Agent {0} on {1}".format(agent.show_info(), operation.capitalize()))
+                    flash(msg,"alert-success")
+                else:
+                    msg = ("Failed!", "Agent {0} failed to {1}".format(agent.show_info(), operation.capitalize()))
+                    flash(msg,"alert-danger")
+            except:
                 msg = ("Failed!", "Agent {0} failed to {1}".format(agent.show_info(), operation.capitalize()))
                 flash(msg,"alert-danger")
+
             
 
         

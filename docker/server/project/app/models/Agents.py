@@ -96,7 +96,7 @@ class Agents(db.Model):
                     self.status = resp.get('sensor').get('status')
 
 
-                moi = MoI("mongodb://192.168.1.100:27017/")
+                moi = MoI()
                 count = moi.logs.count(identifier= self.user.identifier, agent_ip= self.ipaddr)
                 setattr(self, 'attack_count', count)
                 self.attack_count = "{:,}".format(self.attack_count).replace(",",".")
@@ -110,8 +110,7 @@ class Agents(db.Model):
         
 
         return self
-
-    
+   
     def destroy(self):
         self.condition_id = 1
         self.status = "dead"

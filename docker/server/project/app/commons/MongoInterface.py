@@ -1,6 +1,7 @@
 
 import pymongo
 import datetime
+import pytz
 from dateutil.relativedelta import relativedelta
 import json
 from bson import ObjectId, son
@@ -125,6 +126,12 @@ class ResourceMixin():
             if dirty.get(arg):
                 clean[arg] = dirty.get(arg)
         
+        if 'today' in dirty:
+            clean['timestamp'] = {
+                '$gte': dirty['today'].replace(hour=0, minute=0, second=0),
+                '$lte': dirty['today'].replace(hour=23, minute=59, second=59)
+            }
+
         if 'hours_ago' in dirty:
             clean['timestamp'] = {
                 '$gte': get_datetime( (datetime.datetime.now() - datetime.timedelta(hours=int(dirty['hours_ago']))).timestamp() )
@@ -971,7 +978,6 @@ class Logs(ResourceMixin):
             "$project":{   
                 "_id":0,
                 "label": "$_id.sensor",
-                "identifier":"$_id.identifier",
                 "counts": { 
                     "$cond": { 
                         "if": {"$eq": ["$_id.sensor", "cowrie"] }, 
@@ -981,6 +987,17 @@ class Logs(ResourceMixin):
                 },
             }
         }
+        
+
+        if kwargs.get("today"):
+            today = {
+                "timestamp": {
+                    "$gte": kwargs.get("today").replace(hour=0, minute=0, second=0),
+                    "$lte": kwargs.get("today").replace(hour=23, minute=59, second=59)
+                }
+            }
+            match_query.get('$match').update(today)
+            
         
         query_set = [match_query, group_query, project_query]
         res = self.collection.aggregate(query_set)

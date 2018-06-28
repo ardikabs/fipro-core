@@ -106,7 +106,7 @@ class CredentialCount:
 class SensorEventsCount:
 
     def __init__(self,data):
-        self._type = "{}.events.count".format(data["honeypot"])
+        self._type = "{}.events.count".format(data["sensor"])
         self._date = utils.get_date(data['timestamp'])
         self._identifier = data["identifier"]
         self._counts = 1

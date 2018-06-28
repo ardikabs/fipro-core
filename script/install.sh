@@ -33,12 +33,8 @@ setup_webserver(){
     WEB_DIR=$DOCKER_DIR/web/project
     touch $WEB_DIR/.env
 
-    APP_NAME=FIPRO
-    APP_SETTINGS=development
-    SECRET_KEY=b'159216c9eb4cd34e5b093d95ec9f8245d3a56b6a1c09d071'
-    MONGODB_URL=mongodb://192.168.1.100:27017/
-    echo "APP_NAME=FIPRO SERVER" >> $COLLECTOR_DIR/.env
-    echo "APP_SETTINGS=development" >> $COLLECTOR_DIR/.env
+    echo "APP_NAME=FIPRO SERVER" >> $WEB_DIR/.env
+    echo "APP_SETTINGS=development" >> $WEB_DIR/.env
     echo "SECRET_KEY=$(python3 -c 'import os;import binascii;print(binascii.hexlify(os.urandom(24)))')"
 }
 
@@ -61,7 +57,7 @@ composer(){
     sudo -u fipro docker-compose -f $DOCKER_DIR/docker-compose.yml up -d
     sleep 3
     clear
-    echo "\n\n>>> Server Installation Done <<<"
+    echo -e "\n\n>>> Server Installation Done <<<"
 }
 
 main(){

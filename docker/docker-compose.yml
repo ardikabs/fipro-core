@@ -9,12 +9,12 @@ services:
       - "1883:1883"
       - "9001:9001"
     volumes:
-      - ./mqtt-broker/config:/mosquitto/config/
-      - ./mqtt-broker/data:/mosquitto/data/
-      - ./mqtt-broker/log:/mosquitto/log/
-      - ./mqtt-broker/auth:/mosquitto/auth/
+      - /var/fipro-core/docker/mqtt-broker/config:/mosquitto/config/
+      - /var/fipro-core/docker/mqtt-broker/data:/mosquitto/data/
+      - /var/fipro-core/docker/mqtt-broker/log:/mosquitto/log/
+      - /var/fipro-core/docker/mqtt-broker/auth:/mosquitto/auth/
 
-  mongo:
+  mongodb:
     container_name: mongodb
     restart: always
     image: "mongo"
@@ -28,32 +28,38 @@ services:
     container_name: collector
     restart: always
     image: "ardikabs/collector"
+    links:
+      - mongodb
+      - mqtt-broker
     depends_on:
-      - mongo
+      - mongodb
       - broker
     volumes:
-      - ./mqtt-subs/collector:/collector
+      - /var/fipro-core/docker/mqtt-subs/collector:/collector
 
   reverseproxy:
     build: ./nginx
     container_name: reverse-proxy
     restart: always
-    image: "ardikabs/reverseproxy"
+    image: "ardikabs/reverse-proxy"
+    links:
+      - serverapp
     ports:
       - "80:80"
     volumes:
-      - ./nginx/log:/var/log/nginx/
+      - /var/fipro-core/docker/nginx/log:/var/log/nginx/
 
-  web:
-    build: ./web
-    container_name: web
+  serverapp:
+    build: ./server
+    container_name: serverapp
     restart: always
     image: "ardikabs/fipro-server"
+    links:
+      - mongodb
     depends_on:
-      - reverseproxy
-      - mongo
+      - mongodb
     volumes:
-      - ./web/project:/project
+      - /var/fipro-core/docker/server/project:/project
   
 
   fluentd:
@@ -66,5 +72,5 @@ services:
     ports:
       - "24224:24224"
     volumes:
-      - ./fluentd/conf:/fluentd/etc
+      - /var/fipro-core/docker/fluentd/conf:/fluentd/etc
   

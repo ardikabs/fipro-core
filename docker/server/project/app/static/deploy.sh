@@ -15,13 +15,15 @@ BASE_DIR=`dirname "$(readlink -f "$0")"`
 SERVER_URL=$1
 API_KEY=$2
 DEPLOY_KEY=$3
+IPADDR=$(hostname -I | cut -d ' ' -f1)
 
-sudo apt-get update
-sudo apt-get install git curl
+sudo apt-get -y update
+sudo apt-get install -y git curl
 
 curl -s -X POST -H "Content-Type: application/json" -d "{
 	\"deploy_key\": \"$DEPLOY_KEY\",
-    \"api_key\": \"$API_KEY\"
+    \"api_key\": \"$API_KEY\",
+	\"ipaddr\": \"$IPADDR\"
 }" $SERVER_URL/api/v1/agent/ > /tmp/agent.json
 
 STATUS=$(cat /tmp/agent.json | python3 -c 'import sys,json;obj=json.load(sys.stdin);print (obj["status"])')
@@ -35,8 +37,8 @@ if [[ "$STATUS" != True ]]; then
     exit 1
 fi
 
-IP_SERVER=$(cat /tmp/agent.json | python3 -c 'import sys,json;obj=json.load(sys.stdin);print (obj["ip_server"])')
-IP_AGENT=$(cat /tmp/agent.json | python3 -c 'import sys,json;obj=json.load(sys.stdin);print (obj["ip_agent"])')
+SERVER_IP=$(cat /tmp/agent.json | python3 -c 'import sys,json;obj=json.load(sys.stdin);print (obj["server_ip"])')
+AGENT_IP=$(cat /tmp/agent.json | python3 -c 'import sys,json;obj=json.load(sys.stdin);print (obj["agent_ip"])')
 IDENTIFIER=$(cat /tmp/agent.json | python3 -c 'import sys,json;obj=json.load(sys.stdin);print (obj["identifier"])')
 
 
@@ -54,4 +56,4 @@ DATA_DIR=$PWD/data
 
 chmod +x $SCRIPT_DIR/install.sh
 
-sudo $SCRIPT_DIR/install.sh $IP_SERVER $IP_AGENT $IDENTIFIER
+sudo $SCRIPT_DIR/install.sh $SERVER_IP $AGENT_IP $IDENTIFIER

@@ -43,7 +43,7 @@ coll_cred    = db.credential_count
 ########################################################################
 # [START] Honeypot Resolver
 def cowrie_resolver(data):
-    exist_session = [c for c in coll_log.find({"honeypot":"cowrie"}).distinct("session")]
+    exist_session = [c for c in coll_log.find({"sensor":"cowrie"}).distinct("session")]
     if data["session"] not in exist_session: # Check Existing Session dengan Session Data yang masuk
         daily_counter(data) 
         port_counter(data)
@@ -111,7 +111,7 @@ def port_counter(data):
             coll_port.update({"type": type, "date": date,"identifier": identifier }, existdata.to_inc())
 
 def event_counter(data):
-    type= "{0}.events.count".format(data["honeypot"])
+    type= "{0}.events.count".format(data["sensor"])
     date= utils.get_date(data['timestamp'])
     identifier= data["identifier"]
 

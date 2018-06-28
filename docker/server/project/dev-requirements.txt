@@ -2,7 +2,6 @@ alembic==0.9.9
 aniso8601==3.0.0
 bcrypt==3.1.4
 certifi==2018.4.16
-cffi==1.11.5
 chardet==3.0.4
 click==6.7
 cssmin==0.2.0
@@ -24,7 +23,6 @@ jsmin==2.2.2
 jsonschema==2.6.0
 Mako==1.0.7
 MarkupSafe==1.0
-pkg-resources==0.0.0
 pycparser==2.18
 pymongo==3.6.1
 python-dateutil==2.7.2

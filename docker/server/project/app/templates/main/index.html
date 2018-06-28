@@ -3,7 +3,11 @@
 
 {% block custom_css %}
 <link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/components/flag.min.css" rel="stylesheet">
-
+<style>
+    .hover-expand-effect {
+        cursor: pointer;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
@@ -70,6 +74,7 @@
         </div>
         <div class="row clearfix">
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <a href="{{ url_for('logs.dionaea_index') }}">
                 <div class="info-box bg-light-green hover-expand-effect">
                     <div class="icon">
                         <i class="material-icons">equalizer</i>
@@ -79,8 +84,10 @@
                         <div class="number count-to" data-from="0" data-to="{{ data['dionaea_events'] }}" data-speed="1000" data-fresh-interval="20"></div>
                     </div>
                 </div>
+                </a>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <a href="{{ url_for('logs.cowrie_index') }}">
                 <div class="info-box bg-cyan hover-expand-effect">
                     <div class="icon">
                         <i class="material-icons">insert_chart_outlined</i>
@@ -90,9 +97,11 @@
                         <div class="number count-to" data-from="0" data-to="{{ data['cowrie_events'] }}" data-speed="1000" data-fresh-interval="20"></div>
                     </div>
                 </div>
+                </a>
             </div>
 
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <a href="{{ url_for('logs.dionaea_index') }}">
                 <div class="info-box bg-orange hover-expand-effect">
                     <div class="icon">
                         <i class="material-icons">insert_chart</i>
@@ -102,6 +111,7 @@
                         <div class="number count-to" data-from="0" data-to="{{ data['glastopf_events'] }}" data-speed="1000" data-fresh-interval="20"></div>
                     </div>
                 </div>
+                </a>
             </div>
         </div>
 
@@ -213,8 +223,25 @@
                 },
                 options: {
                     responsive: true,
-                    legend: false
-                }
+                    legend: false,
+                    scales: {
+                        xAxes: [{
+                            scaleLabel: {
+                                display:true,
+                                labelString: "Timestamp"
+                            }
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            },
+                            scaleLabel: {
+                                display:true,
+                                labelString: "Events (Count)"
+                            }                        
+                        }]
+                    }
+                },
         }
         return config
     }

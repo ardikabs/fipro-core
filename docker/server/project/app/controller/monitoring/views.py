@@ -81,8 +81,8 @@ def event_hourly_statistics():
     ts = current_datetime()
     sensor_event = moi.logs.sensor_event_statistics(identifier= current_user.identifier, date=ts)
     agent_event = moi.logs.agents_event_statistics(identifier= current_user.identifier, date=ts)
-    ports_event  = moi.logs.ports_event_statistics(identifier= current_user.identifier, date=ts)
-    countries_event = moi.logs.countries_event_statistics(identifier= current_user.identifier, date=ts)
+    ports_event  = moi.logs.ports_event_statistics(identifier= current_user.identifier, date=ts, limit=10)
+    countries_event = moi.logs.countries_event_statistics(identifier= current_user.identifier, date=ts, limit=10)
     
     for agent in agent_event:
         ag = Agents.query.filter_by(ipaddr=agent.get('label')).first()

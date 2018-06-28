@@ -33,30 +33,31 @@ def index():
     if moi.check_conn() is False:
         return render_template('main/index.html', date = date_now, db_info=False)
 
-    dt = datetime.datetime.strptime('2017-11-01',"%Y-%m-%d")
-
-    cursor_today    = moi.daily.get_one(identifier= current_user.identifier, date= dt)
-    cursor_dionaea  = moi.sensor_event.get_one(identifier= current_user.identifier, date= dt, sensor="dionaea")
-    cursor_cowrie   = moi.sensor_event.get_one(identifier= current_user.identifier, date= dt, sensor="cowrie")
-    cursor_glastopf = moi.sensor_event.get_one(identifier= current_user.identifier, date= dt, sensor="glastopf")
-
     agents          = Agents.query.filter_by(user_id=current_user.id, condition_id=4).count()
     sensor          = Sensor.query.filter_by(user_id=current_user.id, condition_id=4).count()
 
+    today_attack    = moi.logs.events_count(identifier= current_user.identifier, today=today)
+    today_events    = 0
+    dionaea_events  = 0
+    cowrie_events   = 0
+    glastopf_events = 0
+    for attack in today_attack:
+        today_events += attack.get("counts",0)
+        if attack.get("label") == "dionaea":
+            dionaea_events += attack.get("counts",0)
+        if attack.get("label" == "cowrie"):
+            cowrie_events += attack.get("counts",0)
+        if attack.get("label") == "glastopf":
+            glastopf_events += attack.get("counts",0)
 
-    today_attack    = cursor_today.counts if cursor_today else 0
-    dionaea_events  = cursor_dionaea.counts if cursor_dionaea else 0
-    cowrie_events   = cursor_cowrie.counts if cursor_cowrie else 0 
-    glastopf_events = cursor_glastopf.counts if cursor_glastopf else 0
-
-    recent_attacks = moi.logs.recent_attacks(options={ 'limit': 10 }, identifier= current_user.identifier, hours_ago=8760)
-    attack_daily_stats = moi.daily.get(options={ "order_by": "date" },identifier= current_user.identifier, months_ago=12 )
+    recent_attacks = moi.logs.recent_attacks(options={ 'limit': 10 }, identifier= current_user.identifier)
+    attack_daily_stats = moi.daily.get(options={ "order_by": "date" },identifier= current_user.identifier, months_ago=1 )
     
 
     return render_template(
         'main/index.html',
         date=date_now,
-        today_attack=today_attack,
+        today_attack=today_events,
         agents=agents,
         sensor=sensor,
         dionaea_events=dionaea_events,

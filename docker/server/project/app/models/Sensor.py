@@ -89,8 +89,8 @@ class Sensor(db.Model):
 
                     self.status = resp.get('sensor').get('status')
 
-                    moi = MoI("mongodb://192.168.1.100:27017")
-                    count = moi.logs.count(identifier= self.user.identifier, agent_ip= self.agent.ipaddr, honeypot= self.type)
+                    moi = MoI()
+                    count = moi.logs.count(identifier= self.user.identifier, agent_ip= self.agent.ipaddr, sensor= self.type)
                     setattr(self, 'attack_count', count)
                     self.attack_count = "{:,}".format(self.attack_count).replace(",",".")
         
