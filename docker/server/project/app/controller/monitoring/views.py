@@ -78,7 +78,10 @@ def event_hourly_statistics():
     if moi.check_conn() is False:
         return render_template('monitoring/event_hourly.html', db_info=False)
     
-    ts = current_datetime()
+    current = current_datetime()
+    date = current.strftime("%Y-%m-%d")
+    ts = datetime.datetime.strptime(date, "%Y-%m-%d")
+    
     sensor_event = moi.logs.sensor_event_statistics(identifier= current_user.identifier, date=ts)
     agent_event = moi.logs.agents_event_statistics(identifier= current_user.identifier, date=ts)
     ports_event  = moi.logs.ports_event_statistics(identifier= current_user.identifier, date=ts, limit=10)
@@ -104,6 +107,7 @@ def event_hourly_statistics():
 # AJAX ENDPOINT
 
 @monitoring.route('/top-attacks/ajax/', methods=['GET','POST'])
+@login_required
 def top_attacks_ajax():
     moi = MoI(mongodburl=current_app.config['MONGODB_URL'])
     if moi.check_conn() is False:
@@ -141,6 +145,7 @@ def top_attacks_ajax():
         return make_response(jsonify({"message":"Type is not recognized", "status": False}), 404)
 
 @monitoring.route('/event-hourly-statistics/ajax/')
+@login_required
 def event_hourly_ajax():
     moi = MoI(mongodburl=current_app.config['MONGODB_URL'])
     if moi.check_conn() is False:
@@ -152,7 +157,7 @@ def event_hourly_ajax():
     if date is None:
         return make_response(jsonify({'message': 'Date param is not initialized'}), 404)
 
-    ts = datetime.datetime.strptime(date, '%Y-%m-%d')
+    ts = datetime.datetime.strptime(date, "%Y-%m-%d")
     
 
     if type == 'sensor-event':

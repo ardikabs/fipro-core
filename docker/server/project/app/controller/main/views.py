@@ -36,7 +36,7 @@ def index():
     agents          = Agents.query.filter_by(user_id=current_user.id, condition_id=4).count()
     sensor          = Sensor.query.filter_by(user_id=current_user.id, condition_id=4).count()
 
-    today_attack    = moi.logs.events_count(identifier= current_user.identifier, today=today)
+    today_attack    = moi.logs.sensor_event_statistics(identifier= current_user.identifier, date=today)
     today_events    = 0
     dionaea_events  = 0
     cowrie_events   = 0
@@ -45,10 +45,10 @@ def index():
         today_events += attack.get("counts",0)
         if attack.get("label") == "dionaea":
             dionaea_events += attack.get("counts",0)
-        if attack.get("label" == "cowrie"):
-            cowrie_events += attack.get("counts",0)
-        if attack.get("label") == "glastopf":
+        elif attack.get("label") == "glastopf":
             glastopf_events += attack.get("counts",0)
+        else:
+            cowrie_events += attack.get("counts",0)
 
     recent_attacks = moi.logs.recent_attacks(options={ 'limit': 10 }, identifier= current_user.identifier)
     attack_daily_stats = moi.daily.get(options={ "order_by": "date" },identifier= current_user.identifier, months_ago=1 )
