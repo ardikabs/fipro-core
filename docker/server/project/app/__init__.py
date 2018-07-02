@@ -27,10 +27,10 @@ def create_app(config_name):
     config[config_name].init_app(app)
 
     ''' Extension Configuration '''
-    with app.app_context():
-        db.init_app(app)
+    db.init_app(app)
     csrf.init_app(app)
     login_manager.init_app(app)
+   
     ''' Assets Configuration '''
     '''
     assets_env = Environment(app)

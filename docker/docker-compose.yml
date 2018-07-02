@@ -5,7 +5,7 @@ services:
     container_name: mqtt-broker
     restart: always
     image: "eclipse-mosquitto"
-    ports:
+    expose:
       - "1883/tcp"
       - "9001/tcp"
     volumes:
@@ -18,8 +18,8 @@ services:
     container_name: mongodb
     restart: always
     image: "mongo"
-    ports:
-      - "27017:27017"
+    expose:
+      - "27017/tcp"
     volumes:
       - /data/db:/data/db
 
@@ -30,7 +30,7 @@ services:
     image: "ardikabs/collector"
     links:
       - mongodb
-      - mqtt-broker
+      - broker
     depends_on:
       - mongodb
       - broker
@@ -39,15 +39,27 @@ services:
 
   reverseproxy:
     build: ./nginx
-    container_name: reverse-proxy
+    container_name: reverseproxy
     restart: always
     image: "ardikabs/reverse-proxy"
     links:
       - serverapp
       - mongodb
+      - fluentd-master
+      - fluentd-cluster1
+      - fluentd-cluster2
+    depends_on:
+      - mongodb
+      - serverapp
+      - fluentd-master
+      - fluentd-cluster1
+      - fluentd-cluster2
+
     ports:
       - "80:80"
-      - "8080:8080"
+      - "27020:27020/tcp"
+      - "24224/tcp:24224/tcp"
+      - "24224/udp:24224/udp"
     volumes:
       - /var/fipro-core/docker/nginx/log:/var/log/nginx/
 
@@ -64,15 +76,42 @@ services:
       - /var/fipro-core/docker/server/project:/project
   
 
-  fluentd:
-    container_name: aggregator
+  fluentd-master:
+    container_name: aggregator-master
     restart: always
     image: "ardikabs/fluentd"
     depends_on:
       - broker
       - collector
-    ports:
-      - "24224:24224"
+    expose:
+      - "24224/tcp"
+      - "24224/udp"
     volumes:
       - /var/fipro-core/docker/fluentd/conf:/fluentd/etc
+
+  fluentd-cluster1:
+    container_name: aggregator-cluster1
+    restart: always
+    image: "ardikabs/fluentd"
+    depends_on:
+      - broker
+      - collector
+    expose:
+      - "24224/tcp"
+      - "24224/udp"
+    volumes:
+      - /var/fipro-core/docker/fluentd/conf-cluster1:/fluentd/etc
+
+  fluentd-cluster2:
+    container_name: aggregator-cluster2
+    restart: always
+    image: "ardikabs/fluentd"
+    depends_on:
+      - broker
+      - collector
+    expose:
+      - "24224/tcp"
+      - "24224/udp"
+    volumes:
+      - /var/fipro-core/docker/fluentd/conf-cluster2:/fluentd/etc
   

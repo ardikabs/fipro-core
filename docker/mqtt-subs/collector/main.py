@@ -181,6 +181,12 @@ def on_message(client,userdata,message):
         data['geoip'] = None
     else:
         data['geoip'] = geoip.to_dict()
+    
+    if "src_port" in data:
+        data["src_port"] = int(data["src_port"])
+    
+    if "dst_port" in data:
+        data["dst_port"] = int(data["dst_port"])
 
     if message.topic == "honeypot/cowrie":
         cowrie_resolver(data)
