@@ -45,7 +45,7 @@ def setup_general():
             user = User(
                 firstname='Ardika',
                 lastname='Bagus',
-                password= "rustygear125",
+                password= "jarkom@123",
                 registered_at= datetime.datetime.today(),
                 email="ardikabs@gmail.com",
                 identifier=str(uuid.uuid4()).split("-")[-1])
