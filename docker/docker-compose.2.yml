@@ -19,7 +19,7 @@ services:
     restart: always
     image: "mongo"
     ports:
-      - "27017:27017"
+      - 27017/tcp
     volumes:
       - /data/db:/data/db
 
@@ -45,9 +45,15 @@ services:
     links:
       - serverapp
       - mongodb
+      - fluentd
+    depends_on:
+      - serverapp
+      - mongodb
+      - fluentd
     ports:
       - "80:80"
-      - "8080:8080"
+      - "24224:24224"
+      - "27017:27017"
     volumes:
       - /var/fipro-core/docker/nginx/log:/var/log/nginx/
 
@@ -68,11 +74,11 @@ services:
     container_name: aggregator
     restart: always
     image: "ardikabs/fluentd"
+    ports:
+      - 24224/tcp
     depends_on:
       - broker
       - collector
-    ports:
-      - "24224:24224"
     volumes:
       - /var/fipro-core/docker/fluentd/conf:/fluentd/etc
   

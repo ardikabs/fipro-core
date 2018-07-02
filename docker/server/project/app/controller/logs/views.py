@@ -68,77 +68,92 @@ def source_cowrie():
     if moi.check_conn() is False:
         return make_response(jsonify([]), 500)
 
-    options = {}
-    if request.args.get('limit'):
-        try:
-            options['limit'] = int(request.args.get('limit'))
-        except (ValueError, TypeError): 
-            options['limit'] = 1000
+    skip = request.args.get("start",0)
+    limit = request.args.get("length",10)
+    options = dict(limit=limit, skip=skip, order_by="-timestamp")    
+
 
     cowrie_logs = moi.logs.get(options=options,identifier= current_user.identifier, sensor= "cowrie")
+    total_data = moi.logs.count(identifier= current_user.identifier, sensor= "cowrie")
     source = [cowrie.to_dict() for cowrie in cowrie_logs]
+    response = dict(
+        draw=request.args.get("draw"),
+        recordsTotal=total_data,
+        recordsFiltered=total_data,
+        data=source
+    )
 
-    return make_response(jsonify(dict(data= source)), 200)
+    return make_response(jsonify(response), 200)
 
 @logs.route('/dionaea/data/ajax')
-@login_required
-def source_dionaea(): 
+def source_dionaea():
     moi = MoI(mongodburl=current_app.config['MONGODB_URL'])
     if moi.check_conn() is False:
         return make_response(jsonify([]), 500)
 
-    options = {}
-    if request.args.get('limit'):
-        try:
-            options['limit'] = int(request.args.get('limit'))
-        except (ValueError, TypeError): 
-            options['limit'] = 1000
+    skip = request.args.get("start",0)
+    limit = request.args.get("length",10)
+    options = dict(limit=limit, skip=skip, order_by="-timestamp")    
 
     dionaea_logs = moi.logs.get(options=options,identifier= current_user.identifier, sensor= "dionaea")
+    total_data = moi.logs.count(identifier= current_user.identifier, sensor= "dionaea")
     source = [dionaea.to_dict() for dionaea in dionaea_logs]
+    response = dict(
+        draw=request.args.get("draw"),
+        recordsTotal=total_data,
+        recordsFiltered=total_data,
+        data=source
+    )
 
-    return make_response(jsonify(dict(data= source)), 200)
+    return make_response(jsonify(response), 200)
 
 @logs.route('/glastopf/data/ajax')
-@login_required
 def source_glastopf():
+    print (request.args)
     moi = MoI(mongodburl=current_app.config['MONGODB_URL'])
     if moi.check_conn() is False:
         return make_response(jsonify([]), 500)
     
-    options = {}
-    if request.args.get('limit'):
-        try:
-            options['limit'] = int(request.args.get('limit'))
-        except (ValueError, TypeError): 
-            options['limit'] = 1000
-    
+    skip = request.args.get("start",0)
+    limit = request.args.get("length",10)
+    options = dict(limit=limit, skip=skip, order_by="-timestamp")    
    
-    masterlogs = moi.logs.get(options=options,identifier= current_user.identifier, sensor= "glastopf")
-    source = [master.to_dict() for master in masterlogs]
+    glastopf_logs = moi.logs.get(options=options,identifier= current_user.identifier, sensor= "glastopf")
 
-    return make_response(jsonify(dict(data= source)), 200)
+    total_data = moi.logs.count(identifier= current_user.identifier, sensor= "glastopf")
+    source = [glastopf.to_dict() for glastopf in glastopf_logs]
+
+    response = dict(
+        draw=request.args.get("draw"),
+        recordsTotal=total_data,
+        recordsFiltered=total_data,
+        data=source
+    )
+    return make_response(jsonify(response), 200)
 
 
 @logs.route('/master/data/ajax')
-@login_required
 def source_master():
     moi = MoI(mongodburl=current_app.config['MONGODB_URL'])
     if moi.check_conn() is False:
         return make_response(jsonify([]), 500)
     
-    options = {}
-    if request.args.get('limit'):
-        try:
-            options['limit'] = int(request.args.get('limit'))
-        except (ValueError, TypeError): 
-            options['limit'] = 1000
-    
+    skip = request.args.get("start",0)
+    limit = request.args.get("length",10)
+    options = dict(limit=limit, skip=skip, order_by="-timestamp")    
    
-    glastopf_logs = moi.logs.get(options=options,identifier= current_user.identifier)
-    source = [glastopf.to_dict() for glastopf in glastopf_logs]
-
-    return make_response(jsonify(dict(data= source)), 200)
+   
+    master_logs = moi.logs.get(options=options,identifier= current_user.identifier)
+    total_data = moi.logs.count(identifier= current_user.identifier)
+    
+    source = [master.to_dict() for master in master_logs]
+    response = dict(
+        draw=request.args.get("draw"),
+        recordsTotal=total_data,
+        recordsFiltered=total_data,
+        data=source
+    )
+    return make_response(jsonify(response), 200)
 
 
 @logs.route('/cowrie/details/<string:session>')

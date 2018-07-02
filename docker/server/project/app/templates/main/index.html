@@ -42,7 +42,7 @@
                         <i class="material-icons col-red">show_chart</i>
                     </div>
                     <div class="content">
-                        <div class="text"><h5>TODAY ATTAK COUNT</h5></div>
+                        <div class="text"><h5>TODAY ATTACKS COUNT</h5></div>
                         <div class="number count-to" data-from="0" data-to="{{ data['today_attack'] }}" data-speed="1000" data-fresh-interval="20"></div>
                     </div>
                 </div>
@@ -74,44 +74,45 @@
         </div>
         <div class="row clearfix">
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                <a href="{{ url_for('logs.dionaea_index') }}">
                 <div class="info-box bg-light-green hover-expand-effect">
+                    <a href="{{ url_for('logs.dionaea_index') }}">
                     <div class="icon">
                         <i class="material-icons">equalizer</i>
                     </div>
+                    </a>
                     <div class="content">
                         <div class="text"><h5>DIONAEA EVENTS</h5></div>
                         <div class="number count-to" data-from="0" data-to="{{ data['dionaea_events'] }}" data-speed="1000" data-fresh-interval="20"></div>
                     </div>
                 </div>
-                </a>
+                
             </div>
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                <a href="{{ url_for('logs.cowrie_index') }}">
                 <div class="info-box bg-cyan hover-expand-effect">
+                    <a href="{{ url_for('logs.cowrie_index') }}">
                     <div class="icon">
                         <i class="material-icons">insert_chart_outlined</i>
                     </div>
+                    </a>
                     <div class="content">
                         <div class="text"><h5>COWRIE EVENTS</h5></div>
                         <div class="number count-to" data-from="0" data-to="{{ data['cowrie_events'] }}" data-speed="1000" data-fresh-interval="20"></div>
                     </div>
                 </div>
-                </a>
             </div>
 
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                <a href="{{ url_for('logs.dionaea_index') }}">
                 <div class="info-box bg-orange hover-expand-effect">
+                    <a href="{{ url_for('logs.dionaea_index') }}">
                     <div class="icon">
                         <i class="material-icons">insert_chart</i>
                     </div>
+                    </a>
                     <div class="content">
                         <div class="text"><h5>GLASTOPF EVENTS</h5></div>
                         <div class="number count-to" data-from="0" data-to="{{ data['glastopf_events'] }}" data-speed="1000" data-fresh-interval="20"></div>
                     </div>
                 </div>
-                </a>
             </div>
         </div>
 

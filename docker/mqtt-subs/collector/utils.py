@@ -4,7 +4,7 @@ import datetime
 import pytz
 
 def get_datetime(timestamp):
-    utctime = datetime.datetime.fromtimestamp(float(timestamp), tz=pytz.utc)
+    utctime = datetime.datetime.utcfromtimestamp(float(timestamp)).replace(tzinfo=pytz.utc)
     return utctime.astimezone(pytz.timezone('Asia/Jakarta'))
 
 def get_date_str(timestamp):

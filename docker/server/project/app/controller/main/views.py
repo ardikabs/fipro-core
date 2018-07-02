@@ -28,7 +28,7 @@ def index():
     timezone        = pytz.timezone('Asia/Jakarta')
     today           = datetime.datetime.utcnow().replace(tzinfo=pytz.utc).astimezone(timezone)
     date_now        = today.strftime("%b %d")
-
+    
     moi = MoI(mongodburl=current_app.config['MONGODB_URL'])
     if moi.check_conn() is False:
         return render_template('main/index.html', date = date_now, db_info=False)
@@ -36,7 +36,10 @@ def index():
     agents          = Agents.query.filter_by(user_id=current_user.id, condition_id=4).count()
     sensor          = Sensor.query.filter_by(user_id=current_user.id, condition_id=4).count()
 
-    today_attack    = moi.logs.sensor_event_statistics(identifier= current_user.identifier, date=today)
+    date            = today.strftime("%Y-%m-%d")
+    ts_today        = datetime.datetime.strptime(date, "%Y-%m-%d")
+
+    today_attack    = moi.logs.sensor_event_statistics(identifier= current_user.identifier, date= ts_today)
     today_events    = 0
     dionaea_events  = 0
     cowrie_events   = 0
@@ -50,7 +53,7 @@ def index():
         else:
             cowrie_events += attack.get("counts",0)
 
-    recent_attacks = moi.logs.recent_attacks(options={ 'limit': 10 }, identifier= current_user.identifier)
+    recent_attacks = moi.logs.recent_attacks(options={ 'limit': 10, "order_by": "-timestamp"}, identifier= current_user.identifier)
     attack_daily_stats = moi.daily.get(options={ "order_by": "date" },identifier= current_user.identifier, months_ago=1 )
     
 

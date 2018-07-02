@@ -385,11 +385,12 @@
                 .on('change',function(e, date){
                     var type = 'sensor-event'
                     var stringDate = date.format('YYYY-MM-DD');
-                    var url  = 'ajax/?type='+ type + '&date=' + stringDate;
+                    var url  = 'ajax/';
                     var ajax = $.ajax({
                         type: "GET",
                         url: url,
                         dataType:"json",
+                        data: {type: type, date: stringDate, identifier: '{{ current_user.identifier }}'},
                         async: true,
                         error: function(data){
                             console.log('No data found');
@@ -408,11 +409,12 @@
                 .on('change',function(e, date){
                     var type = 'ports-event'
                     var stringDate = date.format('YYYY-MM-DD');
-                    var url  = 'ajax/?type='+ type + '&date=' + stringDate;
+                    var url  = 'ajax/';
                     var ajax = $.ajax({
                         type: "GET",
                         url: url,
                         dataType:"json",
+                        data: {type: type, date: stringDate, identifier: '{{ current_user.identifier }}'},
                         async: true,
                         error: function(data){
                             console.log('No data found');
@@ -428,11 +430,12 @@
                 .on('change',function(e, date){
                     var type = 'countries-event'
                     var stringDate = date.format('YYYY-MM-DD');
-                    var url  = 'ajax/?type='+ type + '&date=' + stringDate;
+                    var url  = 'ajax/';
                     var ajax = $.ajax({
                         type: "GET",
                         url: url,
                         dataType:"json",
+                        data: {type: type, date: stringDate, identifier: '{{ current_user.identifier }}'},
                         async: true,
                         error: function(data){
                             console.log('No data found');
@@ -449,11 +452,12 @@
                 .on('change',function(e, date){
                     var type = 'agents-event'
                     var stringDate = date.format('YYYY-MM-DD');
-                    var url  = 'ajax/?type='+ type + '&date=' + stringDate;
+                    var url  = 'ajax/';
                     var ajax = $.ajax({
                         type: "GET",
                         url: url,
                         dataType:"json",
+                        data: {type: type, date: stringDate, identifier: '{{ current_user.identifier }}'},
                         async: true,
                         error: function(data){
                             console.log('No data found');

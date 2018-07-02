@@ -215,19 +215,21 @@
     }
 
     function setDataHistogram(dataSource, typeColorSet=null, typeChartSet='bar'){
+        var labelsForDatasets = new Array();
         var labels = new Array();
         var datasets = new Array();
         var dateAsLabel;
         // Set global labels
         for (var i=0; i<dataSource.length; i++){
-            dateAsLabel = moment(dataSource[i].infos.date.$date).format('DD MM YYYY');
+            dateAsLabel = dataSource[i].infos.date.$date;
             if (labels.includes(dateAsLabel) == false){
                 labels.push(dateAsLabel); //07 Maret
+                labelsForDatasets.push(moment(dateAsLabel));
             }
         }
 
         for (var i=0; i<dataSource.length; i++){
-            dateAsLabel = moment(dataSource[i].infos.date.$date).format('DD MM YYYY');
+            dateAsLabel = dataSource[i].infos.date.$date;
             if (datasets.length == 0){
                 datasets.push(initDatasetHistogram(typeColor=typeColorSet));
                 var last = datasets.length - 1;
@@ -257,7 +259,7 @@
             }
         }
 
-        return [labels, datasets]
+        return [labelsForDatasets, datasets]
         
 
     }
@@ -286,6 +288,14 @@
                 },
                 scales: {
                     xAxes: [{
+                        type: 'time',
+                        distribution: 'series',
+                        ticks: {
+                            source: 'labels'
+                        },
+                        time: {
+                            unit: "day"
+                        },
                         stacked:true,
                         scaleLabel: {
                             display:true,
@@ -316,7 +326,7 @@
                 position: 'right',
                 labels: {
                     usePointStyle: true,
-                    fontSize: 12
+                    fontSize: 14
                 }
             },
             animation: {
@@ -356,7 +366,7 @@
         var datasets = new Array();
         var options = customOptions();
         
-        var titles = {display:true, text: dataSource.label};
+        var titles = {display:true, text: dataSource.label, fontSize:16};
         options['title'] = titles
 
         // initialize dataset template

@@ -59,7 +59,6 @@ def event_statistics():
     ports_events = moi.logs.ports_events_count(identifier= current_user.identifier, limit=15)
     countries_ports_events = moi.logs.top_countries_port(identifier= current_user.identifier, limit=6)
     
-   
     return render_template(
         'monitoring/event_statistics.html', 
         db_info=True,
@@ -81,12 +80,11 @@ def event_hourly_statistics():
     current = current_datetime()
     date = current.strftime("%Y-%m-%d")
     ts = datetime.datetime.strptime(date, "%Y-%m-%d")
-    
+
     sensor_event = moi.logs.sensor_event_statistics(identifier= current_user.identifier, date=ts)
     agent_event = moi.logs.agents_event_statistics(identifier= current_user.identifier, date=ts)
     ports_event  = moi.logs.ports_event_statistics(identifier= current_user.identifier, date=ts, limit=10)
     countries_event = moi.logs.countries_event_statistics(identifier= current_user.identifier, date=ts, limit=10)
-    
     for agent in agent_event:
         ag = Agents.query.filter_by(ipaddr=agent.get('label')).first()
         agent['agent_ip']  = agent['label']
@@ -107,7 +105,6 @@ def event_hourly_statistics():
 # AJAX ENDPOINT
 
 @monitoring.route('/top-attacks/ajax/', methods=['GET','POST'])
-@login_required
 def top_attacks_ajax():
     moi = MoI(mongodburl=current_app.config['MONGODB_URL'])
     if moi.check_conn() is False:
@@ -116,23 +113,26 @@ def top_attacks_ajax():
     res = None
     type = request.args.get('type', None)
     limit = request.args.get('limit', 10)
+    identifier = request.args.get('identifier', None)
     options = {'limit': limit}
 
+    if identifier is None:
+        return make_response(jsonify({'message': 'Identifier required'}), 403)
 
     if type == 'top_srcip_port':
-        res = moi.logs.top_sourceip_port(identifier = current_user.identifier)
+        res = moi.logs.top_sourceip_port(identifier = identifier)
     
     elif type == 'top_asn':
-        res = moi.logs.top_asn(identifier = current_user.identifier, options=options)
+        res = moi.logs.top_asn(identifier = identifier, options=options)
     
     elif type == 'top_countries':
-        res = moi.logs.top_countries(identifier = current_user.identifier, options=options)
+        res = moi.logs.top_countries(identifier = identifier, options=options)
     
     elif type == 'top_src_ip':
-        res = moi.logs.top_sourceip(identifier = current_user.identifier, options=options)
+        res = moi.logs.top_sourceip(identifier = identifier, options=options)
     
     elif type == 'top_unknown':
-        res = moi.logs.top_unknown_sourceip(identifier = current_user.identifier, options=options)
+        res = moi.logs.top_unknown_sourceip(identifier = identifier, options=options)
 
     if res:
         return make_response(jsonify(res), 200)
@@ -145,7 +145,6 @@ def top_attacks_ajax():
         return make_response(jsonify({"message":"Type is not recognized", "status": False}), 404)
 
 @monitoring.route('/event-hourly-statistics/ajax/')
-@login_required
 def event_hourly_ajax():
     moi = MoI(mongodburl=current_app.config['MONGODB_URL'])
     if moi.check_conn() is False:
@@ -153,19 +152,21 @@ def event_hourly_ajax():
 
     type = request.args.get('type')
     date = request.args.get('date')
-    
+    identifier = request.args.get('identifier', None)
+
+    if identifier is None:
+        return make_response(jsonify({'message': 'Identifier required'}), 403)
+
     if date is None:
         return make_response(jsonify({'message': 'Date param is not initialized'}), 404)
 
-    ts = datetime.datetime.strptime(date, "%Y-%m-%d")
+    ts = datetime.datetime.strptime(date, "%Y-%m-%d").replace(tzinfo=pytz.utc)
     
-
     if type == 'sensor-event':
-        data = moi.logs.sensor_event_statistics(identifier= current_user.identifier, date=ts)
+        data = moi.logs.sensor_event_statistics(identifier= identifier, date=ts)
 
     elif type == 'agents-event':
-        data = moi.logs.agents_event_statistics(identifier= current_user.identifier, date=ts, limit=10)
-        print (data)
+        data = moi.logs.agents_event_statistics(identifier= identifier, date=ts)
         for agent in data:
             ag = Agents.query.filter_by(ipaddr=agent.get('label')).first()
             if ag is None:
@@ -174,13 +175,13 @@ def event_hourly_ajax():
             agent['agent_ip']  = agent['label']
             agent['label'] = ag.show_info()
         
-        print (data)
 
     elif type == 'ports-event':
-        data = moi.logs.ports_event_statistics(identifier= current_user.identifier, date=ts, limit=10)
+        data = moi.logs.ports_event_statistics(identifier= identifier, date=ts, limit=10)
 
     elif type == 'countries-event':
-        data = moi.logs.countries_event_statistics(identifier= current_user.identifier, date=ts, limit=10)
+        data = moi.logs.countries_event_statistics(identifier= identifier, date=ts, limit=10)
+
 
     if data:
         return make_response(jsonify(data), 200)

@@ -123,44 +123,55 @@ class SensorEventsCount:
 
 class GeoIP:
 
+    expected_attribute = ('location', 'country', 'country_code', 'state', 'city', 'postal_code', 'autonomous_system_number', 'autonomous_system_organization')
+
     def __init__(self, ip):
-        self.readerCity     = geoip2.database.Reader('./db/GeoLite2-City.mmdb')
-        self.readerASN      = geoip2.database.Reader('./db/GeoLite2-ASN.mmdb')
-        self.addresNotFound = False
-        self.asnNotFound    = False
+        self.ipaddr         = ip
+        self.reader_city    = geoip2.database.Reader('./db/GeoLite2-City.mmdb')
+        self.reader_asn     = geoip2.database.Reader('./db/GeoLite2-ASN.mmdb')
+        self.addr_notfound  = False
+        self.asn_notfound   = False
 
         try:
-            self._response_city = self.readerCity.city(ip)
+            self._response_city = self.reader_city.city(self.ipaddr)
             
         except geoip2.errors.AddressNotFoundError:
-            self.addresNotFound = True
+            self.addr_notfound = True
             self._response_city = None
 
         try:
-            self._response_asn = self.readerASN.asn(ip)
+            self._response_asn = self.reader_asn.asn(self.ipaddr)
             
         except geoip2.errors.AddressNotFoundError:
-            self.asnNotFound = True
+            self.asn_notfound = True
             self._response_asn = None
-
-    def to_dict(self):
-        self.readerCity.close()
-        self.readerASN.close()
-
-        data = dict(
-            location= {'longitude': self._response_city.location.longitude or None, 'latitude': self._response_city.location.latitude or None},
-            country= self._response_city.country.name or None,
-            country_code= self._response_city.country.iso_code or None,
-            state= self._response_city.subdivisions.most_specific.name or None,
-            city= self._response_city.city.name or None,
-            postal_code= self._response_city.postal.code or None,
-            autonomous_system_organization= self._response_asn.autonomous_system_organization if self._response_asn is not None else None,
-            autonomous_system_number= self._response_asn.autonomous_system_number if self._response_asn is not None else None)
-        return data
     
+    def to_dict(self):
+        if self.not_found():
+            return None
+        else:
+            self.reader_city.close()
+            self.reader_asn.close()
+
+            data = dict(
+                location                        = dict(
+                                                    longitude=self._response_city.location.longitude,
+                                                    latitude=self._response_city.location.latitude
+                                                ) if self._response_city.location.latitude is not None else dict(),
+                country                         = self._response_city.country.name if self._response_city.country.name is not None else None,
+                country_code                    = self._response_city.country.iso_code if self._response_city.country.iso_code is not None else None,
+                state                           = self._response_city.subdivisions.most_specific.name if self._response_city.subdivisions.most_specific.name is not None else None,
+                city                            = self._response_city.city.name if self._response_city.city.name is not None else None,
+                postal_code                     = self._response_city.postal.code if self._response_city.postal.code is not None else None,
+                autonomous_system_organization  = self._response_asn.autonomous_system_organization if self._response_asn is not None else None,
+                autonomous_system_number        = self._response_asn.autonomous_system_number if self._response_asn is not None else None)
+            return data
+    
+   
     def not_found(self):
-        if self.addresNotFound and self.asnNotFound:
+        if self.addr_notfound and self.asn_notfound:
             return True
         else:
             return False
 
+        

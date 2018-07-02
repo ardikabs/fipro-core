@@ -212,6 +212,9 @@ def runner():
         sys.exit(0)
     except Exception:
         import traceback
+        import datetime
+        print ("\n\nDate: ".format(datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")))
+
         logging.warning("Raised Error")
         print (">>> Error raised <<<\n\n")
         traceback.print_exc(file=sys.stdout)

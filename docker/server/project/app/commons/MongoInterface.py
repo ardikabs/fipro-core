@@ -12,9 +12,10 @@ class MongoInterface():
 
     def __init__(self, mongodburl=None):
 
-        mongodburl = mongodburl or 'mongodb://localhost:27017'
+        # mongodburl = mongodburl or 'mongodb://localhost:27017'
         # self.client = pymongo.MongoClient(mongodburl,serverSelectionTimeoutMS=10, tz_aware=True)
-        self.client = pymongo.MongoClient(host="mongodb", port=27017, serverSelectionTimeoutMS=10, tz_aware=True)
+        # self.client = pymongo.MongoClient(host="mongodb", port=27017, serverSelectionTimeoutMS=10, tz_aware=True)
+        self.client = pymongo.MongoClient(host="mongo.wisperlabs.me", port=27020, serverSelectionTimeoutMS=10, tz_aware=True)
         try:
             self.client.server_info()
             self.conn = True
@@ -86,13 +87,15 @@ class ResourceMixin():
 
             if options:
                 skip, limit, order_by = self.__class__._clean_options(options)
+
                 if skip:
                     queryset = queryset.skip(skip)
                 if limit:
                     queryset = queryset.limit(limit)
                 if order_by:
                     queryset = queryset.sort(order_by)
-            
+
+
             return (self.__class__.from_dict(f, self.client) for f in queryset)
 
     def delete(self, **kwargs):
@@ -360,7 +363,8 @@ class Logs(ResourceMixin):
                 },
                 "attacked_port": {
                     "$push": {
-                        "dst_port": "$_id.dst_port", "count": "$count" 
+                        "dst_port": "$_id.dst_port", 
+                        "count": "$count" 
                     }
                 },
                 "counts": {"$sum": "$count"}
@@ -518,7 +522,8 @@ class Logs(ResourceMixin):
                 },
                 "attacked_port": { 
                     "$push": {
-                        "dst_port": "$_id.dst_port", "count": "$count" 
+                        "dst_port": "$_id.dst_port", 
+                        "count": "$count" 
                     }
                 },
                 "counts": {"$sum": "$count"}
@@ -712,7 +717,6 @@ class Logs(ResourceMixin):
             }
         }
         sort = {"$sort": {"date": 1}}
-        
         query_set = [match_query, group_query, group1_query, project_query, sort]
         res = self.collection.aggregate(query_set)
         
@@ -1296,10 +1300,10 @@ class Logs(ResourceMixin):
         elif "days_ago" in opt:
             return {"$gte": current_datetime() - datetime.timedelta(days= int(opt.get('days_ago', 7)) ) }
 
-        elif 'date' in opt:
+        elif "date" in opt:
             time = opt.get('date')
-            gte = time.replace(hour= 0, minute= 0, second= 0)
-            lte = time.replace(hour= 23, minute= 59, second= 59)
+            gte = time.replace(hour= 17, minute= 0, second= 0) - datetime.timedelta(days=1)
+            lte = time.replace(hour= 16, minute= 59, second= 59)
             return {"$gte": gte, "$lte": lte }
         
     

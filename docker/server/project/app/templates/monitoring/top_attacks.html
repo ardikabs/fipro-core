@@ -192,7 +192,10 @@
             ajax: {
                 url: 'ajax/',
                 dataSrc: '',
-                data: {'type':'top_srcip_port'}
+                data: {
+                    'type':'top_srcip_port', 
+                    'identifier': '{{ current_user.identifier }}'
+                }
             },
 
             columns: [
@@ -235,7 +238,10 @@
             ajax: {
                 url: 'ajax/',
                 dataSrc: '',
-                data: {'type':'top_asn'}
+                data: {
+                    'type':'top_asn',
+                    'identifier': '{{ current_user.identifier }}'
+                }
             },
 
             columns: [
@@ -255,7 +261,10 @@
             ajax: {
                 url: 'ajax/',
                 dataSrc: '',
-                data: {'type':'top_countries'}
+                data: {
+                    'type':'top_countries',
+                    'identifier': '{{ current_user.identifier }}'
+                }
             },
 
             columns: [
@@ -281,7 +290,10 @@
             ajax: {
                 url: 'ajax/',
                 dataSrc: '',
-                data: {'type':'top_src_ip'}
+                data: {
+                    'type':'top_src_ip',
+                    'identifier': '{{ current_user.identifier }}'
+                }
             },
 
             columns: [
@@ -306,7 +318,9 @@
             ajax: {
                 url: 'ajax/',
                 dataSrc: '',
-                data: {'type':'top_unknown'}
+                data: {
+                    'type':'top_unknown', 'identifier': '{{ current_user.identifier }}'
+                }
             },
 
             columns: [

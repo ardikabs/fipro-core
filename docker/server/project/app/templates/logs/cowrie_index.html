@@ -166,14 +166,6 @@
                 '</tr>'
         }
 
-        if (d.hasOwnProperty('input')){
-            firstTemplate = firstTemplate + 
-                '<tr>'+
-                    '<td>Command: </td>'+
-                    '<td>'+ d.input +'</td>'+
-                '</tr>'
-        }
-
         if (d.hasOwnProperty('shasum')){
             firstTemplate = firstTemplate + 
                 '<tr>'+
@@ -267,11 +259,9 @@
         $.fn.dataTable.ext.errMode = 'throw';
 
         var table = $('#table-log').DataTable({
-            dom: 'Bfrtip',
+            processing: true,
+            serverSide: true,
             responsive: true,
-            buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print'
-            ],
             ajax: {
                 url: "data/ajax",
                 dataSrc: 'data'
