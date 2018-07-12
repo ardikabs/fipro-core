@@ -12,10 +12,16 @@ class MongoInterface():
 
     def __init__(self, mongodburl=None):
 
+        # Mongo With URL
         # mongodburl = mongodburl or 'mongodb://localhost:27017'
         # self.client = pymongo.MongoClient(mongodburl,serverSelectionTimeoutMS=10, tz_aware=True)
-        # self.client = pymongo.MongoClient(host="mongodb", port=27017, serverSelectionTimeoutMS=10, tz_aware=True)
-        self.client = pymongo.MongoClient(host="mongo.wisperlabs.me", port=27020, serverSelectionTimeoutMS=10, tz_aware=True)
+        
+        # Production
+        self.client = pymongo.MongoClient(host="mongodb", port=27017, serverSelectionTimeoutMS=10, tz_aware=True)
+        
+        # Development
+        # self.client = pymongo.MongoClient(host="mongo.wisperlabs.me", port=27020, serverSelectionTimeoutMS=10, tz_aware=True)
+        
         try:
             self.client.server_info()
             self.conn = True
