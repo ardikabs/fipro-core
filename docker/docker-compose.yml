@@ -11,7 +11,6 @@ services:
     volumes:
       - ${SERVER_DIR}/docker/mqtt-broker/config:/mosquitto/config/
       - ${SERVER_DIR}/docker/mqtt-broker/data:/mosquitto/data/
-      - ${SERVER_DIR}/docker/mqtt-broker/log:/mosquitto/log/
       - ${SERVER_DIR}/docker/mqtt-broker/auth:/mosquitto/auth/
 
   mongodb:
@@ -45,13 +44,13 @@ services:
     links:
       - serverapp
       - mongodb
-      - fluentd-master
+      - fluentd
       - fluentd-node1
       - fluentd-node2
     depends_on:
       - mongodb
       - serverapp
-      - fluentd-master
+      - fluentd
       - fluentd-node1
       - fluentd-node2
 

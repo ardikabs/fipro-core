@@ -2,9 +2,8 @@
 SCRIPT_DIR=`dirname "$(readlink -f "$0")"`
 SERVER_DIR=`dirname "$(readlink -f $SCRIPT_DIR)"`
 DOCKER_DIR=$SERVER_DIR/docker
-
 install_docker(){
-    echo -e "\n>>>> Docker Engine Installation >>>>"
+    echo -e "\n\n>>>> Docker Engine Installation >>>>"
     
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
     sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
@@ -12,7 +11,7 @@ install_docker(){
     sudo apt-get install -y docker-ce
     
     # (optional)
-    # sudo usermod -aG docker fipro
+    sudo usermod -aG docker fipro
     sleep 2
 
     echo ">>>> Docker Compose Installation >>>>"
@@ -64,19 +63,14 @@ composer(){
     touch $DOCKER_DIR/.env
     echo "SERVER_DIR=$SERVER_DIR" >> $DOCKER_DIR/.env
 
-    cd $DOCKER_DIR
-    sudo docker-compose -f $DOCKER_DIR/docker-compose.yml up -d
-
-    # Run docker-compose with user priveleges (fipro)
-    # sudo -u fipro docker-compose -f $DOCKER_DIR/docker-compose.yml up -d
-
+    sudo -u fipro docker-compose -f $DOCKER_DIR/docker-compose.yml up -d
     sleep 3
     clear
     echo -e "\n\n>>> Server Installation Done <<<"
 }
 
 main(){
-    # create_user
+    create_user
     install_docker
     setup_collector
     setup_webserver
