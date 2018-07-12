@@ -17,10 +17,10 @@ class MongoInterface():
         # self.client = pymongo.MongoClient(mongodburl,serverSelectionTimeoutMS=10, tz_aware=True)
         
         # Production
-        self.client = pymongo.MongoClient(host="mongodb", port=27017, serverSelectionTimeoutMS=10, tz_aware=True)
+        # self.client = pymongo.MongoClient(host="mongodb", port=27017, serverSelectionTimeoutMS=10, tz_aware=True)
         
         # Development
-        # self.client = pymongo.MongoClient(host="mongo.wisperlabs.me", port=27020, serverSelectionTimeoutMS=10, tz_aware=True)
+        self.client = pymongo.MongoClient(host="mongo.wisperlabs.me", port=27020, serverSelectionTimeoutMS=10, tz_aware=True)
         
         try:
             self.client.server_info()
