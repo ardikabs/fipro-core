@@ -46,20 +46,20 @@ services:
       - serverapp
       - mongodb
       - fluentd-master
-      - fluentd-cluster1
-      - fluentd-cluster2
+      - fluentd-node1
+      - fluentd-node2
     depends_on:
       - mongodb
       - serverapp
       - fluentd-master
-      - fluentd-cluster1
-      - fluentd-cluster2
+      - fluentd-node1
+      - fluentd-node2
 
     ports:
       - "80:80"
       - "27020:27020/tcp"
-      - "24224/tcp:24224/tcp"
-      - "24224/udp:24224/udp"
+      - "24224:24224/tcp"
+      - "24224:24224/udp"
     volumes:
       - /var/fipro-core/docker/nginx/log:/var/log/nginx/
 
@@ -76,7 +76,7 @@ services:
       - /var/fipro-core/docker/server/project:/project
   
 
-  fluentd-master:
+  fluentd:
     container_name: aggregator-master
     restart: always
     image: "ardikabs/fluentd"
@@ -89,8 +89,8 @@ services:
     volumes:
       - /var/fipro-core/docker/fluentd/conf:/fluentd/etc
 
-  fluentd-cluster1:
-    container_name: aggregator-cluster1
+  fluentd-node1:
+    container_name: aggregator-node1
     restart: always
     image: "ardikabs/fluentd"
     depends_on:
@@ -100,10 +100,10 @@ services:
       - "24224/tcp"
       - "24224/udp"
     volumes:
-      - /var/fipro-core/docker/fluentd/conf-cluster1:/fluentd/etc
+      - /var/fipro-core/docker/fluentd/conf-node1:/fluentd/etc
 
-  fluentd-cluster2:
-    container_name: aggregator-cluster2
+  fluentd-node2:
+    container_name: aggregator-node2
     restart: always
     image: "ardikabs/fluentd"
     depends_on:
@@ -113,5 +113,5 @@ services:
       - "24224/tcp"
       - "24224/udp"
     volumes:
-      - /var/fipro-core/docker/fluentd/conf-cluster2:/fluentd/etc
+      - /var/fipro-core/docker/fluentd/conf-node2:/fluentd/etc
   

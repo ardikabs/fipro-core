@@ -25,6 +25,7 @@ from app.commons.MongoInterface import MongoInterface as MoI
 @main.route('/')
 @login_required
 def index():
+    title           = "Dashboard"
     timezone        = pytz.timezone('Asia/Jakarta')
     today           = datetime.datetime.utcnow().replace(tzinfo=pytz.utc).astimezone(timezone)
     date_now        = today.strftime("%b %d")
@@ -59,6 +60,7 @@ def index():
 
     return render_template(
         'main/index.html',
+        title=title,
         date=date_now,
         today_attack=today_events,
         agents=agents,

@@ -9,10 +9,10 @@ services:
       - "1883/tcp"
       - "9001/tcp"
     volumes:
-      - /var/fipro-core/docker/mqtt-broker/config:/mosquitto/config/
-      - /var/fipro-core/docker/mqtt-broker/data:/mosquitto/data/
-      - /var/fipro-core/docker/mqtt-broker/log:/mosquitto/log/
-      - /var/fipro-core/docker/mqtt-broker/auth:/mosquitto/auth/
+      - ${SERVER_DIR}/docker/mqtt-broker/config:/mosquitto/config/
+      - ${SERVER_DIR}/docker/mqtt-broker/data:/mosquitto/data/
+      - ${SERVER_DIR}/docker/mqtt-broker/log:/mosquitto/log/
+      - ${SERVER_DIR}/docker/mqtt-broker/auth:/mosquitto/auth/
 
   mongodb:
     container_name: mongodb
@@ -35,7 +35,7 @@ services:
       - mongodb
       - broker
     volumes:
-      - /var/fipro-core/docker/mqtt-subs/collector:/collector
+      - ${SERVER_DIR}/docker/mqtt-subs/collector:/collector
 
   reverseproxy:
     build: ./nginx
@@ -46,22 +46,22 @@ services:
       - serverapp
       - mongodb
       - fluentd-master
-      - fluentd-cluster1
-      - fluentd-cluster2
+      - fluentd-node1
+      - fluentd-node2
     depends_on:
       - mongodb
       - serverapp
       - fluentd-master
-      - fluentd-cluster1
-      - fluentd-cluster2
+      - fluentd-node1
+      - fluentd-node2
 
     ports:
       - "80:80"
       - "27020:27020/tcp"
-      - "24224/tcp:24224/tcp"
-      - "24224/udp:24224/udp"
+      - "24224:24224/tcp"
+      - "24224:24224/udp"
     volumes:
-      - /var/fipro-core/docker/nginx/log:/var/log/nginx/
+      - ${SERVER_DIR}/docker/nginx/log:/var/log/nginx/
 
   serverapp:
     build: ./server
@@ -73,10 +73,10 @@ services:
     depends_on:
       - mongodb
     volumes:
-      - /var/fipro-core/docker/server/project:/project
+      - ${SERVER_DIR}/docker/server/project:/project
   
 
-  fluentd-master:
+  fluentd:
     container_name: aggregator-master
     restart: always
     image: "ardikabs/fluentd"
@@ -87,10 +87,10 @@ services:
       - "24224/tcp"
       - "24224/udp"
     volumes:
-      - /var/fipro-core/docker/fluentd/conf:/fluentd/etc
+      - ${SERVER_DIR}/docker/fluentd/conf:/fluentd/etc
 
-  fluentd-cluster1:
-    container_name: aggregator-cluster1
+  fluentd-node1:
+    container_name: aggregator-node1
     restart: always
     image: "ardikabs/fluentd"
     depends_on:
@@ -100,10 +100,10 @@ services:
       - "24224/tcp"
       - "24224/udp"
     volumes:
-      - /var/fipro-core/docker/fluentd/conf-cluster1:/fluentd/etc
+      - ${SERVER_DIR}/docker/fluentd/conf-node1:/fluentd/etc
 
-  fluentd-cluster2:
-    container_name: aggregator-cluster2
+  fluentd-node2:
+    container_name: aggregator-node2
     restart: always
     image: "ardikabs/fluentd"
     depends_on:
@@ -113,5 +113,5 @@ services:
       - "24224/tcp"
       - "24224/udp"
     volumes:
-      - /var/fipro-core/docker/fluentd/conf-cluster2:/fluentd/etc
+      - ${SERVER_DIR}/docker/fluentd/conf-node2:/fluentd/etc
   

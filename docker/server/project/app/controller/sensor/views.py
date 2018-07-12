@@ -27,6 +27,7 @@ def model_update(model):
 @login_required
 def index():
     form = SensorForm()
+    title = "Sensor"
     
     if request.form.get('_operation'):
         operation = request.form.get('_operation')
@@ -118,6 +119,7 @@ def index():
     
     return render_template(
         'sensor/index.html',
+        title = title,
         agents = agents,
         sensors = sensors,
         form = form)

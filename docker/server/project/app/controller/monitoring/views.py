@@ -33,34 +33,44 @@ def index():
 @monitoring.route('/top-attacks/')
 @login_required
 def top_attacks():
-    moi = MoI(mongodburl=current_app.config['MONGODB_URL'])
+    title = "Top Attacks"
+    moi = MoI()
     if moi.check_conn() is False:
-        return render_template('monitoring/top_attacks.html', db_info=False)
-    return render_template('monitoring/top_attacks.html', db_info=True)
+        return render_template('monitoring/top_attacks.html', title=title, db_info=False)
+    return render_template('monitoring/top_attacks.html', title=title, db_info=True)
 
 
 @monitoring.route('/event-statistics/')
 @login_required
 def event_statistics():
-
-    moi = MoI(mongodburl=current_app.config['MONGODB_URL'])
+    import time
+    start = time.time()
+    title = "Event Statistics"
+    moi = MoI()
     if moi.check_conn() is False:
-        return render_template('monitoring/event_statistics.html', db_info=False)
+        return render_template('monitoring/event_statistics.html', title=title, db_info=False)
     
     events = moi.logs.events_histogram(identifier= current_user.identifier, limit=10)
+    print ("1. {}".format(time.time() - start))
     countries = moi.logs.countries_histogram(identifier= current_user.identifier, limit=10)
+    print ("2. {}".format(time.time() - start))
     ports = moi.logs.ports_histogram(identifier= current_user.identifier, limit=11)
+    print ("3. {}".format(time.time() - start)) 
 
     sensor_events_histogram = json.dumps(events, default=json_util.default)
     countries_event_histogram = json.dumps(countries, default=json_util.default)
     ports_event_histogram = json.dumps(ports, default=json_util.default)
 
     sensor_events = moi.logs.events_count(identifier= current_user.identifier)
+    print ("4. {}".format(time.time() - start))
     ports_events = moi.logs.ports_events_count(identifier= current_user.identifier, limit=15)
+    print ("5. {}".format(time.time() - start))
     countries_ports_events = moi.logs.top_countries_port(identifier= current_user.identifier, limit=6)
+    print ("6. {}".format(time.time() - start))
     
     return render_template(
-        'monitoring/event_statistics.html', 
+        'monitoring/event_statistics.html',
+        title=title, 
         db_info=True,
         sensor_event_histogram=sensor_events_histogram,
         countries_event_histogram=countries_event_histogram,
@@ -73,9 +83,10 @@ def event_statistics():
 @monitoring.route('/event-hourly-statistics/')
 @login_required
 def event_hourly_statistics():
-    moi = MoI(mongodburl=current_app.config['MONGODB_URL'])
+    title = "Event Hourly Statistics"    
+    moi = MoI()
     if moi.check_conn() is False:
-        return render_template('monitoring/event_hourly.html', db_info=False)
+        return render_template('monitoring/event_hourly.html', title=title, db_info=False)
     
     current = current_datetime()
     date = current.strftime("%Y-%m-%d")
@@ -93,6 +104,7 @@ def event_hourly_statistics():
 
     return render_template(
         'monitoring/event_hourly.html',
+        title=title,
         db_info=True,
         sensor_event = sensor_event,
         agent_event = agent_event,
@@ -105,15 +117,16 @@ def event_hourly_statistics():
 # AJAX ENDPOINT
 
 @monitoring.route('/top-attacks/ajax/', methods=['GET','POST'])
+@login_required
 def top_attacks_ajax():
-    moi = MoI(mongodburl=current_app.config['MONGODB_URL'])
+    moi = MoI()
     if moi.check_conn() is False:
         return make_response(jsonify([]), 500)
 
     res = None
     type = request.args.get('type', None)
     limit = request.args.get('limit', 10)
-    identifier = request.args.get('identifier', None)
+    identifier = current_user.identifier
     options = {'limit': limit}
 
     if identifier is None:
@@ -145,14 +158,15 @@ def top_attacks_ajax():
         return make_response(jsonify({"message":"Type is not recognized", "status": False}), 404)
 
 @monitoring.route('/event-hourly-statistics/ajax/')
+@login_required
 def event_hourly_ajax():
-    moi = MoI(mongodburl=current_app.config['MONGODB_URL'])
+    moi = MoI()
     if moi.check_conn() is False:
         return make_response(jsonify([]), 500)
 
     type = request.args.get('type')
     date = request.args.get('date')
-    identifier = request.args.get('identifier', None)
+    identifier = current_user.identifier
 
     if identifier is None:
         return make_response(jsonify({'message': 'Identifier required'}), 403)

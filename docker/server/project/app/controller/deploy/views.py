@@ -26,6 +26,7 @@ from .forms import AddDeployKeyForm
 @login_required
 def index():
     form = AddDeployKeyForm()
+    title = "Deployment"
 
     if request.form.get('_method') == "PUT" :
         deploy_key = DeployKey.query.filter_by(id=request.form.get('id')).first()
@@ -68,7 +69,8 @@ def index():
     deploy_key_lists = DeployKey.query.all()
 
     if deploy_key_lists:
-        return render_template('deploy/index.html', 
+        return render_template('deploy/index.html',
+            title = title,
             api_key = api_key.api_key,
             host_url = host_url,
             deploy_key_lists = deploy_key_lists,
@@ -76,7 +78,8 @@ def index():
         )
 
     else:
-        return render_template('deploy/index.html', 
+        return render_template('deploy/index.html',
+            title = title, 
             form=form
         )
 

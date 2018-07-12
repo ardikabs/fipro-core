@@ -1,0 +1,39 @@
+Connecting to host ssh.wisperlabs.me, port 5202
+[  4] local 178.62.97.214 port 58910 connected to 178.128.217.94 port 5202
+[ ID] Interval           Transfer     Bandwidth       Retr  Cwnd
+[  4]   0.00-20.00  sec   270 MBytes  13.5 MBytes/sec  1162   3.05 MBytes       
+[  4]  20.00-40.00  sec   256 MBytes  12.8 MBytes/sec   14   2.59 MBytes       
+[  4]  40.00-60.00  sec   254 MBytes  12.7 MBytes/sec   66   2.77 MBytes       
+[  4]  60.00-80.00  sec   260 MBytes  13.0 MBytes/sec    0   3.04 MBytes       
+[  4]  80.00-100.00 sec   260 MBytes  13.0 MBytes/sec    2   3.04 MBytes       
+[  4] 100.00-120.00 sec   256 MBytes  12.8 MBytes/sec   81   2.50 MBytes       
+[  4] 120.00-140.00 sec   252 MBytes  12.6 MBytes/sec   42   2.64 MBytes       
+[  4] 140.00-160.00 sec   260 MBytes  13.0 MBytes/sec    0   3.01 MBytes       
+[  4] 160.00-180.00 sec   258 MBytes  12.9 MBytes/sec  101   3.00 MBytes       
+[  4] 180.00-200.00 sec   260 MBytes  13.0 MBytes/sec    0   3.00 MBytes       
+[  4] 200.00-220.00 sec   255 MBytes  12.7 MBytes/sec   84   2.55 MBytes       
+[  4] 220.00-240.00 sec   255 MBytes  12.7 MBytes/sec   78   2.59 MBytes       
+[  4] 240.00-260.00 sec   262 MBytes  13.1 MBytes/sec    0   3.01 MBytes       
+[  4] 260.00-280.00 sec   260 MBytes  13.0 MBytes/sec    0   3.01 MBytes       
+[  4] 280.00-300.00 sec   255 MBytes  12.7 MBytes/sec  174   2.83 MBytes       
+[  4] 300.00-320.00 sec   240 MBytes  12.0 MBytes/sec  100   1.82 MBytes       
+[  4] 320.00-340.00 sec   218 MBytes  10.9 MBytes/sec    0   3.01 MBytes       
+[  4] 340.00-360.00 sec   249 MBytes  12.4 MBytes/sec  210   2.48 MBytes       
+[  4] 360.00-380.00 sec   259 MBytes  12.9 MBytes/sec  173   3.02 MBytes       
+[  4] 380.00-400.00 sec   254 MBytes  12.7 MBytes/sec   86   2.87 MBytes       
+[  4] 400.00-420.00 sec   256 MBytes  12.8 MBytes/sec   96   3.03 MBytes       
+[  4] 420.00-440.00 sec   254 MBytes  12.7 MBytes/sec   48   2.61 MBytes       
+[  4] 440.00-460.00 sec   250 MBytes  12.5 MBytes/sec  227   1.59 MBytes       
+[  4] 460.00-480.00 sec   204 MBytes  10.2 MBytes/sec    0   2.82 MBytes       
+[  4] 480.00-500.00 sec   259 MBytes  12.9 MBytes/sec   92   2.52 MBytes       
+[  4] 500.00-520.00 sec   260 MBytes  13.0 MBytes/sec    0   3.06 MBytes       
+[  4] 520.00-540.00 sec   258 MBytes  12.9 MBytes/sec  146   3.01 MBytes       
+[  4] 540.00-560.00 sec   255 MBytes  12.7 MBytes/sec   18   2.70 MBytes       
+[  4] 560.00-580.00 sec   251 MBytes  12.6 MBytes/sec  125   2.42 MBytes       
+[  4] 580.00-600.00 sec   250 MBytes  12.5 MBytes/sec   15   2.58 MBytes       
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bandwidth       Retr
+[  4]   0.00-600.00 sec  7.41 GBytes  12.6 MBytes/sec  3140             sender
+[  4]   0.00-600.00 sec  7.41 GBytes  12.6 MBytes/sec                  receiver
+
+iperf Done.

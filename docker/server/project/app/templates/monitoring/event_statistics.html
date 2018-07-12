@@ -223,7 +223,7 @@
         for (var i=0; i<dataSource.length; i++){
             dateAsLabel = dataSource[i].infos.date.$date;
             if (labels.includes(dateAsLabel) == false){
-                labels.push(dateAsLabel); //07 Maret
+                labels.push(dateAsLabel);
                 labelsForDatasets.push(moment(dateAsLabel));
             }
         }
@@ -242,6 +242,12 @@
                     var newdata=true;
                     for (ds in datasets){
                         if (datasets[ds].label == String(dataSource[i].label).capitalize()){
+                            if(datasets[ds].data.length != x){
+                                var lastData = x - datasets[ds].data.length;
+                                for(var z=0;z<lastData;z++){
+                                    datasets[ds].data.push(0);
+                                }
+                            }
                             datasets[ds].data.push(dataSource[i].infos.count);
                             newdata=false;
                         }

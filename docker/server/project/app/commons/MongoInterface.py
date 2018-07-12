@@ -261,36 +261,25 @@ class Logs(ResourceMixin):
     expected_filters = ('_id', 'identifier', 'sensor', 'agent_ip', 'timestamp', 'src_ip', 'dst_port')
  
     def top_asn(self, options={}, **kwargs):
-       
         match_query = {
             "$match": 
             {
-                "sensor": {"$ne": "cowrie"},
                 "identifier": kwargs.get('identifier', None),
                 "geoip.autonomous_system_number" : {"$ne": None}
             }
         }
-
-        match2_query = {
-            "$match":
-            {
-                "sensor": {"$eq": "cowrie"},
-                "identifier": kwargs.get('identifier'),
-                "geoip.autonomous_system_number" : {"$ne": None}
-            }
-        }
-        
         group_query = {
             "$group":
             {
                 "_id": {
+                    "sensor": "$sensor",
                     "autonomous_system_number": "$geoip.autonomous_system_number",
                     "autonomous_system_organization": "$geoip.autonomous_system_organization"
                 },
-                "counts": {"$sum": 1}
+                "uniqueValues":{"$addToSet": "$session"},
+                "count": {"$sum": 1}
             }
         }
-
         group2_query = {
             "$group":
             {
@@ -298,7 +287,13 @@ class Logs(ResourceMixin):
                     "autonomous_system_number": "$_id.autonomous_system_number",
                     "autonomous_system_organization": "$_id.autonomous_system_organization"
                 },
-                "counts": {"$sum": 1}
+                "counts": {"$sum": {
+                    "$cond": {
+                        "if": {"$eq": ["$_id.sensor", "cowrie"] },
+                        "then": {"$size": "$uniqueValues"},
+                        "else": "$count",
+                    }
+                }}
             }
         }
 
@@ -308,32 +303,15 @@ class Logs(ResourceMixin):
                 "label": "$_id.autonomous_system_number",
                 "autonomous_system_number": "$_id.autonomous_system_number",
                 "autonomous_system_organization": "$_id.autonomous_system_organization",
-                "counts": "$counts"
+                "counts": 1
             }
         }
         sort = {"$sort": {"counts": -1}}
-        unwind = {"$unwind": "$session"}
         limit = {"$limit": options.get('limit', 10)}
+        query_set = [match_query, group_query, group2_query, sort, limit, project_query]
 
-        query_set = [match_query, group_query, sort, limit, project_query]
-        query1_set = [match2_query, group2_query, unwind, group2_query, project_query, sort, limit]
-
-        nocowrie_dt = self.collection.aggregate(query_set)
-        cowrie_dt = self.collection.aggregate(query1_set)
-        
-        return self._process_asn(nocowrie_dt, cowrie_dt)
+        return list(self.collection.aggregate(query_set))
     
-    def _process_asn(self, nocowrie_dt, cowrie_dt):
-        cowrie = [doc for doc in cowrie_dt]
-        newdata = []
-
-        for doc in nocowrie_dt:
-            for dt in cowrie:
-                if dt['autonomous_system_number'] == doc ['autonomous_system_number']:
-                    doc['counts'] += dt['counts']
-            newdata.append(doc)
-        return newdata
-
     def top_countries_port(self, options={}, **kwargs):
         match_query = {
             "$match": {
@@ -346,20 +324,43 @@ class Logs(ResourceMixin):
         group_query = {
             "$group":{
                 "_id": {
+                    "sensor": "$sensor",
                     "country": "$geoip.country",
                     "country_code": "$geoip.country_code",
                     "dst_port": "$dst_port"
                 },
+                "uniqueValues": {"$addToSet": "$session"},
                 "count": {"$sum": 1}
             }
         }
-
+        
         group1_query = {
             "$group":{
                 "_id": {
                     "country": "$_id.country",
+                    "country_code": "$_id.country_code",
+                    "dst_port": "$_id.dst_port"                    
+                },
+                "count": {
+                    "$sum": {
+                        "$cond": {
+                            "if": {"$eq": ["$_id.sensor", "cowrie"] },
+                            "then": {"$size": "$uniqueValues"},
+                            "else": "$count",
+                        }
+                    }
+                }
+
+            }
+        }
+
+        sort_port_rank = {"$sort": {"count":-1}}
+        
+        group2_query = {
+            "$group":{
+                "_id": {
+                    "country": "$_id.country",
                     "country_code": "$_id.country_code"
-                    
                 },
                 "attacked_port": {
                     "$push": {
@@ -377,7 +378,10 @@ class Logs(ResourceMixin):
                 "_id": 0,
                 "label": "$_id.country",
                 "country_code": "$_id.country_code",
-                "attacked_port": 1,
+                "attacked_port": {
+                    "$slice": ["$attacked_port", 0, 10]
+                },
+                "sorted_dst_port":1,
                 "counts":1
             } 
         }
@@ -386,7 +390,7 @@ class Logs(ResourceMixin):
         unwind = {"$unwind": "$attacked_port"}        
         limit = {'$limit': options.get('limit', 10)}
 
-        query_set = [match_query, group_query, group1_query, sort, limit, project_query]
+        query_set = [match_query, group_query, group1_query, sort_port_rank, group2_query, sort, limit, project_query]
         res = self.collection.aggregate(query_set)
         return list(res)
 
@@ -401,11 +405,31 @@ class Logs(ResourceMixin):
         group_query = {
             "$group": {
                 "_id": {
+                    "sensor": "$sensor",
                     "country": "$geoip.country",
                     "country_code": "$geoip.country_code",
                 },
-                "counts": {"$sum": 1}
+                "uniqueValues": {"$addToSet":"$session"},
+                "count": {"$sum": 1}
             }  
+        }
+
+        group1_query = {
+            "$group": {
+                "_id": {
+                    "country": "$_id.country",
+                    "country_code": "$_id.country_code",
+                },
+                "counts":  {
+                    "$sum": {
+                        "$cond": {
+                            "if": {"$eq": ["$_id.sensor", "cowrie"] },
+                            "then": {"$size": "$uniqueValues"},
+                            "else": "$count",
+                        }
+                    }
+                }
+            }
         }
 
         project_query = {
@@ -420,7 +444,7 @@ class Logs(ResourceMixin):
         sort = {"$sort": {"counts": -1}}
         limit = {'$limit': options.get('limit', 10)}
 
-        query_set = [match_query, group_query, project_query, sort, limit]
+        query_set = [match_query, group_query, group1_query, project_query, sort, limit]
         res = self.collection.aggregate(query_set)
         return list(res)
 
@@ -435,13 +459,35 @@ class Logs(ResourceMixin):
         group_query = {
             "$group": {
                 "_id": {
+                    "sensor": "$sensor",
                     "src_ip": "$src_ip",
                     "country": "$geoip.country",
                     "country_code": "$geoip.country_code"
                 },
-                "counts": {"$sum": 1}
+                "uniqueValues": {"$addToSet": "$session"},
+                "count": {"$sum": 1}
             }
         }
+
+        group1_query = {
+            "$group": {
+                "_id": {
+                    "src_ip": "$_id.src_ip",
+                    "country": "$_id.country",
+                    "country_code": "$_id.country_code"
+                },
+                "counts": {
+                    "$sum":{
+                        "$cond":{
+                            "if": {"$eq": ["$_id.sensor", "cowrie"] },
+                            "then": {"$size": "$uniqueValues"},
+                            "else": "$count"
+                        }
+                    } 
+                }
+            }
+        }
+
 
         project_query = {
             "$project":{
@@ -455,7 +501,7 @@ class Logs(ResourceMixin):
         sort = {"$sort": {"counts": -1}}
         limit = {'$limit': options.get('limit', 10)}
 
-        query_set = [match_query, group_query, project_query, sort, limit]
+        query_set = [match_query, group_query, group1_query, project_query, sort, limit]
         res = self.collection.aggregate(query_set)
         return list(res)
     
@@ -470,9 +516,28 @@ class Logs(ResourceMixin):
         group_query = {
             "$group": {
                 "_id": {
+                    "sensor": "$sensor",
                     "src_ip": "$src_ip",
                 },
-                "counts": {"$sum": 1}
+                "uniqueValues": {"$addToSet": "$session"},
+                "count": {"$sum": 1}
+            }
+        }
+
+        group1_query = {
+            "$group": {
+                "_id": {
+                    "src_ip": "$_id.src_ip",
+                },
+                "counts": {
+                    "$sum":{
+                        "$cond":{
+                            "if": {"$eq": ["$_id.sensor", "cowrie"] },
+                            "then": {"$size": "$uniqueValues"},
+                            "else": "$count"
+                        }
+                    } 
+                }            
             }
         }
 
@@ -486,7 +551,7 @@ class Logs(ResourceMixin):
         sort = {"$sort": {"counts": -1}}
         limit = {'$limit': options.get('limit', 10)}
 
-        query_set = [match_query, group_query, project_query, sort, limit]
+        query_set = [match_query, group_query, group1_query, project_query, sort, limit]
         res = self.collection.aggregate(query_set)
         return list(res)
 
@@ -502,17 +567,39 @@ class Logs(ResourceMixin):
         group_query = {
             "$group": {
                 "_id": {
+                    "sensor": "$sensor",
                     "src_ip": "$src_ip",
                     "country": "$geoip.country",
                     "country_code": "$geoip.country_code",
                     "dst_port": "$dst_port"
-
                 },
+                "uniqueValues": {"$addToSet": "$session"},
                 "count": {"$sum": 1}
             }
         }
-
+        
         group1_query = {
+            "$group": {
+                "_id": {
+                    "src_ip": "$_id.src_ip",
+                    "country": "$_id.country",
+                    "country_code": "$_id.country_code",
+                    "dst_port": "$_id.dst_port"
+
+                },
+                "count": {
+                    "$sum": {
+                        "$cond":{
+                            "if": {"$eq": ["$_id.sensor", "cowrie"] },
+                            "then": {"$size": "$uniqueValues"},
+                            "else": "$count"
+                        }   
+                    }
+                }
+            }
+        }
+
+        group2_query = {
             "$group":{
                 "_id": {
                     "src_ip": "$_id.src_ip",
@@ -542,8 +629,9 @@ class Logs(ResourceMixin):
         }
         sort = {"$sort": {"counts": -1}}
         unwind = {"$unwind": "$attacked_port"}
+        limit = {"$limit": options.get("limit", 1000)}
 
-        query_set = [match_query, group_query, group1_query, sort, unwind, project_query]
+        query_set = [match_query, group_query, group1_query, group2_query, sort, unwind, project_query, limit]
         res = self.collection.aggregate(query_set)
         return list(res)
 

@@ -25,6 +25,7 @@ def model_update(model):
 @agents.route('/', methods=['GET','POST'])
 @login_required
 def index():
+    title = "Agents"
     if request.form.get('_operation'):
         operation = request.form.get('_operation')
         id = request.form.get('id')
@@ -75,7 +76,7 @@ def index():
     pool.join()
 
     db.session.commit()
-    return render_template('agents/index.html', agents=agents)
+    return render_template('agents/index.html', title=title, agents=agents)
 
 @agents.route('/<int:agent_id>')
 @agents.route('/<int:agent_id>/')

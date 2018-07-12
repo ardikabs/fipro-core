@@ -156,6 +156,8 @@ def data_to_hmaps(data):
 
 def data_to_mongo(data):
     data['timestamp'] = utils.get_datetime(data['timestamp'])
+    if data.get('sensor') == 'glastopf':
+        print (str(data))
     coll_log.insert(data)
 
 
@@ -168,9 +170,9 @@ def data_to_mongo(data):
 # [START] MQTT Component
 def on_connect(client, userdata, flags, rc):
     print ("... %s is Listening ..." % client._client_id)
-    client.subscribe("honeypot/cowrie",qos=2)
-    client.subscribe("honeypot/dionaea",qos=2)
-    client.subscribe("honeypot/glastopf",qos=2)
+    client.subscribe("honeypot/cowrie",qos=1)
+    client.subscribe("honeypot/dionaea",qos=1)
+    client.subscribe("honeypot/glastopf",qos=1)
 
 def on_message(client,userdata,message):
     # insertion data to database

@@ -48,14 +48,14 @@ class GeoIP:
                 )
             else:
                 location = None
-
+            
             response_city = dict(
                 location = location,
-                country = result_city.country.name,
-                country_code = result_city.country.iso_code,
-                state = result_city.subdivisions.most_specific.name,
-                city = result_city.city.name,
-                postal_code = result_city.postal.code
+                country = result_city.country.name if result_city else None,
+                country_code = result_city.country.iso_code if result_city else None,
+                state = result_city.subdivisions.most_specific.name if result_city else None,
+                city = result_city.city.name if result_city else None,
+                postal_code = result_city.postal.code if result_city else None 
             )
             response.update(response_city)
         

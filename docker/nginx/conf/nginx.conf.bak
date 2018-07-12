@@ -9,13 +9,16 @@ stream {
     }
 
     upstream fluentd_aggregator {
-        server fluentd:24224;
-        server fluentd-node1:24224 backup;
-        server fluentd-node2:24224 backup;
+        server fluentd-master:24224;
+        server fluentd-cluster1:24224;
+        server fluentd-cluster2:24224;
     }
 
     server {
         listen 27020;
+
+        # proxy_connect_timeout 1s;
+        # proxy_timeout 3s;
         proxy_pass mongodb_backend;
     }
 
@@ -52,7 +55,7 @@ http {
             proxy_set_header   Host $host;
             proxy_set_header   X-Real-IP $remote_addr;
             proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_set_header   X-Forwarded-Host $server_name;        
+            proxy_set_header   X-Forwarded-Host $server_name;
         }
     }
 

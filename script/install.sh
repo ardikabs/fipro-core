@@ -23,6 +23,8 @@ install_docker(){
 
 setup_collector(){
     COLLECTOR_DIR=$DOCKER_DIR/mqtt-subs/collector
+
+    # Environment variable for Collector
     touch $COLLECTOR_DIR/.env
     
     echo "USERNAME_MQTT=mycollector" >> $COLLECTOR_DIR/.env
@@ -30,12 +32,14 @@ setup_collector(){
 }
 
 setup_webserver(){
-    WEB_DIR=$DOCKER_DIR/web/project
+    WEB_DIR=$DOCKER_DIR/web/project 
+
+    # Environment variable for Web Server
     touch $WEB_DIR/.env
 
-    echo "APP_NAME=FIPRO SERVER" >> $WEB_DIR/.env
+    echo "APP_NAME=FIPRO" >> $WEB_DIR/.env
     echo "APP_SETTINGS=development" >> $WEB_DIR/.env
-    echo "SECRET_KEY=$(python3 -c 'import os;import binascii;print(binascii.hexlify(os.urandom(24)))')"
+    echo "SECRET_KEY=$(python3 -c 'import os;import binascii;print(binascii.hexlify(os.urandom(24)))')" >> $WEB_DIR/.env
 }
 
 add_sudoers(){
@@ -54,6 +58,11 @@ create_user(){
 }
 
 composer(){
+    
+    # Environment variable for Docker Compose
+    touch $DOCKER_DIR/.env
+    echo "SERVER_DIR=$SERVER_DIR" >> $DOCKER_DIR/.env
+
     sudo -u fipro docker-compose -f $DOCKER_DIR/docker-compose.yml up -d
     sleep 3
     clear

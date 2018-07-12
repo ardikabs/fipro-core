@@ -157,14 +157,14 @@ class GeoIP:
                 location                        = dict(
                                                     longitude=self._response_city.location.longitude,
                                                     latitude=self._response_city.location.latitude
-                                                ) if self._response_city.location.latitude is not None else dict(),
-                country                         = self._response_city.country.name if self._response_city.country.name is not None else None,
-                country_code                    = self._response_city.country.iso_code if self._response_city.country.iso_code is not None else None,
-                state                           = self._response_city.subdivisions.most_specific.name if self._response_city.subdivisions.most_specific.name is not None else None,
-                city                            = self._response_city.city.name if self._response_city.city.name is not None else None,
-                postal_code                     = self._response_city.postal.code if self._response_city.postal.code is not None else None,
-                autonomous_system_organization  = self._response_asn.autonomous_system_organization if self._response_asn is not None else None,
-                autonomous_system_number        = self._response_asn.autonomous_system_number if self._response_asn is not None else None)
+                                                ) if self._response_city else dict(longitude=None, latitude=None),
+                country                         = self._response_city.country.name if self._response_city else None,
+                country_code                    = self._response_city.country.iso_code if self._response_city else None,
+                state                           = self._response_city.subdivisions.most_specific.name if self._response_city else None,
+                city                            = self._response_city.city.name if self._response_city else None,
+                postal_code                     = self._response_city.postal.code if self._response_city else None,
+                autonomous_system_organization  = self._response_asn.autonomous_system_organization if self._response_asn else None,
+                autonomous_system_number        = self._response_asn.autonomous_system_number if self._response_asn else None)
             return data
     
    

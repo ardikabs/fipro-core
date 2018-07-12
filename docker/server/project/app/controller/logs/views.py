@@ -27,35 +27,39 @@ def index():
 @logs.route('/master/')
 @login_required
 def master_index():
-    moi = MoI(mongodburl=current_app.config['MONGODB_URL'])
+    title = "Data Master"
+    moi = MoI()
     if moi.check_conn() is False:
-        return render_template('logs/master_index.html', db_info=False)
+        return render_template('logs/master_index.html', title=title, db_info=False)
     
-    return render_template('logs/master_index.html', db_info=True)
+    return render_template('logs/master_index.html', title=title, db_info=True)
 
 
 @logs.route('/dionaea/')
 @login_required
 def dionaea_index():
-    moi = MoI(mongodburl=current_app.config['MONGODB_URL'])
+    title = "Dionaea Logs"
+    moi = MoI()
     if moi.check_conn() is False:
-        return render_template('logs/dionaea_index.html', db_info=False)
+        return render_template('logs/dionaea_index.html', title=title, db_info=False)
     
-    return render_template('logs/dionaea_index.html', db_info=True)
+    return render_template('logs/dionaea_index.html', title=title, db_info=True)
     
 @logs.route('/cowrie/')
 @login_required
 def cowrie_index():
-    moi = MoI(mongodburl=current_app.config['MONGODB_URL'])
+    title = "Cowrie Logs"    
+    moi = MoI()
     if moi.check_conn() is False:
-        return render_template('logs/cowrie_index.html', db_info=False)
+        return render_template('logs/cowrie_index.html', title=title, db_info=False)
     
-    return render_template('logs/cowrie_index.html', db_info=True)
+    return render_template('logs/cowrie_index.html', title=title, db_info=True)
 
 @logs.route('/glastopf/')
 @login_required
 def glastopf_index():
-    moi = MoI(mongodburl=current_app.config['MONGODB_URL'])
+    title = "Glastopf Logs"
+    moi = MoI()
     if moi.check_conn() is False:
         return render_template('logs/glastopf_index.html', db_info=False)
     
@@ -63,14 +67,16 @@ def glastopf_index():
 
 
 @logs.route('/cowrie/data/ajax')
+@login_required
 def source_cowrie():
-    moi = MoI(mongodburl=current_app.config['MONGODB_URL'])
+    moi = MoI()
     if moi.check_conn() is False:
         return make_response(jsonify([]), 500)
 
     skip = request.args.get("start",0)
     limit = request.args.get("length",10)
-    options = dict(limit=limit, skip=skip, order_by="-timestamp")    
+    options = dict(limit=limit, skip=skip, order_by="-timestamp")
+    identifier = current_user.identifier    
 
 
     cowrie_logs = moi.logs.get(options=options,identifier= current_user.identifier, sensor= "cowrie")
@@ -86,14 +92,16 @@ def source_cowrie():
     return make_response(jsonify(response), 200)
 
 @logs.route('/dionaea/data/ajax')
+@login_required
 def source_dionaea():
-    moi = MoI(mongodburl=current_app.config['MONGODB_URL'])
+    moi = MoI()
     if moi.check_conn() is False:
         return make_response(jsonify([]), 500)
 
     skip = request.args.get("start",0)
     limit = request.args.get("length",10)
-    options = dict(limit=limit, skip=skip, order_by="-timestamp")    
+    options = dict(limit=limit, skip=skip, order_by="-timestamp")
+    identifier = current_user.identifier    
 
     dionaea_logs = moi.logs.get(options=options,identifier= current_user.identifier, sensor= "dionaea")
     total_data = moi.logs.count(identifier= current_user.identifier, sensor= "dionaea")
@@ -108,15 +116,17 @@ def source_dionaea():
     return make_response(jsonify(response), 200)
 
 @logs.route('/glastopf/data/ajax')
+@login_required
 def source_glastopf():
     print (request.args)
-    moi = MoI(mongodburl=current_app.config['MONGODB_URL'])
+    moi = MoI()
     if moi.check_conn() is False:
         return make_response(jsonify([]), 500)
     
     skip = request.args.get("start",0)
     limit = request.args.get("length",10)
-    options = dict(limit=limit, skip=skip, order_by="-timestamp")    
+    options = dict(limit=limit, skip=skip, order_by="-timestamp")
+    identifier = current_user.identifier    
    
     glastopf_logs = moi.logs.get(options=options,identifier= current_user.identifier, sensor= "glastopf")
 
@@ -133,14 +143,16 @@ def source_glastopf():
 
 
 @logs.route('/master/data/ajax')
+@login_required
 def source_master():
-    moi = MoI(mongodburl=current_app.config['MONGODB_URL'])
+    moi = MoI()
     if moi.check_conn() is False:
         return make_response(jsonify([]), 500)
     
     skip = request.args.get("start",0)
     limit = request.args.get("length",10)
-    options = dict(limit=limit, skip=skip, order_by="-timestamp")    
+    options = dict(limit=limit, skip=skip, order_by="-timestamp")
+    identifier = current_user.identifier    
    
    
     master_logs = moi.logs.get(options=options,identifier= current_user.identifier)
