@@ -1,26 +1,26 @@
-# Query untuk mendapatkan Data Metrics Event berdasarkan jenis Honeypot
-# serta juga berdasarkan jenis Honeypot dan waktu per jam dan per hari
+# Query untuk mendapatkan Data Metrics Event berdasarkan jenis sensor
+# serta juga berdasarkan jenis sensor dan waktu per jam dan per hari
 
 from pymongo import MongoClient
 import time
 import datetime
-mongoconn = MongoClient('mongodb://192.168.1.100:27017/')
+mongoconn = MongoClient('mongo.wisperlabs.me:27020')
 db = mongoconn.fipro
 start_ts = time.time()
 
 
-aggregate = db.logs.aggregate([
+aggregate = db.new_logs.aggregate([
     {
         "$match": {
             "identifier": "fb0963921f12",
-            "timestamp": {"$gte": datetime.datetime.today() - datetime.timedelta(weeks=102) }
+            "timestamp": {"$gte": datetime.datetime.today() - datetime.timedelta(hours=24) }
         }
     },
 
     {
         "$group": {
             "_id": {
-                "honeypot": "$honeypot",
+                "sensor": "$sensor",
                 "date": {
                     "$dateFromParts": {
                         "year": {"$year": {"date": "$timestamp", "timezone": "Asia/Jakarta"}},
@@ -38,7 +38,7 @@ aggregate = db.logs.aggregate([
     {
         "$group": {
             "_id": {
-                "honeypot": "$_id.honeypot",
+                "sensor": "$_id.sensor",
                 "date": "$_id.date"
             },
             "hourly":{
@@ -49,7 +49,7 @@ aggregate = db.logs.aggregate([
                                 {"k": {"$substr":["$_id.hour",0,-1]}, 
                                     "v": {
                                         "$cond": {
-                                            "if": {"$eq": ["$_id.honeypot", "cowrie"] },
+                                            "if": {"$eq": ["$_id.sensor", "cowrie"] },
                                             "then": {"$size": "$uniqueValues"},
                                             "else": "$count",
                                         }
@@ -62,7 +62,7 @@ aggregate = db.logs.aggregate([
             },
             "counts": {"$sum": {
                 "$cond": {
-                    "if": {"$eq": ["$_id.honeypot", "cowrie"] },
+                    "if": {"$eq": ["$_id.sensor", "cowrie"] },
                     "then": {"$size": "$uniqueValues"},
                     "else": "$count",
                 }
@@ -75,18 +75,16 @@ aggregate = db.logs.aggregate([
         "$project":{
             "_id": 0,
             "date": "$_id.date",
-            "honeypot": "$_id.honeypot",
+            "sensor": "$_id.sensor",
             "hourly": {"$mergeObjects": "$hourly"},
             "counts": 1
         }
     },
     {
         "$sort": {"date": 1}
-    },
-    {
-        "$out": "honeypot_events_sensor_timebased_metric"
     }
 ])
 end_ts = time.time()
+print (list(aggregate))
 print (end_ts - start_ts)
 

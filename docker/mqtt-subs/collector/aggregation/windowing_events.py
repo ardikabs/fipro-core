@@ -4,7 +4,7 @@
 from pymongo import MongoClient
 import time
 import datetime
-mongoconn = MongoClient('mongodb://206.189.149.230:27017/')
+mongoconn = MongoClient('mongo.wisperlabs.me:27020')
 db = mongoconn.fipro
 start_ts = time.time()
 

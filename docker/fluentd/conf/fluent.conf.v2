@@ -1,0 +1,126 @@
+<source>
+ @log_level fatal
+ @type forward
+ bind 0.0.0.0
+ port 24224
+</source>
+
+<filter honeypot.**>
+    @type record_modifier
+
+    char_encoding utf-8
+</filter>
+
+<filter honeypot.dionaea>
+    @type record_modifier
+    <record>
+        _dummy_ ${if record["src_ip"].include?('::ffff:'); record["src_ip"] = record["src_ip"].gsub("::ffff:","");end; if record["dst_ip"].include?("::ffff:"); record["dst_ip"] = record["dst_ip"].gsub("::ffff:","")  ;end;nil}
+        credentials ${if record["credentials"].kind_of?(Array); record["username"] = record["credentials"][0]["username"]; record["password"] = record["credentials"][0]["password"];end;nil}
+        credentials ${if record["credentials"].kind_of?(Hash); record["username"] = record["credentials"]["username"][0]; record["password"] = record["credentials"]["password"][0]; end; nil}
+    </record>
+    remove_keys credentials, _dummy_
+
+</filter>
+
+<filter honeypot.cowrie>
+    @type record_modifier
+    remove_keys _dummy_
+    <record>
+        _dummy_ ${if record["dst_port"] == 2222; record["dst_port"] = 22;elsif record["dst_port"] == 2223; record["dst_port"] = 23;end;nil}
+    </record>
+</filter>
+
+
+<filter honeypot.**>
+    @type geoip
+    geoip_lookup_keys src_ip
+    geoip2_database "/fluentd/geoip/GeoLite2-City.mmdb"
+    backend_library geoip2_c
+
+    <record>
+        city            ${city.names.en["src_ip"]}	
+        location        '{ "latitude" : ${location.latitude["src_ip"]}, "longitude" : ${location.longitude["src_ip"]} }'
+        country         ${country.names.en["src_ip"]}
+        country_code    ${country.iso_code["src_ip"]}
+        postal_code     ${postal.code["src_ip"]}
+        region_code     ${subdivisions.0.iso_code["src_ip"]}
+        region_name     ${subdivisions.0.names.en["src_ip"]}
+    </record>
+
+    <inject>
+        geoip 
+    </inject>
+
+    skip_adding_null_record false
+</filter>
+
+<filter honeypot.**>
+    @type geoip
+    geoip_lookup_keys src_ip
+    geoip2_database "/fluentd/geoip/GeoLite2-ASN.mmdb"
+    backend_library geoip2_c
+
+    <record>
+        autonomous_system_number        ${autonomous_system_number["src_ip"]}
+        autonomous_system_organization  ${autonomous_system_organization["src_ip"]}
+    </record>
+
+    skip_adding_null_record false
+</filter>
+
+
+<match honeypot.**>
+
+    # @type copy
+
+    # <store>
+    #     @type stdout
+    # </store>
+
+    # <store>
+        @type mongo
+        database fipro
+        host mongodb
+        port 27017
+
+        collection backup
+
+        <inject>
+            time_key timestamp
+        </inject>
+
+        capped
+        capped_size 500m
+
+        <buffer>
+            flush_interval 1s
+        </buffer>
+    # </store>
+
+    # <store>
+    # @type mqtt
+    
+    # host mqtt-broker
+    # port 1883      
+    # client_id FLUENTD.HoneypotPublisher
+
+    # <security>
+    #     username fluentd
+    #     password rustygear125
+    # </security>
+
+    # keep_alive 15s
+
+    # <format>
+    #     @type json
+    #     add_newline false
+    # </format>
+    # <inject>
+    #     time_key timestamp
+    # </inject>
+    # <buffer>
+    #     flush_interval 1s
+    # </buffer>
+    # </store>
+
+</match>

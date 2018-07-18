@@ -90,18 +90,15 @@ class ResourceMixin():
 
             query = self.__class__._clean_query(kwargs)
             queryset = self.collection.find(query)
-
             if options:
                 skip, limit, order_by = self.__class__._clean_options(options)
-
                 if skip:
                     queryset = queryset.skip(skip)
                 if limit:
                     queryset = queryset.limit(limit)
                 if order_by:
                     queryset = queryset.sort(order_by)
-
-
+                
             return (self.__class__.from_dict(f, self.client) for f in queryset)
 
     def delete(self, **kwargs):
@@ -218,7 +215,6 @@ class ResourceMixin():
         for at in attrs:
             doc.data_keys = doc.data_keys + (at,)
             setattr(doc, at, dict_.get(at))
-        
         return doc
 
 class DailyCount(ResourceMixin):

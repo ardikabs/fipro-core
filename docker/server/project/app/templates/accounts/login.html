@@ -88,7 +88,8 @@
     <script src="{{ url_for('static', filename='scripts/admin.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/pages/examples/sign-in.js') }}"></script>    
     
-    {% block bottomscripts %}{% endblock %} 
+    {% block bottomscripts %}
+    {% endblock %} 
     {# Implement CSRF protection for site #}
     {% if csrf_token()|safe %}
     <div style="visibility: hidden; display: none">

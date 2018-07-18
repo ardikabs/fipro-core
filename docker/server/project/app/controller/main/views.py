@@ -39,8 +39,8 @@ def index():
 
     date            = today.strftime("%Y-%m-%d")
     ts_today        = datetime.datetime.strptime(date, "%Y-%m-%d")
-
     today_attack    = moi.logs.sensor_event_statistics(identifier= current_user.identifier, date= ts_today)
+    
     today_events    = 0
     dionaea_events  = 0
     cowrie_events   = 0
