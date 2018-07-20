@@ -47,7 +47,7 @@
                         </div>
                         <div class="content">
                             <div class="text"><h5>TODAY ATTACKS COUNT</h5></div>
-                            <div class="number count-to" data-from="0" data-to="{{ data['today_attack'] }}" data-speed="1000" data-fresh-interval="20"></div>
+                            <div id="todayAtk" class="number count-to" data-from="0" data-to="{{ data['today_attack'] }}" data-speed="1000" data-fresh-interval="20"></div>
                         </div>
                     </div>
                 </a>
@@ -88,7 +88,7 @@
                         </div>
                         <div class="content">
                             <div class="text"><h5>DIONAEA EVENTS</h5></div>
-                            <div class="number count-to" data-from="0" data-to="{{ data['dionaea_events'] }}" data-speed="1000" data-fresh-interval="20"></div>
+                            <div id="dionaeaEvent" class="number count-to" data-from="0" data-to="{{ data['dionaea_events'] }}" data-speed="1000" data-fresh-interval="20"></div>
                         </div>
                     </div>
                 </a>
@@ -102,7 +102,7 @@
                         </div>
                         <div class="content">
                             <div class="text"><h5>COWRIE EVENTS</h5></div>
-                            <div class="number count-to" data-from="0" data-to="{{ data['cowrie_events'] }}" data-speed="1000" data-fresh-interval="20"></div>
+                            <div id="cowrieEvent" class="number count-to" data-from="0" data-to="{{ data['cowrie_events'] }}" data-speed="1000" data-fresh-interval="20"></div>
                         </div>
                     </div>
                 </a>
@@ -116,7 +116,7 @@
                         </div>
                         <div class="content">
                             <div class="text"><h5>GLASTOPF EVENTS</h5></div>
-                            <div class="number count-to" data-from="0" data-to="{{ data['glastopf_events'] }}" data-speed="1000" data-fresh-interval="20"></div>
+                            <div id="glastopfEvent" class="number count-to" data-from="0" data-to="{{ data['glastopf_events'] }}" data-speed="1000" data-fresh-interval="20"></div>
                         </div>
                     </div>
                 </a>
@@ -194,7 +194,68 @@
 <script src="{{ url_for('static', filename='vendors/morrisjs/morris.js') }}"></script>
 <script src="{{ url_for('static', filename='vendors/chartjs/Chart.bundle.js') }}"></script>
 
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+<script>
+    var socket;
+    var todayAttackInit = 0;
+    var dionaeaEventInit = 0;
+    var cowrieEventInit = 0;
+    var glastopfEventInit = 0;
 
+    $(document).ready(function(){
+        socket = io.connect('http://' + document.domain + ':' + location.port + '/socket.io');
+        socket.on('connect', function() {
+            console.log("Connected to the WebSocket");
+            socket.emit("get_recent_attacks", "{{ current_user.identifier }}");
+        });
+
+        socket.on('recent_attacks', function(data) {
+            var json = JSON.parse(data)
+            recycleRecentAttacks(json);
+            updateSensorEvents(json);
+            updateTodayAttacks();
+        });
+
+        socket.on('disconnect', function(){
+            console.log("Disconnected from WebSocket");
+        });
+    });
+    
+
+    function recycleRecentAttacks(data){
+        var country = (data.geoip.country !== null) ? data.geoip.country : "Unknown";
+        var country_code = (data.geoip.country_code !== null) ? data.geoip.country_code.toLowerCase() : "N/A";
+        var src_ip = data.src_ip;
+        var count = data.count;
+        $('.dashboard-stat-list li:last-child').remove();
+        $('.dashboard-stat-list').prepend('<li> <i class="' + country_code + ' flag"></i>' + country + '<span class="pull-right">' + src_ip + ' <small>(' + count + ')</small></span></li>');
+    }
+
+    function updateTodayAttacks(){
+        todayAttackInit++;
+        $('#todayAtk').text(todayAttackInit);
+    }
+
+    function updateSensorEvents(data){
+        if (data.sensor === "dionaea"){
+            dionaeaEventInit++;
+            $('#dionaeaEvent').text(dionaeaEventInit);
+        }
+
+        else if (data.sensor === "cowrie"){
+            cowrieEventInit++;
+            console.log(data.session);
+
+            $('#cowrieEvent').text(cowrieEventInit);
+        }
+
+        else if (data.sensor == "glastopf"){
+            glastopfEventInit++;
+            $('#glastopfEvent').text(glastopfEventInit);
+        }
+
+    }
+</script>
 <script>
 
 

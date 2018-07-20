@@ -2,7 +2,7 @@
 import os
 from flask_script import Manager, Shell
 from flask_migrate import Migrate, MigrateCommand
-from app import create_app, db
+from app import create_app, db, socketio
 from app.models import *
 import datetime
 
@@ -19,7 +19,7 @@ manager.add_command('db', MigrateCommand)
 
 @manager.command
 def runserver():
-    app.run(debug=True, host='0.0.0.0')
+    app.run(host='0.0.0.0', debug=True, threaded=True)
 
 @manager.command
 def recreate_db():

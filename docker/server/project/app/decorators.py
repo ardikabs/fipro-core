@@ -5,6 +5,7 @@ from functools import wraps
 
 from flask import abort
 from flask_login import current_user
+from flask_socketio import disconnect
 
 
 def permission_required(permission):
@@ -22,3 +23,13 @@ def permission_required(permission):
 
 def admin_required(f):
     return permission_required('default')(f)
+
+
+def authenticated_only(f):
+    @wraps(f)
+    def wrapped(*args, **kwargs):
+        if not current_user.is_authenticated:
+            disconnect()
+        else:
+            return f(*args, **kwargs)
+    return wrapped

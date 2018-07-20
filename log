@@ -69,3 +69,5 @@ docker run -d -v ~/Dev/fipro-core/docker/mqtt-subs/collector:/collector --name m
 
 docker run -d -p 5000:5000 -v ~/Dev/fipro-agent/docker/agent/project:/project \
 	-v /var/run/:/var/run --name fipro-agent ardikabs/fipro-agent
+
+gunicorn --worker-class eventlet -w 1 -b 0.0.0.0:8000 wsgi

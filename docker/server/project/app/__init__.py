@@ -10,10 +10,11 @@ from flask_socketio import SocketIO
 from config import config
 from app import errors as err
 basedir = os.path.abspath(os.path.dirname(__file__))
+async_mode = ['threading', 'eventlet']
 
 db = SQLAlchemy()
 csrf = CSRFProtect()
-socket = SocketIO()
+socketio = SocketIO()
 
 login_manager = LoginManager()
 login_manager.session_protection = "strong"
@@ -32,7 +33,7 @@ def create_app(config_name):
     db.init_app(app)
     csrf.init_app(app)
     login_manager.init_app(app)
-    socket.init_app(app)
+    socketio.init_app(app, async_mode= async_mode[1])
    
     ''' Assets Configuration '''
     '''
@@ -76,7 +77,7 @@ def create_app(config_name):
     app.register_blueprint(api_v1)
     csrf.exempt(api_v1)
 
-    from .controller.socket import events
+    from .controller.socketio import events
 
     ''' Error Handler Configuration '''
     app.register_error_handler(404,err.page_not_found)
