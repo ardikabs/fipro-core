@@ -21,7 +21,7 @@ import pytz
 
 from app.models import ApiKey, Agents, Sensor
 from app.commons.MongoInterface import MongoInterface as MoI
-
+from app.commons.mongodb import IMongo
 @main.route('/')
 @login_required
 def index():
@@ -30,7 +30,13 @@ def index():
     today           = datetime.datetime.utcnow().replace(tzinfo=pytz.utc).astimezone(timezone)
     date_now        = today.strftime("%b %d")
     
-    moi = MoI(mongodburl=current_app.config['MONGODB_URL'])
+    mongo = IMongo()
+    if mongo.check_connection():
+        print ("Mantap")
+    else:
+        print ("Bosok")
+        
+    moi = MoI()
     if moi.check_conn() is False:
         return render_template('main/index.html', date = date_now, db_info=False)
 

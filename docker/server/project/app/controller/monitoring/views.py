@@ -43,24 +43,33 @@ def top_attacks():
 @monitoring.route('/event-statistics/')
 @login_required
 def event_statistics():
-    import time
-    start = time.time()
     title = "Event Statistics"
     moi = MoI()
     if moi.check_conn() is False:
         return render_template('monitoring/event_statistics.html', title=title, db_info=False)
     
+    import time
+    start = time.time()
+    
     events = moi.logs.events_histogram(identifier= current_user.identifier, limit=10)
+    print ("1. {}".format(time.time() - start))
     countries = moi.logs.countries_histogram(identifier= current_user.identifier, limit=10)
+    print ("2. {}".format(time.time() - start))
     ports = moi.logs.ports_histogram(identifier= current_user.identifier, limit=11)
-
+    print ("3. {}".format(time.time() - start))
+    
     sensor_events_histogram = json.dumps(events, default=json_util.default)
     countries_event_histogram = json.dumps(countries, default=json_util.default)
     ports_event_histogram = json.dumps(ports, default=json_util.default)
-
+    
     sensor_events = moi.logs.events_count(identifier= current_user.identifier)
+    print ("4. {}".format(time.time() - start))
+    
     ports_events = moi.logs.ports_events_count(identifier= current_user.identifier, limit=15)
+    print ("5. {}".format(time.time() - start))
+    
     countries_ports_events = moi.logs.top_countries_port(identifier= current_user.identifier, limit=6)
+    print ("6. {}".format(time.time() - start))
     
     return render_template(
         'monitoring/event_statistics.html',

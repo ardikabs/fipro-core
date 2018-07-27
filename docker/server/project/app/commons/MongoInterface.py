@@ -312,7 +312,7 @@ class Logs(ResourceMixin):
         limit = {"$limit": options.get('limit', 10)}
         query_set = [match_query, group_query, group2_query, sort, limit, project_query]
 
-        return list(self.collection.aggregate(query_set))
+        return list(self.collection.aggregate(query_set, allowDiskUse= True))
     
     def top_countries_port(self, options={}, **kwargs):
         match_query = {
@@ -393,7 +393,7 @@ class Logs(ResourceMixin):
         limit = {'$limit': options.get('limit', 10)}
 
         query_set = [match_query, group_query, group1_query, sort_port_rank, group2_query, sort, limit, project_query]
-        res = self.collection.aggregate(query_set)
+        res = self.collection.aggregate(query_set, allowDiskUse= True)
         return list(res)
 
     def top_countries(self, options={}, **kwargs):
@@ -447,7 +447,7 @@ class Logs(ResourceMixin):
         limit = {'$limit': options.get('limit', 10)}
 
         query_set = [match_query, group_query, group1_query, project_query, sort, limit]
-        res = self.collection.aggregate(query_set)
+        res = self.collection.aggregate(query_set, allowDiskUse= True)
         return list(res)
 
     def top_sourceip(self, options={}, **kwargs):
@@ -504,7 +504,7 @@ class Logs(ResourceMixin):
         limit = {'$limit': options.get('limit', 10)}
 
         query_set = [match_query, group_query, group1_query, project_query, sort, limit]
-        res = self.collection.aggregate(query_set)
+        res = self.collection.aggregate(query_set, allowDiskUse= True)
         return list(res)
     
     def top_unknown_sourceip(self, options={}, **kwargs):
@@ -554,7 +554,7 @@ class Logs(ResourceMixin):
         limit = {'$limit': options.get('limit', 10)}
 
         query_set = [match_query, group_query, group1_query, project_query, sort, limit]
-        res = self.collection.aggregate(query_set)
+        res = self.collection.aggregate(query_set, allowDiskUse= True)
         return list(res)
 
     def top_sourceip_port(self, options={}, **kwargs):
@@ -634,7 +634,7 @@ class Logs(ResourceMixin):
         limit = {"$limit": options.get("limit", 1000)}
 
         query_set = [match_query, group_query, group1_query, group2_query, sort, unwind, project_query, limit]
-        res = self.collection.aggregate(query_set)
+        res = self.collection.aggregate(query_set, allowDiskUse= True)
         return list(res)
 
     def event_statistics(self, **kwargs):
@@ -732,7 +732,7 @@ class Logs(ResourceMixin):
         sort = {"$sort": {"date": 1}}
         
         query_set = [match_query, group_query, group1_query, unwind, group2_query, group3_query, project_query, sort]
-        res = self.collection.aggregate(query_set)
+        res = self.collection.aggregate(query_set, allowDiskUse= True)
         return list(res)
 
     def sensor_event_statistics(self, **kwargs):
@@ -808,7 +808,7 @@ class Logs(ResourceMixin):
         }
         sort = {"$sort": {"date": 1}}
         query_set = [match_query, group_query, group1_query, project_query, sort]
-        res = self.collection.aggregate(query_set)
+        res = self.collection.aggregate(query_set, allowDiskUse= True)
         
         return list(res)
         
@@ -912,7 +912,7 @@ class Logs(ResourceMixin):
         query_set = [match_query, group_query, group1_query, unwind, group2_query, group3_query, project_query, sort]
         if kwargs.get('limit'):
             query_set.append(limit)
-        res = self.collection.aggregate(query_set)
+        res = self.collection.aggregate(query_set, allowDiskUse= True)
         return list(res)
     
     def countries_event_statistics(self, **kwargs):
@@ -982,7 +982,7 @@ class Logs(ResourceMixin):
         if kwargs.get('limit'):
             query_set.append(limit)
             
-        res = self.collection.aggregate(query_set)
+        res = self.collection.aggregate(query_set, allowDiskUse= True)
         return list(res)
 
     def ports_event_statistics(self, **kwargs):
@@ -1048,7 +1048,7 @@ class Logs(ResourceMixin):
         if kwargs.get('limit'):
             query_set.append(limit)
 
-        res = self.collection.aggregate(query_set)
+        res = self.collection.aggregate(query_set, allowDiskUse= True)
         return list(res)
     
     def events_count(self, **kwargs):
@@ -1094,7 +1094,7 @@ class Logs(ResourceMixin):
             
         
         query_set = [match_query, group_query, project_query]
-        res = self.collection.aggregate(query_set)
+        res = self.collection.aggregate(query_set, allowDiskUse= True)
         return list(res)
 
     def ports_events_count(self, **kwargs):
@@ -1128,7 +1128,7 @@ class Logs(ResourceMixin):
         if kwargs.get('limit'):
             query_set.append(limit)
 
-        res = self.collection.aggregate(query_set)
+        res = self.collection.aggregate(query_set, allowDiskUse= True)
         return list(res)   
 
     def username_list(self, **kwargs):
@@ -1156,7 +1156,7 @@ class Logs(ResourceMixin):
 
         sort = {"$sort": {"counts": -1}}
         query_set = [match_query, group_query, project_query, sort]
-        res = self.collection.aggregate(query_set)
+        res = self.collection.aggregate(query_set, allowDiskUse= True)
         return list(res)
 
     def password_list(self, **kwargs):
@@ -1185,7 +1185,7 @@ class Logs(ResourceMixin):
 
         sort = {"$sort": {"counts": -1}}
         query_set = [match_query, group_query, project_query, sort]
-        res = self.collection.aggregate(query_set)
+        res = self.collection.aggregate(query_set, allowDiskUse= True)
         return list(res)
 
     def ports_histogram(self, **kwargs):
@@ -1244,7 +1244,7 @@ class Logs(ResourceMixin):
 
         query_set = [match_query, group_query, group1_query, sort, limit, unwind, sort_date, project_query]
             
-        res = self.collection.aggregate(query_set)
+        res = self.collection.aggregate(query_set, allowDiskUse= True)
         return list(res)
 
     def countries_histogram(self, **kwargs):
@@ -1306,7 +1306,7 @@ class Logs(ResourceMixin):
 
         query_set = [match_query, group_query, group1_query, sort, limit, unwind, sort_date, project_query]
             
-        res = self.collection.aggregate(query_set)
+        res = self.collection.aggregate(query_set, allowDiskUse= True)
         return list(res)
 
     def events_histogram(self, **kwargs):
@@ -1375,7 +1375,7 @@ class Logs(ResourceMixin):
         limit = {"$limit": kwargs.get('limit',10)}   
 
         query_set = [match_query, group_query, group1_query, sort, limit, unwind, sort_date, project_query]
-        res = self.collection.aggregate(query_set)
+        res = self.collection.aggregate(query_set, allowDiskUse= True)
         
         return list(res)
         

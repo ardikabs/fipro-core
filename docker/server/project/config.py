@@ -14,8 +14,13 @@ if os.path.exists('.env'):
 class Config:
     APP_NAME = os.environ.get('APP_NAME') or 'Server-Side Web App'
     SERVER_IP = requests.get('http://httpbin.org/ip').json().get('origin')
-    MONGODB_URL = os.environ.get('MONGODB_URL') or None
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
+    
+    MONGO_URI = "mongodb://mongo.wisperlabs.me:27020/fipro"
+
+    CELERY_BROKER_URL= 'redis://localhost:63790/0'
+    CELERY_RESULT_BACKEND= 'redis://localhost:63790/0'
+    
     
     if os.environ.get('SECRET_KEY'):
         SECRET_KEY = os.environ.get('SECRET_KEY')

@@ -6,7 +6,7 @@ from app import create_app, db, socketio
 from app.models import *
 import datetime
 
-app = create_app(os.getenv('APP_SETTINGS') or 'default')
+app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 manager = Manager(app)
 migrate = Migrate(app, db)
 

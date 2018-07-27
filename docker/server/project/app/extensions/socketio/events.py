@@ -6,9 +6,9 @@ from flask_login import(
     login_user,
     logout_user
 )
-from . import socketio
-from .worker import Worker
+from app import socketio
 from app.decorators import authenticated_only
+from .worker import RecentAttacksWorker
 
 worker = None
 
@@ -22,13 +22,8 @@ Events SocketIO
 @authenticated_only
 def request_recent_attacks(data):
     global worker
-    worker = Worker(socketio)
+    worker = RecentAttacksWorker(socketio)
     socketio.start_background_task(target=worker.run, args=(current_app._get_current_object(),), **{'identifier':current_user.identifier})
-
-
-
-
-
 
 
 
@@ -45,8 +40,7 @@ def on_connect():
 
 @socketio.on("disconnect", namespace="/socket.io")
 @authenticated_only
-def on_disconnect():
+def on_disconnect(): 
     if worker is not None:
         worker.stop()
     print ("Disconnected from Socket.io user:{}".format(current_user.fullname()))
-    # TODO Disconnect from mqtt

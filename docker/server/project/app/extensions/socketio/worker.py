@@ -6,21 +6,21 @@ import time
 from bson import json_util
 
 from app.commons.MongoInterface import MongoInterface as MoI
+from app import mongo as mongo_client
 
-class Worker:
+class RecentAttacksWorker:
 
     switch = False
     num_of_work = 0
 
     def __init__(self, socketio):
-        self.client = pymongo.MongoClient(host="mongo.wisperlabs.me", port=27020, serverSelectionTimeoutMS=10, tz_aware=True)
         self.socketio = socketio
         self.switch = True
     
     def run(self, *args, **kwargs):
         identifier = kwargs.get('identifier')
 
-        col = self.client.fipro.sensor.log
+        col = mongo_client.db.sensor.log
         last_ts = col.find({'identifier': identifier}).sort('timestamp',-1).limit(-1).next()['timestamp']
         query = {'identifier': identifier ,'timestamp': {'$gte': datetime.datetime.fromtimestamp(last_ts.timestamp(), tz=pytz.utc)}}
         tail_opts = { "cursor_type": pymongo.CursorType.TAILABLE_AWAIT}

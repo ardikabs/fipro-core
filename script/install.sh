@@ -39,7 +39,7 @@ setup_webserver(){
     touch $PROJECT_DIR/.env
 
     echo "APP_NAME=FIPRO" >> $PROJECT_DIR/.env
-    echo "APP_SETTINGS=development" >> $PROJECT_DIR/.env
+    echo "FLASK_CONFIG=development" >> $PROJECT_DIR/.env
     echo "SECRET_KEY=$(python3 -c 'import os;import binascii;print(binascii.hexlify(os.urandom(24)))')" >> $PROJECT_DIR/.env
 }
 
