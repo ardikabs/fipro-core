@@ -21,7 +21,7 @@ import pytz
 
 from app.models import ApiKey, Agents, Sensor
 from app.commons.MongoInterface import MongoInterface as MoI
-from app.commons.mongodb import IMongo
+from app.commons.mongo import MongoCore
 @main.route('/')
 @login_required
 def index():
@@ -30,7 +30,7 @@ def index():
     today           = datetime.datetime.utcnow().replace(tzinfo=pytz.utc).astimezone(timezone)
     date_now        = today.strftime("%b %d")
     
-    mongo = IMongo()
+    mongo = MongoCore()
     if mongo.check_connection():
         print ("Mantap")
     else:

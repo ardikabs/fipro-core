@@ -8,7 +8,7 @@ from bson import ObjectId, son
 from app.utils import get_datetime, get_date, current_datetime
 from app import mongo
 
-class IMongo:
+class MongoCore:
 
     def __init__(self):
         self.client = mongo
