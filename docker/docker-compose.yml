@@ -74,6 +74,8 @@ services:
     container_name: serverapp
     restart: always
     image: "ardikabs/fipro-server:1.1"
+    expose:
+      - "27017/tcp"
     links:
       - mongodb
       - redis
