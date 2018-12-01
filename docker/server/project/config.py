@@ -18,8 +18,8 @@ class Config:
     
     MONGO_URI = "mongodb://mongodb:27017/fipro"
 
-    CELERY_BROKER_URL= 'redis://redis:63790/0'
-    CELERY_RESULT_BACKEND= 'redis://redis:63790/0'
+    CELERY_BROKER_URL= 'redis://redis:6379/0'
+    CELERY_RESULT_BACKEND= 'redis://redis:6379/0'
     
     
     if os.environ.get('SECRET_KEY'):

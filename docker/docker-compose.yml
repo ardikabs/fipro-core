@@ -27,7 +27,7 @@ services:
     restart: always
     image: "redis:alpine"
     ports:
-      - "63790/tcp"
+      - "6379/tcp"
 
   collector:
     build: ./mqtt-subs
