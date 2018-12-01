@@ -73,7 +73,7 @@ services:
     build: ./server
     container_name: serverapp
     restart: always
-    image: "ardikabs/fipro-server"
+    image: "ardikabs/fipro-server:1.1"
     links:
       - mongodb
       - redis
