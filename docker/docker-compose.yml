@@ -22,6 +22,13 @@ services:
     volumes:
       - /data/db:/data/db
 
+  redis:
+    container_name: redis
+    restart: always
+    image: "redis:alpine"
+    ports:
+      - "63790/tcp"
+
   collector:
     build: ./mqtt-subs
     container_name: collector
@@ -69,8 +76,10 @@ services:
     image: "ardikabs/fipro-server"
     links:
       - mongodb
+      - redis
     depends_on:
       - mongodb
+      - redis
     volumes:
       - ${SERVER_DIR}/docker/server/project:/project
   
