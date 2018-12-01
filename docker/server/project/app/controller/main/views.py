@@ -22,6 +22,7 @@ import pytz
 from app.models import ApiKey, Agents, Sensor
 from app.commons.MongoInterface import MongoInterface as MoI
 from app.commons.mongo import MongoCore
+
 @main.route('/')
 @login_required
 def index():

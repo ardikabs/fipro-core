@@ -61,6 +61,28 @@ def setup_general():
             print('User identifier : {}'.format(user.identifier))
             print (api_key)
 
+        if User.query.filter_by(email= "aspendaka@gmail.com").first() is None:
+            import uuid
+            generated_key = str(uuid.uuid4().hex)
+            user = User(
+                firstname='Andika',
+                lastname='Ramadhan',
+                password= "jarkom@123",
+                registered_at= datetime.datetime.today(),
+                email="aspendaka@gmail.com",
+                identifier=str(uuid.uuid4()).split("-")[-1])
+            db.session.add(user)
+            db.session.commit()
+
+            api_key = ApiKey(
+                api_key=generated_key,
+                user_id=user.id)
+            db.session.add(api_key)
+            db.session.commit()
+            print('Added Administrator : {}'.format(user.fullname()))
+            print('User identifier : {}'.format(user.identifier))
+            print (api_key)
+
                 
 
 
