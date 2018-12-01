@@ -26,10 +26,10 @@ from app.commons.mongo import MongoCore
 @main.route('/')
 @login_required
 def index():
-    title           = "Dashboard"
-    timezone        = pytz.timezone('Asia/Jakarta')
-    today           = datetime.datetime.utcnow().replace(tzinfo=pytz.utc).astimezone(timezone)
-    date_now        = today.strftime("%b %d")
+    title = "Dashboard"
+    timezone = pytz.timezone('Asia/Jakarta')
+    today = datetime.datetime.utcnow().replace(tzinfo=pytz.utc).astimezone(timezone)
+    date_now = today.strftime("%b %d")
     
     mongo = MongoCore()
     if mongo.check_connection():
@@ -41,16 +41,16 @@ def index():
     if moi.check_conn() is False:
         return render_template('main/index.html', date = date_now, db_info=False)
 
-    agents          = Agents.query.filter_by(user_id=current_user.id, condition_id=4).count()
-    sensor          = Sensor.query.filter_by(user_id=current_user.id, condition_id=4).count()
+    agents = Agents.query.filter_by(user_id=current_user.id, condition_id=4).count()
+    sensor = Sensor.query.filter_by(user_id=current_user.id, condition_id=4).count()
 
-    date            = today.strftime("%Y-%m-%d")
-    ts_today        = datetime.datetime.strptime(date, "%Y-%m-%d")
-    today_attack    = moi.logs.sensor_event_statistics(identifier= current_user.identifier, date= ts_today)
+    date = today.strftime("%Y-%m-%d")
+    ts_today = datetime.datetime.strptime(date, "%Y-%m-%d")
+    today_attack = moi.logs.sensor_event_statistics(identifier= current_user.identifier, date= ts_today)
     
-    today_events    = 0
-    dionaea_events  = 0
-    cowrie_events   = 0
+    today_events = 0
+    dionaea_events = 0
+    cowrie_events = 0
     glastopf_events = 0
     for attack in today_attack:
         today_events += attack.get("counts",0)

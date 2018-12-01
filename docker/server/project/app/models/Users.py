@@ -8,6 +8,7 @@ from sqlalchemy.sql import func
 from app import db, login_manager
 from app.utils import get_datetime, current_datetime
 import datetime
+import pytz
 
 
 class Permission:
@@ -150,7 +151,7 @@ class DeployKey(db.Model):
         return "<DeployKey of {}>".format(self.user.email)
 
     def check_expired(self):
-        return current_datetime() > self.expired_at
+        return current_datetime() > self.expired_at.replace(tzinfo=pytz.utc).astimezone(pytz.timezone('Asia/Jakarta'))
 
     def show_date(self, date):
         return date.strftime('%d/%m/%Y')

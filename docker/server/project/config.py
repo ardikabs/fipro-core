@@ -16,7 +16,7 @@ class Config:
     SERVER_IP = requests.get('http://httpbin.org/ip').json().get('origin')
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     
-    MONGO_URI = "mongodb://mongodb:27020/fipro"
+    MONGO_URI = "mongodb://mongodb:27017/fipro"
 
     CELERY_BROKER_URL= 'redis://localhost:63790/0'
     CELERY_RESULT_BACKEND= 'redis://localhost:63790/0'
