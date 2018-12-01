@@ -9,4 +9,4 @@ RUN pip install -r requirements.txt \
     && python manage.py setup_dev
 
 EXPOSE 8080/tcp
-CMD ["gunicorn","-w","4","-b","0.0.0.0:8080","wsgi"]
+CMD ["/bin/bash","run.sh"]

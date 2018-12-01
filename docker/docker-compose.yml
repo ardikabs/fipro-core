@@ -76,9 +76,10 @@ services:
   
 
   fluentd:
+    build: ./fluentd
     container_name: aggregator-master
     restart: always
-    image: "ardikabs/fluentd"
+    image: "ardikabs/fluentd:1.1"
     links:
       - broker
       - mongodb
@@ -94,9 +95,10 @@ services:
       - ${SERVER_DIR}/docker/fluentd/geoip:/fluentd/geoip
 
   fluentd-node1:
+    build: ./fluentd
     container_name: aggregator-node1
     restart: always
-    image: "ardikabs/fluentd"
+    image: "ardikabs/fluentd:1.1"
     links:
       - broker
       - mongodb
@@ -112,9 +114,10 @@ services:
       - ${SERVER_DIR}/docker/fluentd/geoip:/fluentd/geoip  
 
   fluentd-node2:
+    build: ./fluentd
     container_name: aggregator-node2
     restart: always
-    image: "ardikabs/fluentd"
+    image: "ardikabs/fluentd:1.1"
     links:
       - broker
       - mongodb
