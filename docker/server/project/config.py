@@ -15,7 +15,7 @@ if os.path.exists('.env'):
 
 class Config:
     APP_NAME = os.environ.get('APP_NAME') or 'Server-Side Web App'
-    SERVER_IP = serverip.split(',')[0] if ',' in serverip else serverip
+    SERVER_IP = serverip.split(',')[0].strip() if ',' in serverip else serverip
     MONGODB_URL = os.environ.get('MONGODB_URL') or None
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     
