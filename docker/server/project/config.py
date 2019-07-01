@@ -3,6 +3,7 @@ import os
 import sys
 import requests
 basedir = os.path.abspath(os.path.dirname(__file__))
+serverip = requests.get('http://httpbin.org/ip').json().get('origin')
 
 ''' Environment Variable Configuration '''
 if os.path.exists('.env'):
@@ -11,9 +12,10 @@ if os.path.exists('.env'):
         if len(var) == 2:
             os.environ[var[0]] = var[1]           
 
+
 class Config:
     APP_NAME = os.environ.get('APP_NAME') or 'Server-Side Web App'
-    SERVER_IP = requests.get('http://httpbin.org/ip').json().get('origin')
+    SERVER_IP = serverip.split(',')[0] if ',' in serverip else serverip
     MONGODB_URL = os.environ.get('MONGODB_URL') or None
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     
