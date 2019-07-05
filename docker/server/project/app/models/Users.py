@@ -150,7 +150,7 @@ class DeployKey(db.Model):
         return "<DeployKey of {}>".format(self.user.email)
 
     def check_expired(self):
-        return current_datetime() > self.expired_at
+        return current_datetime().replace(tzinfo=None) > self.expired_at.replace(tzinfo=None)
 
     def show_date(self, date):
         return date.strftime('%d/%m/%Y')
