@@ -18,7 +18,7 @@ Flask-WTF==0.14.2
 gunicorn==19.8.1
 idna==2.7
 itsdangerous==0.24
-Jinja2==2.10
+Jinja2==2.11.3
 jsmin==2.2.2
 jsonschema==2.6.0
 Mako==1.0.7
